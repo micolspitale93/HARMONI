@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   harmoni_full:
     container_name: harmoni_full

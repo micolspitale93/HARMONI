@@ -7,6 +7,7 @@ stt:
     credential_path: "$(env HOME)/.gcp/private-keys.json/private-keys.json" #path where private keys are mounted
     wait_duration: 5
     max_silence: 10 #s
+    num_speakers: 2 #number of speakers in the group conversation
   ita_param:
     language_id: "it-IT"
     sample_rate: 16000 #44100 for wav audio file

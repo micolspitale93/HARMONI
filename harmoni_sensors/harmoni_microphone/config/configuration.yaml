@@ -5,5 +5,5 @@ microphone:
     chunk_size: 4410 #1600
     total_channels: 1
     audio_rate: 44100 #16000
-    device_name: "USB PnP Sound Device: Audio (hw:1,0)" #"CBHT Audio: USB Audio (hw:3,0)"  CBHT Audio: USB Audio (hw:2,0) , Jabra SPEAK 510 USB: Audio (hw:1,0)
+    device_name: "TONOR TC30 Audio Device: USB Audio (hw:1,0)" #"USB PnP Sound Device: Audio (hw:1,0)" #"CBHT Audio: USB Audio (hw:3,0)"  CBHT Audio: USB Audio (hw:2,0) , Jabra SPEAK 510 USB: Audio (hw:1,0)
     test_outdir: "$(find harmoni_microphone)/temp_data/test_example.wav"
