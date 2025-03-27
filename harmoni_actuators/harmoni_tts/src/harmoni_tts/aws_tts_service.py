@@ -34,6 +34,8 @@ class AWSTtsService(HarmoniServiceManager):
         """ Initialization of variables and tts parameters """
         self.region_name = param["region_name"]
         self.voice = param["voice"]
+        self.voice_viseme = param["voice_viseme"]
+        self.engine = param["engine"]
         self.language = param["language"]
         self.outdir = param["outdir"]
         self.wav_header_length = param["wav_header_length"]
@@ -272,7 +274,7 @@ class AWSTtsService(HarmoniServiceManager):
             text = (
                 '<speak><lang xml:lang="'
                 + self.language
-                + '"><prosody rate="slow" volume= "soft">'
+                + '"><prosody>'
                 + text
                 + "</prosody></lang></speak>"
             )
@@ -280,8 +282,9 @@ class AWSTtsService(HarmoniServiceManager):
                 Text=text,
                 TextType="ssml",
                 OutputFormat="json",
-                VoiceId=self.voice,
+                VoiceId= self.voice_viseme,
                 SpeechMarkTypes=["viseme", "word"],
+                Engine = "standard"
             )
             behavior_data = self._get_behaviors(json_response, actions)
             ogg_response = self.tts.synthesize_speech(
@@ -289,6 +292,7 @@ class AWSTtsService(HarmoniServiceManager):
                 TextType="ssml",
                 OutputFormat="ogg_vorbis",
                 VoiceId=self.voice,
+                Engine = self.engine,
             )
             audio_data = self._get_audio(ogg_response)
             tts_response = self._get_response(behavior_data)

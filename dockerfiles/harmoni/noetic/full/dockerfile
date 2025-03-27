@@ -43,6 +43,7 @@ RUN \
     google-cloud-speech \
     python-dotenv \
     openai \
+    azure-cognitiveservices-speech \
     protobuf==3.20.1
 
 #caching protection for Harmoni, per https://stackoverflow.com/a/39278224/5715374

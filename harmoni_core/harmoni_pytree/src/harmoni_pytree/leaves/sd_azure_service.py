@@ -81,7 +81,7 @@ class DiarSpeechToTextServicePytree(py_trees.behaviour.Behaviour):
                         self.logger.debug(f"Waiting fot the result ({self.server_name})")
                         new_status = py_trees.common.Status.RUNNING
                 elif new_state == GoalStatus.PENDING:
-                    self.send_request = True
+                    self.send_request = False
                     self.logger.debug(f"Cancelling goal to {self.server_name}")
                     self.service_client_stt.cancel_all_goals()
                     self.client_result = None
@@ -89,6 +89,8 @@ class DiarSpeechToTextServicePytree(py_trees.behaviour.Behaviour):
                     #self.service_client_stt.stop_tracking_goal()
                     #self.logger.debug(f"Goal tracking stopped to {self.server_name}")
                     new_status = py_trees.common.Status.RUNNING
+                    #new_status = py_trees.common.Status.SUCCESS
+
                 else: 
                     new_status = py_trees.common.Status.FAILURE
                     #raise

@@ -84,7 +84,7 @@ class ChatGPTService(HarmoniServiceManager):
         try:
             if not self.stop_request:
                 gpt_response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4o-mini",
                 messages = messages_array,
                 temperature=0.9,
                 max_tokens=150,#150,

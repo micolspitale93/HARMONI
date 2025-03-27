@@ -1,0 +1,18 @@
+<launch>
+    <include file="$(find harmoni_stt)/launch/stt_sd_azure_service.launch"></include>
+
+    <include file="$(find harmoni_speaker)/launch/speaker_service.launch"></include>
+    
+    <include file="$(find harmoni_face)/launch/face_service.launch"></include>
+
+    <include file="$(find harmoni_tts)/launch/tts_service.launch"></include>
+
+    <include file="$(find harmoni_bot)/launch/bot_service.launch"></include>
+
+    <rosparam file="$(find harmoni_bot)/config/configuration.yaml" subst_value="True"/>
+    <param name="instance_id" value="default"/>
+   
+    <param name="test_bot_input" value="Hello"/>
+
+    <test test-name="test_mic_stt_bot_tts_speaker" pkg="harmoni_pytree" type="rostest_mic_diar_stt_bot_tts_face_speaker_pytree.py"/>
+</launch>

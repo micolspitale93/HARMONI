@@ -1,8 +1,10 @@
 # Configuration file for the microphone
 tts:
   default_param:
-    region_name: "eu-west-2"
-    language: "en-UK"
+    region_name: "eu-central-1"
+    language: "en-US"
     outdir: "$(find harmoni_tts)/temp_data"
     wav_header_length: 24
-    voice: "Amy"
+    voice: "Ruth"
+    voice_viseme : "Amy" #this parameter has been added because generative voices do not support YET the viseme function
+    engine: "generative"

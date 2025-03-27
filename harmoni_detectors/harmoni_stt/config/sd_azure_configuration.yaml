@@ -1,0 +1,18 @@
+stt:
+  default_param:
+    language_id: "en-US" #"en-US"
+    sample_rate: 44100 #16000 #44100 for wav audio file, 16000 for wav file from mic, 48000
+    audio_channel: 1
+    subscriber_id: "default"
+    wait_duration: 5
+    max_silence: 10 #s
+    num_speakers: 3 #number of speakers in the group conversation
+    names: "Sarah,Jane,Alex" #note that the order fo the names in the list matters, since the module will assign Guest-1 to the first name, Guest-2 to the second, and so on and so forth
+  ita_param:
+    language_id: "it-IT"
+    sample_rate: 16000 #44100 for wav audio file
+    audio_channel: 1
+    subscriber_id: "default"
+    max_silence: 10
+    wait_duration: 1 #s
+    names: "Sarah, Jane, Alex"

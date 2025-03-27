@@ -178,6 +178,7 @@ class STTGoogleService(HarmoniServiceManager):
             if self.response_received:
                 rospy.loginfo("HERE STT response text: "+ transcript + overwrite_chars)
                 self.stt_response = result.alternatives[0].transcript
+                self.stt_response = self.stt_response.replace("'", " ")
                 self.result_msg = self.stt_response
                 self.text_pub.publish(self.stt_response)
                 self.end_duration = rospy.get_time()
@@ -220,6 +221,7 @@ class STTGoogleService(HarmoniServiceManager):
             while not self.response_received:
                 r.sleep()
             self.state = State.SUCCESS
+            self.stt_response = self.stt_response.replace("'"," ")
             self.result_msg = self.stt_response
             self.response_received = True
             rospy.loginfo("FINAL STT response text: "+ self.stt_response)
@@ -260,6 +262,7 @@ class STTGoogleService(HarmoniServiceManager):
                     print("+++++++++++++++++++++++++++++++++ end")
                     self._first_response = True
                     self.response_received = True
+                    self.stt_response = self.stt_response.replace("'", " ")
                     self.result_msg = self.stt_response
                     self.state = State.SUCCESS
                     return

@@ -33,11 +33,11 @@ class SDAzureService(HarmoniServiceManager):
         self.sample_rate = param["sample_rate"]
         self.language = param["language_id"]
         self.audio_channel = param["audio_channel"]
-        self.credential_path = param["credential_path"]
         self.subscriber_id = param["subscriber_id"]
         self.wait_duration = param["wait_duration"]
         self.max_silence = param["max_silence"]
         self.num_speakers = param["num_speakers"]
+        self.names = param["names"].split(",")
         self.time_start_request = None
         self.start_time = None
         self.service_id = hf.get_child_id(self.name)
@@ -111,21 +111,39 @@ class SDAzureService(HarmoniServiceManager):
 
     def conversation_transcriber_transcribed_cb(self, evt: speechsdk.SpeechRecognitionEventArgs):
         print('\nTRANSCRIBED:')
-        if evt.result.reason == speechsdk.ResultReason.RecognizedSpeech:
-            print('\tText={}'.format(evt.result.text))
-            print('\tSpeaker ID={}\n'.format(evt.result.speaker_id))
+        if evt.result.reason == speechsdk.ResultReason.RecognizedSpeech:            
             self.speaker_talking = evt.result.speaker_id
-            self.stt_response = evt.result.text
-            self.response_received = True
+            for i in range(0, self.num_speakers - 1):
+                if (self.speaker_talking == "Guest-" + str(i+1)):
+                    self.speaker_talking = self.names[i]
+                    break
+                else:
+                    self.speaker_talking = "AGENT-UNKNOWN"
+            print('\tText={}'.format(evt.result.text))
+            print('\tSpeaker ID={}\n'.format(self.speaker_talking))
+            if len(evt.result.text)!=0:
+                self.stt_response = self.speaker_talking + ": " + evt.result.text
+                self.stt_response = self.stt_response.replace("'"," ")
+                self.state = State.SUCCESS
+                self.response_received = True
+                self.result_msg = self.stt_response
+                self.conversation_transcriber.stop_transcribing_async()  
         elif evt.result.reason == speechsdk.ResultReason.NoMatch:
             print('\tNOMATCH: Speech could not be TRANSCRIBED: {}'.format(evt.result.no_match_details))
 
     def conversation_transcriber_transcribing_cb(self, evt: speechsdk.SpeechRecognitionEventArgs):
         print('TRANSCRIBING:')
-        print('\tText={}'.format(evt.result.text))
-        print('\tSpeaker ID={}'.format(evt.result.speaker_id))
         self._current_speaker_talking = evt.result.speaker_id
+        for i in range(0, self.num_speakers - 1):
+            if (self._current_speaker_talking == "Guest-" + str(i+1)):
+                self._current_speaker_talking = self.names[i]
+                break
+            else:
+                self._current_speaker_talking = "AGENT-UNKNOWN"
         self._transcription = evt.result.text
+        print('\tText={}'.format(self._transcription))
+        print('\tSpeaker ID={}'.format(self._current_speaker_talking))
+        
 
     def conversation_transcriber_session_started_cb(self, evt: speechsdk.SessionEventArgs):
         print('SessionStarted event')
@@ -166,8 +184,10 @@ class SDAzureService(HarmoniServiceManager):
         self.conversation_transcriber.start_transcribing_async()
 
         # Waits for completion.
+        
         #while not self.transcribing_stop:
         #    time.sleep(.5)
+        #print("STOP TRANSCRIPTION")
         #self.conversation_transcriber.stop_transcribing_async()
         
 
@@ -184,20 +204,22 @@ class SDAzureService(HarmoniServiceManager):
         self.response_received = False
         if self._first_request:
             self.recognize_from_mic()
+        else:
+            self.conversation_transcriber.start_transcribing_async()
         try:
-            self.time_start_request = time.time() #time.time() is the current time
-            self.start_time = time.time()
             # Transcribes data coming from microphone
             r = rospy.Rate(1)
+            print("HEREEEEEE")
             while not self.response_received:
                 r.sleep()
+            print("AFTER WHILE")
+            print("FINAL STT response text: "+ self.stt_response)
             self._first_request = False
             self.state = State.SUCCESS
+            self.response_received = True        
             self.result_msg = self.stt_response
             rospy.loginfo("FINAL STT response text: "+ self.stt_response)
             self.text_pub.publish(self.stt_response)
-            self.response_received = True
-            #self.conversation_transcriber.stop_transcribing_async()
         except rospy.ServiceException:
             self.state = State.FAILED
             rospy.loginfo("Service call failed")
@@ -221,7 +243,7 @@ class SDAzureService(HarmoniServiceManager):
             # Signal the STT input data generator to terminate so that the client's
             # streaming_recognize method will not block the process termination.
             self.transcribing_stop = True
-            self._buff.put(None)
+            #self._buff.put(None)
             self.conversation_transcriber.stop_transcribing_async()
             self.state = State.SUCCESS
         except Exception:
