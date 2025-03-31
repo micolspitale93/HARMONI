@@ -2,7 +2,8 @@
 <launch>
 	<arg name="use_aws_lex" default="false"/>
 	<arg name="use_google" default="false"/>
-	<arg name="use_chatgpt" default="true"/>
+	<arg name="use_chatgpt" default="false"/>
+	<arg name="use_assistant" default="true"/>
 	<arg name="instance_id" default="default"/>
   	<group if="$(arg use_aws_lex)">
 		<rosparam file="$(find harmoni_bot)/config/configuration.yaml" subst_value="True"/>
@@ -18,5 +19,10 @@
 			<rosparam file="$(find harmoni_bot)/config/configuration.yaml" subst_value="True"/>
 			<param name="instance_id" value="$(arg instance_id)"/>
 			<node pkg="harmoni_bot" type="chatgpt_service.py" name="harmoni_bot_chatgpt_$(arg instance_id)" output="screen"  args="$(arg instance_id)"/>
+  	</group>
+	<group if="$(arg use_assistant)">
+			<rosparam file="$(find harmoni_bot)/config/configuration.yaml" subst_value="True"/>
+			<param name="instance_id" value="$(arg instance_id)"/>
+			<node pkg="harmoni_bot" type="assistant_service.py" name="harmoni_bot_assistant_$(arg instance_id)" output="screen"  args="$(arg instance_id)"/>
   	</group>
 </launch>

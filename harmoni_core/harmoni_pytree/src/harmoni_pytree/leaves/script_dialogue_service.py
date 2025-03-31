@@ -7,6 +7,7 @@ import rospy
 from harmoni_common_lib.constants import *
 
 class ScriptDialogueService(py_trees.behaviour.Behaviour):
+    # TODO : NEED TO DEFINE WHAT IS THE SCRIPT DOING. SETTING THE NLP FOR THE AGENT WHETHER 2 (SKIP THE AGENT) OR 1. 
     def __init__(self, name):
         self.name = name
         self.blackboards = []

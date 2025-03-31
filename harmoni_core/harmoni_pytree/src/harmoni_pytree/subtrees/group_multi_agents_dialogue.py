@@ -24,7 +24,7 @@ from harmoni_pytree.leaves.chat_gpt_service import ChatGPTServicePytree
 from harmoni_pytree.leaves.aws_tts_service import AWSTtsServicePytree
 from harmoni_pytree.leaves.speaker_service import SpeakerServicePytree
 from harmoni_pytree.leaves.lip_sync_service import LipSyncServicePytree
-from harmoni_pytree.leaves.script_dialogue_service import ScriptDialogueService
+from harmoni_pytree.leaves.script_group_dialogue_service import ScriptGroupDialogueService
 
 ##############################################################################
 # Classes
@@ -84,20 +84,31 @@ def post_tick_handler(snapshot_visitor, behaviour_tree):
     print(py_trees.display.unicode_blackboard())
 
 
-def create_root(name= "MicAndDiarAndSttAndBotAndTtsAndFaceAndSpeaker"):
+def create_root(name= "MultipartyGroupInteraction"):
 
-    #microphone=MicrophoneServicePytree("MicrophoneMainActivity")
-    #stt=SpeechToTextServicePytree("SpeechToTextMainActivity")
+    root = py_trees.composites.Sequence(name="GroupInteraction",memory=True)
+    agent_selector = py_trees.composites.Selector(name="AgentSelector", memory = True)
+    seq_agent_1 = py_trees.composites.Sequence(name="Agent1",memory=True)
+    seq_agent_2 = py_trees.composites.Sequence(name="Agent2",memory=True)
+    parall_speaker_face_1 = py_trees.composites.Parallel("Playing1", policy = py_trees.common.ParallelPolicy.SuccessOnAll())
+    parall_speaker_face_2 = py_trees.composites.Parallel("Playing2", policy = py_trees.common.ParallelPolicy.SuccessOnAll())
     diar_stt=DiarSpeechToTextServicePytree("Diarization")
-    script = ScriptDialogueService("Script")
-    bot = ChatGPTServicePytree('ChatGPT')
-    tts = AWSTtsServicePytree('TTS')
-    speaker = SpeakerServicePytree('Speaker')
-    face = LipSyncServicePytree("Face")
-    parall_speaker_face = py_trees.composites.Parallel("Playing", policy = py_trees.common.ParallelPolicy.SuccessOnAll())
-    parall_speaker_face.add_children([face, speaker])
-    root = py_trees.composites.Sequence(name="MicAndSttAndBotAndTtsAndSpeaker",memory=True)
-    root.add_children([diar_stt, script, bot, tts, parall_speaker_face])
+    oracle_llm = ChatGPTServicePytree('OracleLLM') # TODO: DECIDE WHETHER THE ORACLE AND THE SCRIPT SHOULD MATCH
+    script = ScriptGroupDialogueService("Script")
+    llm_agent_1 = ChatGPTServicePytree('LLM1')
+    llm_agent_2 = ChatGPTServicePytree('LLM2')
+    tts_1 = AWSTtsServicePytree('TTS1')
+    tts_2 = AWSTtsServicePytree('TTS2')
+    speaker_1 = SpeakerServicePytree('Speaker1')
+    speaker_2 = SpeakerServicePytree('Speaker2')
+    face_1 = LipSyncServicePytree("Face1")
+    face_2 = LipSyncServicePytree("Face2")
+    parall_speaker_face_1.add_children([face_1, speaker_1])
+    parall_speaker_face_2.add_children([face_2, speaker_2])
+    seq_agent_1.add_children([llm_agent_1, tts_1, parall_speaker_face_1])
+    seq_agent_2.add_children([llm_agent_2, tts_2, parall_speaker_face_2])
+    agent_selector.add_children([seq_agent_1, seq_agent_2])
+    root.add_children([diar_stt, oracle_llm, script, agent_selector])
     return root
 
 ##############################################################################
