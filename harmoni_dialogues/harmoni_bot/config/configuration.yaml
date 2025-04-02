@@ -26,6 +26,15 @@ google:
 chat_gpt:
   default_param:
     model: "gpt-4o-mini"
+  mover_param:
+    model: "gpt-4o-mini"
+    assistant_id: "asst_1rkI7oi5Kz811ZERcPd19zFj" #MOVER
+    service_id : "mover"
+  opposer_param:
+    model: "gpt-4o-mini"
+    assistant_id: "asst_oaDSHB0jluXcVC2cAwNx83oS" #OPPOSER
+    service_id : "opposer"
+    
 
 assistant:
   default_param:

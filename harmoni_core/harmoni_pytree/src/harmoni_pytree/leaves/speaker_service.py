@@ -13,14 +13,14 @@ import py_trees
 
 class SpeakerServicePytree(py_trees.behaviour.Behaviour):
 
-    def __init__(self, name = "SpeakerServicePytree"):
+    def __init__(self, name = "SpeakerServicePytree", instance_id = "default"):
         self.name = name
         self.service_client_speaker = None
         self.client_result = None
         self.server_state = None
         self.server_name = None
         self.send_request = True
-
+        self.instance_id = instance_id
         self.blackboards = []
         self.blackboard_scene = self.attach_blackboard_client(name=self.name, namespace=PyTreeNameSpace.scene.name)
         self.blackboard_input = self.attach_blackboard_client(name=self.name, namespace=ActuatorNameSpace.tts.name)
@@ -33,12 +33,12 @@ class SpeakerServicePytree(py_trees.behaviour.Behaviour):
 
     def setup(self,**additional_parameters):
         self.service_client_speaker = HarmoniActionClient(self.name)
-        self.server_name = "speaker_default"
+        self.server_name = "speaker_" + self.instance_id
+        print(self.server_name)
         self.service_client_speaker.setup_client(self.server_name, 
                                             self._result_callback,
                                             self._feedback_callback)
         self.logger.debug("Behavior %s interface action clients have been set up!" % (self.server_name))
-     
         self.logger.debug("%s.setup()" % (self.__class__.__name__))
 
     def initialise(self):
@@ -112,9 +112,11 @@ def main():
     blackboard_input.result = "/root/harmoni_catkin_ws/src/HARMONI/harmoni_actuators/harmoni_tts/temp_data/tts.wav"
     print(blackboard_input)
 
-    rospy.init_node("speaker_default", log_level=rospy.INFO)
+    instance_id = "default"
+
+    rospy.init_node("speaker_" + instance_id, log_level=rospy.INFO)
     
-    speakerPyTree = SpeakerServicePytree("SpeakerServicePytreeTest")
+    speakerPyTree = SpeakerServicePytree("SpeakerServicePytreeTest", instance_id)
     speakerPyTree.setup()
     try:
         for unused_i in range(0, 5):

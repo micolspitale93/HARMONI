@@ -11,3 +11,15 @@ face:
       timer_interval: 0.01 #s
     nose:
       timer_interval: 0.01 #s
+  agent_param:
+    timer_interval: 1 #s
+    mouth:
+      min_duration_viseme: 0.05 #s
+      speed_viseme: 10 #ms
+      timer_interval: 0.01 #s
+    eyes:
+      gaze_speed: 10 #ms
+      timer_interval: 0.01 #s
+    nose:
+      timer_interval: 0.01 #s
+    
