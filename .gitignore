@@ -138,3 +138,9 @@ logs
 private-keys_old.json
 *.wav
 .env
+
+test*
+**resources/*
+dockerfiles*
+
+***py2.py
