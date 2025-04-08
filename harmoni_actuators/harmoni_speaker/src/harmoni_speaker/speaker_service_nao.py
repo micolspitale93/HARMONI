@@ -1,12 +1,12 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 
 # Common Imports
-import rospy, rospkg, roslib
+import rospy
 
 from harmoni_common_lib.constants import State, ActuatorNameSpace
-from harmoni_common_lib.service_server import HarmoniServiceServer
-from harmoni_common_lib.service_manager import HarmoniServiceManager
-import harmoni_common_lib.helper_functions as hf
+from harmoni_common_lib.service_server_py2 import HarmoniServiceServer
+from harmoni_common_lib.service_manager_py2 import HarmoniServiceManager
+import harmoni_common_lib.helper_functions_py2 as hf
 
 
 # Specific Imports
@@ -14,11 +14,7 @@ from audio_common_msgs.msg import AudioData
 import numpy as np
 
 # import wget
-import contextlib
-import ast
-import wave
-import os
-#from naoqi import ALProxy
+from naoqi import ALProxy
 
 AUDIO_DELAY = 0.5 # this constant is used to make shorter the duration in which the service is sleeping.  
 
@@ -32,23 +28,21 @@ class SpeakerServiceNAO(HarmoniServiceManager):
 
     def __init__(self, name, params):
         """ Initialization of variables and camera parameters """
-        super().__init__(name)
+        super(HarmoniServiceManager, self).__init__()
         self.robot_ip = params["robot_ip"]
         self.tts = ""
         self.mock = params["mockup"]
         self.setup_connection()
         self.state = State.INIT
-        self.rospack = rospkg.RosPack()
         return
     
     def setup_connection(self):
         if not self.mock:
-            self.tts = ALProxy("ALTextToSpeech", "<IP of your robot>", 9559)
-            self.audio_player_service = ALProxy("ALAudioPlayer", "<IP of your robot>", 9559)
+            self.tts = ALProxy("ALTextToSpeech", self.robot_ip, 9559)
+            #self.audio_player_service = ALProxy("ALAudioPlayer", "<IP of your robot>", 9559)
         else:
             print("Mockup connection with the NAO robot")
         
-
         
     def stop(self):
         return
@@ -84,7 +78,7 @@ def main():
 
     service_name = ActuatorNameSpace.speaker.name
     instance_id = "nao"
-    service_id = f"{service_name}_{instance_id}"
+    service_id = service_name + "_" + instance_id
 
     try:
         rospy.init_node(service_name)

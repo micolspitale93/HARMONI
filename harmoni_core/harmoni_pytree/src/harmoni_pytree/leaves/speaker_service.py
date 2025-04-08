@@ -47,8 +47,6 @@ class SpeakerServicePytree(py_trees.behaviour.Behaviour):
         self.logger.debug("%s.initialise()" % (self.__class__.__name__))
     
     def update(self):
-        print("Agent name and leaf name")
-        print(self.blackboard_bot.agent, self.name)
         if self.blackboard_scene.nlp == 2 |  self.blackboard_bot.speak == 0:
             new_status = py_trees.common.Status.SUCCESS
         elif (self.blackboard_bot.agent!= "") and (self.blackboard_bot.agent in self.name):

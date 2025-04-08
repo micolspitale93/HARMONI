@@ -10,5 +10,5 @@ speaker:
   nao_param:
     robot_ip: "192.168.1.101" #include the IP of the Nao robot
     instance_id : "nao"
-    mockup: 1
+    mockup: 0
 
