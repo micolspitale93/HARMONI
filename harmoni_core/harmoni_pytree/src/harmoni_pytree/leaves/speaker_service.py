@@ -4,7 +4,7 @@
 import rospy
 
 from harmoni_common_lib.constants import *
-from harmoni_common_lib.constants import ActuatorNameSpace, ActionType, PyTreeNameSpace
+from harmoni_common_lib.constants import ActuatorNameSpace, ActionType, PyTreeNameSpace, DialogueNameSpace
 from harmoni_common_lib.action_client import HarmoniActionClient
 from actionlib_msgs.msg import GoalStatus
 
@@ -24,16 +24,18 @@ class SpeakerServicePytree(py_trees.behaviour.Behaviour):
         self.blackboards = []
         self.blackboard_scene = self.attach_blackboard_client(name=self.name, namespace=PyTreeNameSpace.scene.name)
         self.blackboard_input = self.attach_blackboard_client(name=self.name, namespace=ActuatorNameSpace.tts.name)
-        self.blackboard_input.register_key("result", access=py_trees.common.Access.WRITE)
-        self.blackboard_output = self.attach_blackboard_client(name=self.name, namespace=ActuatorNameSpace.speaker.name)
-        self.blackboard_output.register_key("result", access=py_trees.common.Access.WRITE)
+        self.blackboard_bot = self.attach_blackboard_client(name=self.name, namespace=DialogueNameSpace.bot.name)
+        self.blackboard_input.register_key("result", access=py_trees.common.Access.READ)
         self.blackboard_scene.register_key(key="nlp", access=py_trees.common.Access.READ)
+        self.blackboard_scene.register_key(key="agent", access=py_trees.common.Access.READ)
+        self.blackboard_bot.register_key(key="agent", access=py_trees.common.Access.READ)
+        self.blackboard_bot.register_key(key="speak", access=py_trees.common.Access.READ)
         super(SpeakerServicePytree, self).__init__(name)
         self.logger.debug("%s.__init__()" % (self.__class__.__name__))
 
     def setup(self,**additional_parameters):
         self.service_client_speaker = HarmoniActionClient(self.name)
-        self.server_name = "speaker_" + self.instance_id
+        self.server_name = ActuatorNameSpace.speaker.name + "_" + self.instance_id
         print(self.server_name)
         self.service_client_speaker.setup_client(self.server_name, 
                                             self._result_callback,
@@ -45,8 +47,12 @@ class SpeakerServicePytree(py_trees.behaviour.Behaviour):
         self.logger.debug("%s.initialise()" % (self.__class__.__name__))
     
     def update(self):
-        if self.blackboard_scene.nlp == 2:
+        print("Agent name and leaf name")
+        print(self.blackboard_bot.agent, self.name)
+        if self.blackboard_scene.nlp == 2 |  self.blackboard_bot.speak == 0:
             new_status = py_trees.common.Status.SUCCESS
+        elif (self.blackboard_bot.agent!= "") and (self.blackboard_bot.agent in self.name):
+            new_status = py_trees.common.Status.FAILURE
         else:  
             if self.send_request:
                 self.send_request = False
@@ -60,7 +66,6 @@ class SpeakerServicePytree(py_trees.behaviour.Behaviour):
                 new_status = py_trees.common.Status.RUNNING
             else:
                 new_state = self.service_client_speaker.get_state()
-                print(new_state)
                 if new_state == GoalStatus.ACTIVE:
                     new_status = py_trees.common.Status.RUNNING
                 elif new_state == GoalStatus.SUCCEEDED:
@@ -68,7 +73,6 @@ class SpeakerServicePytree(py_trees.behaviour.Behaviour):
                 else:
                     new_status = py_trees.common.Status.FAILURE
                     raise
-            self.blackboard_output.result = new_status
         self.logger.debug("%s.update()[%s]--->[%s]" % (self.__class__.__name__, self.status, new_status))
         return new_status
         
@@ -110,6 +114,11 @@ def main():
     blackboard_input = py_trees.blackboard.Client(name=ActuatorNameSpace.tts.name, namespace=ActuatorNameSpace.tts.name)
     blackboard_input.register_key("result", access=py_trees.common.Access.WRITE)
     blackboard_input.result = "/root/harmoni_catkin_ws/src/HARMONI/harmoni_actuators/harmoni_tts/temp_data/tts.wav"
+    blackboard_bot = py_trees.blackboard.Client(name=self.name, namespace=DialogueNameSpace.bot.name)
+    blackboard_bot.register_key("speak", access=py_trees.common.Access.WRITE)
+    blackboard_bot.register_key("agent", access=py_trees.common.Access.WRITE)
+    blackboard_bot.speak = 1
+    blackboard_bot.agent = ""
     print(blackboard_input)
 
     instance_id = "default"

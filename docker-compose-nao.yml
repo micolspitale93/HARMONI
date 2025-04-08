@@ -1,0 +1,31 @@
+services:
+
+  harmoni_nao:
+    container_name: harmoni_nao
+    build:
+      context: .
+      dockerfile: dockerfiles/harmoni/noetic/nao/dockerfile
+      network: host
+    init: true
+    environment:
+      DISPLAY: $DISPLAY
+      QT_GRAPHICSSYSTEM: native
+      ROS_DISTRO: kinetic
+      IS_DOCKER_ENV: "true"
+      CATKIN_WS: harmoni_catkin_ws
+    privileged: true
+    network_mode: "host"
+    hostname: harmoni_nao
+    volumes:
+      - ../HARMONI/:/root/local_mount/HARMONI/
+      # Other
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    working_dir: /root/harmoni_catkin_ws/src/HARMONI
+    command: tail  -f /dev/null
+
+networks:
+  host:
+    driver: bridge
+    

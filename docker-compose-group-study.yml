@@ -51,7 +51,7 @@ services:
       CATKIN_WS: harmoni_catkin_ws
     privileged: true
     network_mode: "host"
-    hostname: harmoni_hardware
+    hostname: harmoni_nao
     depends_on:
       - "harmoni_full"
     devices:

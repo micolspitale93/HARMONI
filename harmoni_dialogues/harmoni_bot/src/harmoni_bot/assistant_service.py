@@ -14,6 +14,8 @@ import openai
 import os
 import ast
 
+
+
 class AssistantOpenAIService(HarmoniServiceManager):
     """This is a class representation of a harmoni_dialogue service
     (HarmoniServiceManager). It is essentially an extended combination of the
@@ -32,9 +34,11 @@ class AssistantOpenAIService(HarmoniServiceManager):
         self.name = name
         self.assistant_id = param["assistant_id"]
         self.service_id = param["service_id"]
+        self.names_participant = param["participants"]
         self.thread_id = ""
         self.stop_request = False
         self.flagged_sentence = []
+        self.response_format = None
         self.assistant = None
         self.state = State.INIT
         self._utterance_pub = rospy.Publisher(DialogueNameSpace.bot.value + self.service_id, String, queue_size=1)
@@ -50,14 +54,31 @@ class AssistantOpenAIService(HarmoniServiceManager):
         openai.api_key = os.getenv("OPENAI_API_KEY")
         #openai.Model.list()
         rospy.loginfo("Connected")
+        self.add_instructions = "The name of the three university students are: " + self.names_participant
         self.client = openai.OpenAI()
         self.assistant = self.client.beta.assistants.retrieve(self.assistant_id) #the type of assistant will depend on the config file
+        
         if self.service_id == "default": # only if it is the oracle setup the thread is created for the first time
             thread = self.client.beta.threads.create()
             self.thread_id = thread.id
             self._thread_pub.publish(self.thread_id)
+            self.response_format = {"type": "json_schema", 
+                                    "json_schema": 
+                                        {"name":"agent_response", 
+                                         "schema": {
+                                            "type": "object",
+                                            "properties": {
+                                                            "agent": { "type": "string" },
+                                                            "response": { "type": "string" },
+                                                            "intervene": { "type": "boolean"},
+                                                            "explanation": { "type": "string" },
+                                                            }
+                                                }
+                                        }
+                                    }
         else: #otherwise subscribe to the thread already existing
             self._thread_sub = rospy.Subscriber(DialogueNameSpace.bot.value + self.service_id + "/thread_id", String, self.thread_callback)
+            self.response_format = {"type": "text"}
         return
     
     def thread_callback(self, data):
@@ -99,20 +120,26 @@ class AssistantOpenAIService(HarmoniServiceManager):
                 role= role,
                 content=content,
             )
-            run = self.client.beta.threads.runs.create_and_poll(
+            run = self.client.beta.threads.runs.create(
                 thread_id=self.thread_id,
                 assistant_id=self.assistant_id,
-                instructions=""
-            )
-            if run.status == 'completed': 
-                messages = self.client.beta.threads.messages.list(
-                    thread_id=self.thread_id
+                stream = True,
+                response_format = self.response_format,
+                additional_instructions = self.add_instructions,
                 )
-                print(messages.data[0].content[0].text.value)
-                ai_response = messages.data[0].content[0].text.value
-            else:
-                print(run.status)
-                self.state = State.FAILED
+            for event in run:
+                print(event.event)
+                if event.event == "thread.message.completed":
+                    print(event.data.content[0].text.value)
+                    ai_response = event.data.content[0].text.value
+                #if run.status == 'completed': #this works when you are not using streaming
+                #    messages = self.client.beta.threads.messages.list(
+                #        thread_id=self.thread_id
+                #    )
+                #    print(messages.data[0].content[0].text.value)
+                #    ai_response = messages.data[0].content[0].text.value
+                #else:
+                #    print("the run has not completed yet")
             self.result_msg = ai_response
             self._utterance_pub.publish(self.result_msg)
             self.response_received = True
@@ -137,7 +164,7 @@ def main():
         s = AssistantOpenAIService(service_id, params)
         s.setup_openai()
         service_server = HarmoniServiceServer(service_id, s)
-        #s.request("['*user* Hi my name is Micol, what is your role today?']")
+        #s.request("['*user* Sarah: Hi my name is Sarah, nice to meet you all. Jane: Hi, my name is Jane! Alex: Hi my name is Alex very nice to see you all here today!']")
         print(service_name)
         print("**********************************************************************************************")
         print(service_id)

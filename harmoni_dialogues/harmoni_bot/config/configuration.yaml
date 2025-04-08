@@ -7,6 +7,7 @@ bot:
     region_name: "eu-west-2"
     assistant_id: "asst_IGcxRcdHHQptkIbpp7wsbCLv" #ORACLE
     service_id : "default"
+    participants: "Sarah, Jane, Alex"
   mover_param:
     assistant_id: "asst_1rkI7oi5Kz811ZERcPd19zFj" #MOVER
     service_id : "mover"
@@ -40,6 +41,7 @@ assistant:
   default_param:
     assistant_id: "asst_IGcxRcdHHQptkIbpp7wsbCLv" #ORACLE
     service_id : "default"
+    
   mover_param:
     assistant_id: "asst_1rkI7oi5Kz811ZERcPd19zFj" #MOVER
     service_id : "mover"

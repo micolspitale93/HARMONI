@@ -1,0 +1,9 @@
+pytree:
+  default_param:
+    session: "session"
+    interaction: "group_interaction" 
+    user_names: "Sarah, Jane, Alex"
+    researcher_name: "Micol"
+    scene: 0
+    condition :  0 #0: heterogenous, 1: homogenous
+

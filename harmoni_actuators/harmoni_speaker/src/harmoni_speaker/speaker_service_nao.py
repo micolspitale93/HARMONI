@@ -18,7 +18,7 @@ import contextlib
 import ast
 import wave
 import os
-from naoqi import ALProxy
+#from naoqi import ALProxy
 
 AUDIO_DELAY = 0.5 # this constant is used to make shorter the duration in which the service is sleeping.  
 
