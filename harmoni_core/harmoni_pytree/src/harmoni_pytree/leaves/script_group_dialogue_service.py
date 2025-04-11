@@ -23,7 +23,7 @@ class ScriptGroupDialogueService(py_trees.behaviour.Behaviour):
         self.blackboard_bot.register_key("result", access=py_trees.common.Access.READ)
         self.blackboard_stt = self.attach_blackboard_client(name=self.name, namespace=DetectorNameSpace.stt.name)
         self.blackboard_stt.register_key("result", access=py_trees.common.Access.READ)
-        
+        self.scene_number = 0
         super(ScriptGroupDialogueService, self).__init__(name)
         self.logger.debug("%s.__init__()" % (self.__class__.__name__))
 
@@ -44,13 +44,12 @@ class ScriptGroupDialogueService(py_trees.behaviour.Behaviour):
         self.logger.debug("  %s [ScriptGroupDialogueService::initialise()]" % self.name)
 
     def update(self):
-        print(self.blackboard_stt.result)
-        if self.blackboard_stt.result!="":
-            self.blackboard_scene.utterance =  "['*user* "+self.blackboard_stt.result+"']"
-        else:
-            self.blackboard_scene.utterance = ""
+        self.blackboard_scene.utterance =  "['*user* "+self.blackboard_stt.result+"']"
+        if (self.blackboard_stt.result=="") or (self.blackboard_stt.result=="null"):
+            self.blackboard_scene.utterance = "['*user* "+self.context[self.session][self.scene_number]["utterance"]+"']" 
         rospy.loginfo("============ THE UTTERANCE ARRIVED IS:")
         rospy.loginfo(self.blackboard_scene.utterance)
+        self.scene_number +=1
         return py_trees.common.Status.SUCCESS
 
     def terminate(self, new_status):

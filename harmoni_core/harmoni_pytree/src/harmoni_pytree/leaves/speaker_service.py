@@ -30,6 +30,7 @@ class SpeakerServicePytree(py_trees.behaviour.Behaviour):
         self.blackboard_scene.register_key(key="agent", access=py_trees.common.Access.READ)
         self.blackboard_bot.register_key(key="agent", access=py_trees.common.Access.READ)
         self.blackboard_bot.register_key(key="speak", access=py_trees.common.Access.READ)
+        self.blackboard_bot.register_key(key="addressee", access=py_trees.common.Access.READ)
         super(SpeakerServicePytree, self).__init__(name)
         self.logger.debug("%s.__init__()" % (self.__class__.__name__))
 
@@ -47,9 +48,10 @@ class SpeakerServicePytree(py_trees.behaviour.Behaviour):
         self.logger.debug("%s.initialise()" % (self.__class__.__name__))
     
     def update(self):
+        print(self.blackboard_bot.agent, self.name)
         if self.blackboard_scene.nlp == 2 |  self.blackboard_bot.speak == 0:
             new_status = py_trees.common.Status.SUCCESS
-        elif (self.blackboard_bot.agent!= "") and (self.blackboard_bot.agent in self.name):
+        elif (self.blackboard_bot.agent!= "") and (self.blackboard_bot.agent != self.name):
             new_status = py_trees.common.Status.FAILURE
         else:  
             if self.send_request:
@@ -57,7 +59,7 @@ class SpeakerServicePytree(py_trees.behaviour.Behaviour):
                 self.logger.debug(f"Sending goal to {self.server_name}")
                 self.service_client_speaker.send_goal(
                     action_goal = ActionType["DO"].value,
-                    optional_data=self.blackboard_input.result,
+                    optional_data= '{"input":"' + self.blackboard_input.result + '", "addressee": "'+self.blackboard_bot.addressee+'"}',
                     wait=False,
                 )
                 self.logger.debug(f"Goal sent to {self.server_name}")

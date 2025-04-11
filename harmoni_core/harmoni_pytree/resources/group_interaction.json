@@ -2,7 +2,7 @@
     "session" :   [ 
         {
         	"id"        	:  0,
-        	"utterance" 	: "Sarah: Hi, my name is Micol. Nice to meet you! Jane: Hi, my name is Jane. What is your name? Alex: Hi, my name is Alex, very nice to meet you!",
+        	"utterance" 	: "Sarah: Hi, my name is Sarah. Nice to meet you! Jane: Hi, my name is Jane. What is your name? Alex: Hi, my name is Alex, very nice to meet you!",
             "agent"         : "Mover",
         	"nlp"       	:  1,
         	"gesture"   	: ""

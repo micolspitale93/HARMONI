@@ -8,12 +8,10 @@
     <!-- In order to launch visual_bg we need the following services from HARMONI -->
     <include file="$(find harmoni_stt)/launch/stt_sd_azure_service.launch"></include>
     <include file="$(find harmoni_bot)/launch/bot_service.launch"></include>
+    <include file="$(find harmoni_speaker)/launch/speaker_service_nao.launch"></include>
 
     <rosparam file="$(find harmoni_speaker)/config/configuration.yaml" subst_value="True"/>
     <node pkg="harmoni_speaker" type="speaker_service_furhat.py" name="harmoni_speaker_furhat" output="screen"  args="furhat"/>
-
-    <node pkg="harmoni_speaker" type="speaker_service_nao.py" name="harmoni_speaker_nao" output="screen"  args="nao"/>
-
     <node pkg="harmoni_pytree" type="pytree_group_interaction.py" name="harmoni_pytree_default" output="screen"/>
     
 </launch>

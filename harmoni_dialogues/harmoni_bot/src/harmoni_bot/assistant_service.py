@@ -72,6 +72,7 @@ class AssistantOpenAIService(HarmoniServiceManager):
                                                             "response": { "type": "string" },
                                                             "intervene": { "type": "boolean"},
                                                             "explanation": { "type": "string" },
+                                                            "addressee": { "type": "string" },
                                                             }
                                                 }
                                         }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Common Imports
-import rospy, rospkg, roslib
+import rospy, rospkg
 
 from harmoni_common_lib.constants import State, ActuatorNameSpace
 from harmoni_common_lib.service_server import HarmoniServiceServer
@@ -10,18 +10,11 @@ import harmoni_common_lib.helper_functions as hf
 
 
 # Specific Imports
-from audio_common_msgs.msg import AudioData
-import numpy as np
-
-# import wget
-import contextlib
-import ast
-import wave
-import os
-#robot specific imports
 from furhat_remote_api import FurhatRemoteAPI
+from std_msgs.msg import String
+import json
+import ast 
 
-AUDIO_DELAY = 0.5 # this constant is used to make shorter the duration in which the service is sleeping.  
 
 class SpeakerServiceFurhat(HarmoniServiceManager):
     """Takes text and send it to the Furhat robot, specifically note that the Furhat robot is using Amazon Polly to convert text into speech
@@ -35,7 +28,13 @@ class SpeakerServiceFurhat(HarmoniServiceManager):
         super().__init__(name)
         self.robot_ip = params["robot_ip"]
         self.mock = params["mockup"]
+        self.test_pub = rospy.Publisher(
+            "/ciao",
+            String,
+            queue_size=0,
+        )
         self.setup_connection()
+
         self.state = State.INIT
         self.rospack = rospkg.RosPack()
         return
@@ -67,13 +66,18 @@ class SpeakerServiceFurhat(HarmoniServiceManager):
         """
         self.state = State.REQUEST
         self.actuation_completed = False
+        data =   json.loads(data)
         try:
             if self.mock:
                 print("The robot will say:" , data)
             else:
-                self.furhat.say(text=data)
+                self.furhat.say(text=data["input"])
                 # Attend a user with a specific id
-                self.furhat.attend(userid="virtual-user-1") #addressee of the conversation
+                if "," in data["addressee"]:
+                    rospy.loginfo("The speech is addressed to multiple people")
+                else:
+                    rospy.loginfo(f"The speech is addressed to {data["addressee"]}")
+                    self.furhat.attend(userid=data["addressee"]) #addressee of the conversation
             rospy.loginfo("Writing data for speaker")
             self.state = State.SUCCESS
             self.actuation_completed = True
@@ -99,7 +103,6 @@ def main():
         print(service_name)
         print("****************************************************************************")
         print(service_id)
-
         service_server.start_sending_feedback()
         rospy.spin()
     except rospy.ROSInterruptException:

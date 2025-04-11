@@ -1,22 +1,19 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 # Common Imports
-import rospy
+import rospy, rospkg, roslib
 
 from harmoni_common_lib.constants import State, ActuatorNameSpace
-from harmoni_common_lib.service_server_py2 import HarmoniServiceServer
-from harmoni_common_lib.service_manager_py2 import HarmoniServiceManager
-import harmoni_common_lib.helper_functions_py2 as hf
+from harmoni_common_lib.service_server import HarmoniServiceServer
+from harmoni_common_lib.service_manager import HarmoniServiceManager
+import harmoni_common_lib.helper_functions as hf
 
 
 # Specific Imports
-from audio_common_msgs.msg import AudioData
+from std_msgs.msg import String, Bool
 import numpy as np
+import json
 
-# import wget
-from naoqi import ALProxy
-
-AUDIO_DELAY = 0.5 # this constant is used to make shorter the duration in which the service is sleeping.  
 
 class SpeakerServiceNAO(HarmoniServiceManager):
     
@@ -26,29 +23,56 @@ class SpeakerServiceNAO(HarmoniServiceManager):
         HarmoniServiceManager ([type]): [description]
     """
 
+    
     def __init__(self, name, params):
         """ Initialization of variables and camera parameters """
-        super(HarmoniServiceManager, self).__init__()
+        super().__init__(name)
         self.robot_ip = params["robot_ip"]
-        self.tts = ""
         self.mock = params["mockup"]
-        self.setup_connection()
+        print("Initializing publishers")
+        
+        self.setup_pub = rospy.Publisher(
+            "/" + self.name  +"/connect",
+            String,
+            queue_size=1,
+        )
+        self.play_pub = rospy.Publisher(
+            "/" +self.name  +"/play",
+            String,
+            queue_size=1,
+        )
+        self.addressee_pub = rospy.Publisher(
+            "/" +self.name  +"/addressee",
+            String,
+            queue_size=1,
+        )
+        self.nao_up_sub = rospy.Subscriber(
+            "/speaker_nao/start",
+            Bool,
+            self.connected,
+        )
+        print("Start the connection")
+        self.setup_pub.publish(self.robot_ip)
         self.state = State.INIT
+        #self.setup_connection()
         return
     
-    def setup_connection(self):
-        if not self.mock:
-            self.tts = ALProxy("ALTextToSpeech", self.robot_ip, 9559)
-            #self.audio_player_service = ALProxy("ALAudioPlayer", "<IP of your robot>", 9559)
-        else:
-            print("Mockup connection with the NAO robot")
+    def connected(self, data):
+        if data.data:
+            if not self.mock:
+                self.setup_pub.publish(self.robot_ip)
+                print("CONNECTED")
+                rospy.sleep(5)
+                self.do("CIAO")
+            else:
+                print("Mockup connection with the NAO robot")
+        return
         
         
     def stop(self):
         return
 
     def do(self, data):
-        # TODO: include the addressee of the conversation!
         """
         Converts input audio from bytes or a local/network path to an audio msg.
 
@@ -57,12 +81,17 @@ class SpeakerServiceNAO(HarmoniServiceManager):
                             - string
                             - path of local wav file
         """
-        duration = 0
         self.state = State.REQUEST
         self.actuation_completed = False
+        data = json.loads(data)
         try:
             if not self.mock:
-                self.tts.say(data)
+                self.play_pub.publish(data["input"])
+                if "," in data["addressee"]:
+                    rospy.loginfo("The speech is addressed to multiple people")
+                else:
+                    rospy.loginfo(f"The speech is addressed to {data["addressee"]}")
+                    self.addressee_pub.publish(data["addressee"])
             else:
                 print("NAO is supposed to say ", data)
             self.state = State.SUCCESS
@@ -73,26 +102,26 @@ class SpeakerServiceNAO(HarmoniServiceManager):
             self.actuation_completed = True
         return {"response": self.state}
 
+
+
 def main():
     """Set names, collect params, and give service to server"""
 
     service_name = ActuatorNameSpace.speaker.name
     instance_id = "nao"
-    service_id = service_name + "_" + instance_id
+    service_id = f"{service_name}_{instance_id}"
 
     try:
         rospy.init_node(service_name)
-
         params = rospy.get_param(service_name + "/" + instance_id + "_param/")
-
         s = SpeakerServiceNAO(service_id, params)
-
+        
+    
         service_server = HarmoniServiceServer(service_id, s)
-
+        
         print(service_name)
         print("****************************************************************************")
         print(service_id)
-
         service_server.start_sending_feedback()
         rospy.spin()
     except rospy.ROSInterruptException:
@@ -101,3 +130,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

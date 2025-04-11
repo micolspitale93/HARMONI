@@ -25,6 +25,7 @@ class TestSpeaker(unittest.TestCase):
         """
         Set up the client for requesting to harmoni_speaker
         """
+        print("HEREEEE")
         rospy.init_node("test_speaker", log_level=rospy.INFO)
         self.data = rospy.get_param(
             "test_speaker_input"
@@ -32,16 +33,18 @@ class TestSpeaker(unittest.TestCase):
         self.instance_id = rospy.get_param("instance_id")
         self.result = False
         self.name = ActuatorNameSpace.speaker.name + "_" + self.instance_id
+        print(self.name)
         self.service_client = HarmoniActionClient(self.name)
         self.client_result = deque()
         self.service_client.setup_client(self.name, self.result_cb, self.feedback_cb)
+        
         # NOTE currently no feedback, status, or result is received.
         rospy.Subscriber(
-            "/harmoni_speaker_default/feedback", harmoniFeedback, self.feedback_cb
+            "/harmoni_speaker_"+ self.instance_id+"/feedback", harmoniFeedback, self.feedback_cb
         )
-        rospy.Subscriber("/harmoni_speaker_default/status", GoalStatus, self.status_cb)
+        rospy.Subscriber("/harmoni_speaker_"+ self.instance_id+"/status", GoalStatus, self.status_cb)
         rospy.Subscriber(
-            "/harmoni_speaker_default/result", harmoniResult, self.result_cb
+            "/harmoni_speaker_"+ self.instance_id+"/result", harmoniResult, self.result_cb
         )
         rospy.loginfo("TestSpeaker: Started up. waiting for speaker startup")
         rospy.sleep(
@@ -68,6 +71,7 @@ class TestSpeaker(unittest.TestCase):
             optional_data=self.data,
             wait=True,
         )
+        rospy.sleep(5)
         assert self.result == True
 
 
