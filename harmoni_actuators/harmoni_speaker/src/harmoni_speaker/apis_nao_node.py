@@ -3,7 +3,7 @@
 # Common Imports
 import rospy
 from std_msgs.msg import String, Bool
-
+from harmoni_speaker.srv import nao_speak
 
 # Specific Imports
 import numpy as np
@@ -40,6 +40,7 @@ class SpeakerAPINAO():
             String,
             self.play,
         )
+        self.play_service = rospy.Service('/nao/speak', nao_speak, self.play)
         self.addressee_sub = rospy.Subscriber(
             "/speaker_nao/addressee",
             String,
@@ -52,18 +53,19 @@ class SpeakerAPINAO():
     
     def setup_connection(self, data):
         print(data.data)
-        self.session = qi.Session()
         self.tts = ALProxy("ALTextToSpeech", data.data, 9559)
         self.motion = ALProxy("ALMotion", data.data, 9559)
         return
         
     def play(self, data):
         print(data.data)
-        self.tts.say(data.data)
-        return
+        id = self.tts.say(data.data)
+        print("DONE THE SPEECH")
+        return "done"
 
     def move(self,data):
         print(data.data)
+        """
         self.motion.moveInit()
         testTime = 10 # seconds
         t = 0
@@ -76,6 +78,7 @@ class SpeakerAPINAO():
             time.sleep(dt)
         # stop walk on the next double support
         self.motion.stopMove()
+        """
         return
 
 def main():

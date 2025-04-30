@@ -17,11 +17,21 @@ body {
     margin: auto;
     text-align: center;
     display: flex;
+    background-color: white;
 }
 
 button{
     margin: auto;
     text-align: center;
+}
+
+
+#display_green{
+    background-color: green;
+}
+
+#display_red{
+    background-color: red;
 }
 
 div{

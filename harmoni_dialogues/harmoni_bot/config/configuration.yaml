@@ -5,9 +5,11 @@ bot:
     bot_name: "QTRobot"
     bot_alias: "DemoBot"
     region_name: "eu-west-2"
-    assistant_id: "asst_IGcxRcdHHQptkIbpp7wsbCLv" #ORACLE
+    assistant_id: "asst_kmqbIOvPo3xCC2IGBsdiGuTx" #"asst_IGcxRcdHHQptkIbpp7wsbCLv" #ORACLE
     service_id : "default"
     participants: "Sarah, Jane, Alex"
+    num_speaker: 3
+    scenario: "The topic of this group conversation is AI in society."
   mover_param:
     assistant_id: "asst_1rkI7oi5Kz811ZERcPd19zFj" #MOVER
     service_id : "mover"

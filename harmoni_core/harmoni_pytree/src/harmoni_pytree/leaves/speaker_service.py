@@ -48,9 +48,58 @@ class SpeakerServicePytree(py_trees.behaviour.Behaviour):
         self.logger.debug("%s.initialise()" % (self.__class__.__name__))
     
     def update(self):
-        print(self.blackboard_bot.agent, self.name)
-        if self.blackboard_scene.nlp == 2 |  self.blackboard_bot.speak == 0:
+        print("BotAgent", "Name", "SceneAgent")
+        print(self.blackboard_bot.agent, self.name, self.blackboard_scene.agent)
+        
+        _data = '{"input":"' + self.blackboard_input.result + '", "addressee": "'+self.blackboard_bot.addressee+'"}'
+        #
+        if self.instance_id == "default":
+            _data = self.blackboard_input.result
+        if self.blackboard_scene.nlp == 0:
+            if (self.blackboard_scene.agent!= "") and (self.blackboard_scene.agent != self.name):
+                new_status = py_trees.common.Status.FAILURE
+            else:  
+                if self.send_request:
+                    self.send_request = False
+                    self.logger.debug(f"Sending goal to {self.server_name}")
+                    self.service_client_speaker.send_goal(
+                        action_goal = ActionType["DO"].value,
+                        optional_data= _data,
+                        wait=False,
+                    )
+                    self.logger.debug(f"Goal sent to {self.server_name}")
+                    new_status = py_trees.common.Status.RUNNING
+                else:
+                    new_state = self.service_client_speaker.get_state()
+                    if new_state == GoalStatus.ACTIVE:
+                        new_status = py_trees.common.Status.RUNNING
+                    elif new_state == GoalStatus.SUCCEEDED:
+                        new_status = py_trees.common.Status.SUCCESS
+                    else:
+                        new_status = py_trees.common.Status.FAILURE
+                        raise
+        elif self.blackboard_scene.nlp == 2 |  self.blackboard_bot.speak == 0:
             new_status = py_trees.common.Status.SUCCESS
+        elif (self.blackboard_bot.agent== "null"):
+            if self.send_request:
+                self.send_request = False
+                self.logger.debug(f"Sending goal to {self.server_name}")
+                self.service_client_speaker.send_goal(
+                    action_goal = ActionType["DO"].value,
+                    optional_data= _data,
+                    wait=False,
+                )
+                self.logger.debug(f"Goal sent to {self.server_name}")
+                new_status = py_trees.common.Status.RUNNING
+            else:
+                new_state = self.service_client_speaker.get_state()
+                if new_state == GoalStatus.ACTIVE:
+                    new_status = py_trees.common.Status.RUNNING
+                elif new_state == GoalStatus.SUCCEEDED:
+                    new_status = py_trees.common.Status.SUCCESS
+                else:
+                    new_status = py_trees.common.Status.FAILURE
+                    raise
         elif (self.blackboard_bot.agent!= "") and (self.blackboard_bot.agent != self.name):
             new_status = py_trees.common.Status.FAILURE
         else:  
@@ -59,7 +108,7 @@ class SpeakerServicePytree(py_trees.behaviour.Behaviour):
                 self.logger.debug(f"Sending goal to {self.server_name}")
                 self.service_client_speaker.send_goal(
                     action_goal = ActionType["DO"].value,
-                    optional_data= '{"input":"' + self.blackboard_input.result + '", "addressee": "'+self.blackboard_bot.addressee+'"}',
+                    optional_data= _data,
                     wait=False,
                 )
                 self.logger.debug(f"Goal sent to {self.server_name}")
@@ -114,12 +163,11 @@ def main():
     blackboard_input = py_trees.blackboard.Client(name=ActuatorNameSpace.tts.name, namespace=ActuatorNameSpace.tts.name)
     blackboard_input.register_key("result", access=py_trees.common.Access.WRITE)
     blackboard_input.result = "/root/harmoni_catkin_ws/src/HARMONI/harmoni_actuators/harmoni_tts/temp_data/tts.wav"
-    blackboard_bot = py_trees.blackboard.Client(name=self.name, namespace=DialogueNameSpace.bot.name)
+    blackboard_bot = py_trees.blackboard.Client(name=name, namespace=DialogueNameSpace.bot.name)
     blackboard_bot.register_key("speak", access=py_trees.common.Access.WRITE)
     blackboard_bot.register_key("agent", access=py_trees.common.Access.WRITE)
     blackboard_bot.speak = 1
     blackboard_bot.agent = ""
-    print(blackboard_input)
 
     instance_id = "default"
 

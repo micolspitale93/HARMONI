@@ -33,7 +33,6 @@ class AssistantServicePytree(py_trees.behaviour.Behaviour):
         self.blackboard_bot.register_key(key="speak", access=py_trees.common.Access.WRITE)
         self.blackboard_bot.register_key(key="addressee", access=py_trees.common.Access.WRITE)
         self.blackboard_tts = self.attach_blackboard_client(name=self.name, namespace=ActuatorNameSpace.tts.name)
-        
         self.blackboard_tts.register_key(key="result", access=py_trees.common.Access.WRITE)
 
         super(AssistantServicePytree, self).__init__(name)
@@ -84,7 +83,7 @@ class AssistantServicePytree(py_trees.behaviour.Behaviour):
                             print(_response)
                             self.blackboard_bot.result = {
                                                                     "message":   _response["response"]
-                                                }
+                                                        }
                             self.blackboard_bot.agent = _response["agent"]
                             _intervene = _response["intervene"]
                             self.blackboard_bot.addressee = _response["addressee"]
@@ -116,7 +115,7 @@ class AssistantServicePytree(py_trees.behaviour.Behaviour):
             self.blackboard_bot.result = {
                                                 "message":   self.blackboard_scene.utterance
                                             }
-            self.blackboard_tts = self.blackboard_bot.result
+            self.blackboard_tts.result = self.blackboard_bot.result["message"]
             new_status = py_trees.common.Status.SUCCESS
         self.logger.debug("%s.update()[%s]--->[%s]" % (self.__class__.__name__, self.status, new_status))
         return new_status

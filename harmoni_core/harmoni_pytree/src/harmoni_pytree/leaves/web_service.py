@@ -5,26 +5,27 @@ import rospy
 
 from harmoni_common_lib.action_client import HarmoniActionClient
 from actionlib_msgs.msg import GoalStatus
-from harmoni_common_lib.constants import PyTreeNameSpace, ActuatorNameSpace, ActionType
+from harmoni_common_lib.constants import PyTreeNameSpace, DetectorNameSpace, ActuatorNameSpace, ActionType
 from harmoni_common_lib.constants import *
 # Specific Imports
 import time
 import py_trees
 
 class WebServicePytree(py_trees.behaviour.Behaviour):
-    def __init__(self, name = "WebServicePytree"):
+    def __init__(self, name = "WebServicePytree", color="red"):
         
         self.name = name
         self.service_client_web = None
         self.server_state = None
         self.server_name = None
         self.client_result = None
-        self.old_image = None
-
+        self.old_state = None
+        self.image = ""
+        self.color = color
+        self.send_request = True
         self.blackboards = []
-        self.blackboard_scene = self.attach_blackboard_client(name=self.name, namespace=ActuatorNameSpace.web.name)
-        self.blackboard_scene.register_key("image", access=py_trees.common.Access.READ)
-
+        #self.blackboard_web = self.attach_blackboard_client(name=self.name, namespace=ActuatorNameSpace.web.name)
+        #self.blackboard_web.register_key("image", access=py_trees.common.Access.READ)
         super(WebServicePytree, self).__init__(name)
         self.logger.debug("%s.__init__()" % (self.__class__.__name__))
 
@@ -43,15 +44,19 @@ class WebServicePytree(py_trees.behaviour.Behaviour):
         self.logger.debug("%s.initialise()" % (self.__class__.__name__))
 
     def update(self):
-        if self.old_image != self.blackboard_scene.image:
+        if self.color == "green":
+            _image = "{'component_id':'display_color', 'set_content': 'green'}"
+        else: 
+            _image = "{'component_id':'display_color', 'set_content': 'red'}"
+        if self.send_request:
+            self.send_request = False
             self.logger.debug(f"Sending goal to {self.server_name}")
             self.service_client_web.send_goal(
                 action_goal = ActionType["DO"].value,
-                optional_data = self.blackboard_scene.image,
+                optional_data = _image,
                 wait=False,
             )
             self.logger.debug(f"Goal sent to {self.server_name}")
-            self.old_image = self.blackboard_scene.image
             new_status =  py_trees.common.Status.RUNNING
         else:
             new_state = self.service_client_web.get_state()

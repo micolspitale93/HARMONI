@@ -69,16 +69,20 @@ class SpeakerServiceFurhat(HarmoniServiceManager):
         data =   json.loads(data)
         try:
             if self.mock:
-                print("The robot will say:" , data)
+                print("The robot will say:" , data["input"])
             else:
-                self.furhat.say(text=data["input"])
+                self.furhat.say(text=data["input"], blocking = True)
                 # Attend a user with a specific id
                 if "," in data["addressee"]:
                     rospy.loginfo("The speech is addressed to multiple people")
                 else:
-                    rospy.loginfo(f"The speech is addressed to {data["addressee"]}")
+                    rospy.loginfo(f'The speech is addressed to {data["addressee"]}')
                     self.furhat.attend(userid=data["addressee"]) #addressee of the conversation
-            rospy.loginfo("Writing data for speaker")
+                #r = rospy.Rate(10)
+                #print(self.furhat)
+                #while self.furhat.isSpeaking():
+                #    r.sleep()
+            rospy.loginfo("End writing data for speaker")
             self.state = State.SUCCESS
             self.actuation_completed = True
         except IOError:

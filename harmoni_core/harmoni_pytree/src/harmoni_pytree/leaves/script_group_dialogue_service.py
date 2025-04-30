@@ -14,11 +14,13 @@ class ScriptGroupDialogueService(py_trees.behaviour.Behaviour):
         self.blackboards = []
         self.script_name = params['interaction']
         self.session = params['session']
+        self.user_names = params["user_names"].split(",")
         self.blackboard_scene = self.attach_blackboard_client(name=self.name, namespace=PyTreeNameSpace.scene.name)
         self.blackboard_scene.register_key(key="nlp", access=py_trees.common.Access.WRITE)
         self.blackboard_scene.register_key(key="max_number_scene", access=py_trees.common.Access.WRITE)
         self.blackboard_scene.register_key(key="utterance", access=py_trees.common.Access.WRITE)
         self.blackboard_scene.register_key(key="agent", access=py_trees.common.Access.WRITE)
+    
         self.blackboard_bot = self.attach_blackboard_client(name=self.name, namespace=DialogueNameSpace.bot.name)
         self.blackboard_bot.register_key("result", access=py_trees.common.Access.READ)
         self.blackboard_stt = self.attach_blackboard_client(name=self.name, namespace=DetectorNameSpace.stt.name)
@@ -34,10 +36,11 @@ class ScriptGroupDialogueService(py_trees.behaviour.Behaviour):
         pattern_script_path = pck_path + f"/resources/{json_name}.json"
         with open(pattern_script_path, "r") as read_file:
             self.context = json.load(read_file)
-        self.blackboard_scene.max_number_scene = 20 #SETTING THE MAXIMUM NUMBER OF TURNS
+        self.blackboard_scene.max_number_scene = 30 #SETTING THE MAXIMUM NUMBER OF TURNS
         self.blackboard_scene.utterance = self.context[self.session][0]["utterance"]
         self.blackboard_scene.nlp = self.context[self.session][0]["nlp"]
         self.blackboard_scene.agent = self.context[self.session][0]["agent"]
+        print(self.blackboard_scene.agent)
         self.logger.debug("  %s [ScriptGroupDialogueService::setup()]" % self.name)
 
     def initialise(self):
@@ -45,10 +48,21 @@ class ScriptGroupDialogueService(py_trees.behaviour.Behaviour):
 
     def update(self):
         self.blackboard_scene.utterance =  "['*user* "+self.blackboard_stt.result+"']"
-        if (self.blackboard_stt.result=="") or (self.blackboard_stt.result=="null"):
-            self.blackboard_scene.utterance = "['*user* "+self.context[self.session][self.scene_number]["utterance"]+"']" 
+        self.blackboard_scene.nlp = self.context[self.session][self.scene_number]["nlp"]
+        if self.scene_number == 4:
+            self.blackboard_scene.utterance ="['*user* Now you can start the discussion without telling your name.']"
+        if self.blackboard_scene.nlp==0:
+            self.blackboard_scene.agent = self.context[self.session][self.scene_number]["agent"]
+            self.blackboard_scene.utterance = self.context[self.session][self.scene_number]["utterance"]
         rospy.loginfo("============ THE UTTERANCE ARRIVED IS:")
         rospy.loginfo(self.blackboard_scene.utterance)
+        if self.scene_number == self.blackboard_scene.max_number_scene:
+            self.blackboard_scene.nlp = 0
+            self.blackboard_scene.utterance = self.context[self.session][-1]["utterance"]
+        i=0
+        for name in self.user_names:
+            i+=1
+            self.blackboard_scene.utterance = self.blackboard_scene.utterance.replace("$USERNAME"+str(i), name)
         self.scene_number +=1
         return py_trees.common.Status.SUCCESS
 

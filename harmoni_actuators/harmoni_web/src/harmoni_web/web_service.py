@@ -205,7 +205,7 @@ def main():
         # params = rospy.get_param(service_name + "/" + instance_id + "_param/")
         s = WebService(service_id)
         service_server = HarmoniServiceServer(service_id, s)
-
+        #s.do("{'component_id':'display_color', 'set_content': 'red'}")
         print(service_name)
         print("**********************************************************************************************")
         print(service_id)

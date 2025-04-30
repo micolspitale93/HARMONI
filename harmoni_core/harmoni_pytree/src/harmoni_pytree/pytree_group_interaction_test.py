@@ -21,7 +21,7 @@ from harmoni_pytree.leaves.sd_azure_service import DiarSpeechToTextServicePytree
 from harmoni_pytree.leaves.assistant_service import AssistantServicePytree
 from harmoni_pytree.leaves.speaker_service import SpeakerServicePytree
 from harmoni_pytree.leaves.script_group_dialogue_service import ScriptGroupDialogueService
-from harmoni_pytree.leaves.web_service import WebServicePytree
+from harmoni_pytree.leaves.aws_tts_service import AWSTtsServicePytree
 
 ##############################################################################
 # Classes
@@ -82,21 +82,20 @@ def post_tick_handler(snapshot_visitor, behaviour_tree):
 
 
 def create_root(name= "GroupInteraction", params=""):
-    listening = py_trees.composites.Parallel(name="Listening", policy = py_trees.common.ParallelPolicy.SuccessOnAll())
     diar_stt=DiarSpeechToTextServicePytree("Diarization")
     script = ScriptGroupDialogueService("Script", params=params)
     bot = AssistantServicePytree('LLM Assistant')
+    tts = AWSTtsServicePytree("TextToSpeech")
     speaker_1 = SpeakerServicePytree(name = 'Mover', instance_id = 'furhat')
-    speaker_2 = SpeakerServicePytree(name = 'Opposer', instance_id = 'nao')
-    web_red = WebServicePytree(name="DialogueStateProcessing", color="red")
-    web_green = WebServicePytree(name="DialogueStateListening", color="green")
+    speaker_2 = SpeakerServicePytree(name = 'Opposer', instance_id = 'default')
     agent_selector = py_trees.composites.Selector(name="Agent Selector", memory=True)
-    agent_selector.add_children([speaker_1, speaker_2])
-    listening.add_children([diar_stt, web_green])
-    root = py_trees.composites.Sequence(name="GroupInteraction",memory=True)
-    root.add_children([web_red, script, bot, agent_selector, listening])
+    sequence_test =  py_trees.composites.Sequence(name="PC", memory=True)
+    sequence_test.add_children([tts, speaker_2])
+    agent_selector.add_children([speaker_1, sequence_test])
+    root = py_trees.composites.Sequence(name="GroupInteraction", memory=True)
+    #root.add_children([script, bot, tts, agent_selector, diar_stt])
+    root.add_children([script, bot, agent_selector, diar_stt]) #when testing this with one robot
     return root
-
 
 ##############################################################################
 # Main
@@ -126,7 +125,7 @@ def main():
     #behaviour_tree.visitors.append(py_trees.visitors.DebugVisitor())
     snapshot_visitor = py_trees.visitors.SnapshotVisitor()
     behaviour_tree.visitors.append(snapshot_visitor)
-    behaviour_tree.add_post_tick_handler(functools.partial(post_tick_handler, snapshot_visitor))
+    #behaviour_tree.add_post_tick_handler(functools.partial(post_tick_handler, snapshot_visitor))
     
     behaviour_tree.setup(timeout=15)
 

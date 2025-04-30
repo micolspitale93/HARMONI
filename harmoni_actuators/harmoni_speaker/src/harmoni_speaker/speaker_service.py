@@ -64,6 +64,10 @@ class SpeakerService(HarmoniServiceManager):
                     duration = data["duration"] - AUDIO_DELAY
                 else:
                     data = ast.literal_eval(data)
+                    audio_data = self.file_path_to_audio_data("/root/harmoni_catkin_ws/src/HARMONI/harmoni_actuators/harmoni_tts/temp_data/tts.wav")
+                    duration = audio_data["duration"] + AUDIO_DELAY
+            print("====================== DURATION!!! ")
+            print(duration)
             data = data["audio_data"]
             rospy.loginfo("Writing data for speaker")
             rospy.loginfo(f"length of data is {len(data)}")

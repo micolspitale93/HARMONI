@@ -7,7 +7,7 @@ from harmoni_common_lib.constants import State, ActuatorNameSpace
 from harmoni_common_lib.service_server import HarmoniServiceServer
 from harmoni_common_lib.service_manager import HarmoniServiceManager
 import harmoni_common_lib.helper_functions as hf
-
+from harmoni_speaker.srv import nao_speak
 
 # Specific Imports
 from std_msgs.msg import String, Bool
@@ -30,6 +30,7 @@ class SpeakerServiceNAO(HarmoniServiceManager):
         self.robot_ip = params["robot_ip"]
         self.mock = params["mockup"]
         print("Initializing publishers")
+        self.speak_service = rospy.ServiceProxy('/nao/speak', nao_speak)
         
         self.setup_pub = rospy.Publisher(
             "/" + self.name  +"/connect",
@@ -63,7 +64,8 @@ class SpeakerServiceNAO(HarmoniServiceManager):
                 self.setup_pub.publish(self.robot_ip)
                 print("CONNECTED")
                 rospy.sleep(5)
-                self.do("CIAO")
+                #self.do("CIAO")
+                rospy.wait_for_service('/nao/speak')
             else:
                 print("Mockup connection with the NAO robot")
         return
@@ -86,11 +88,12 @@ class SpeakerServiceNAO(HarmoniServiceManager):
         data = json.loads(data)
         try:
             if not self.mock:
-                self.play_pub.publish(data["input"])
+                #self.play_pub.publish(data["input"])
+                self.speak_service(data["input"])
                 if "," in data["addressee"]:
                     rospy.loginfo("The speech is addressed to multiple people")
                 else:
-                    rospy.loginfo(f"The speech is addressed to {data["addressee"]}")
+                    rospy.loginfo(f'The speech is addressed to {data["addressee"]}')
                     self.addressee_pub.publish(data["addressee"])
             else:
                 print("NAO is supposed to say ", data)

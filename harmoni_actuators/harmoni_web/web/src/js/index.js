@@ -62,6 +62,8 @@ function viewListener(view) {
             $("#" + component).attr("value", content);
             $('img', "#"+component).attr('src', content);
             $("#"+ component).children().unbind('click');
+        }else if(content == "red" | content == "green"){
+            $("#" + component).css("background-color", content);
         }
         else {
             $("#" + component).html(content)
@@ -73,6 +75,7 @@ function viewListener(view) {
     $("#" + component).show();
     //setTimeout(function(){ $("#"+ component).children().bind('click'); }, 3000);
 };
+
 
 
 function requestListener(view) {

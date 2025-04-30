@@ -110,17 +110,25 @@ class SDAzureService(HarmoniServiceManager):
         print('SessionStopped event')
 
     def conversation_transcriber_transcribed_cb(self, evt: speechsdk.SpeechRecognitionEventArgs):
+        self.elapsed_time = time.time() - self.start_time
+        if self.elapsed_time > 10:
+            self.stt_response = "No one is talking. Please initiate a question to reignite the conversation."
+            self.state = State.SUCCESS
+            self.response_received = True
+            self.result_msg = self.stt_response
+            self.conversation_transcriber.stop_transcribing_async() 
+        print(self.elapsed_time)
         print('\nTRANSCRIBED:')
         if evt.result.reason == speechsdk.ResultReason.RecognizedSpeech:            
             self.speaker_talking = evt.result.speaker_id
-            for i in range(0, self.num_speakers - 1):
-                if (self.speaker_talking == "Guest-" + str(i+1)):
-                    self.speaker_talking = self.names[i]
-                    break
-                else:
-                    self.speaker_talking = "AGENT-UNKNOWN"
+            print(evt.result.speaker_id)
+            _num_id = self.speaker_talking.split("-")[-1]
+            if _num_id != "Unknown":
+                _num_id = int(_num_id)
+                self.speaker_talking = self.names[_num_id-1]
             print('\tText={}'.format(evt.result.text))
             print('\tSpeaker ID={}\n'.format(self.speaker_talking))
+            
             if len(evt.result.text)!=0:
                 self.stt_response = self.speaker_talking + ": " + evt.result.text
                 self.stt_response = self.stt_response.replace("'"," ")
@@ -133,20 +141,24 @@ class SDAzureService(HarmoniServiceManager):
 
     def conversation_transcriber_transcribing_cb(self, evt: speechsdk.SpeechRecognitionEventArgs):
         print('TRANSCRIBING:')
+        self.start_time = time.time()
         self._current_speaker_talking = evt.result.speaker_id
-        for i in range(0, self.num_speakers - 1):
-            if (self._current_speaker_talking == "Guest-" + str(i+1)):
-                self._current_speaker_talking = self.names[i]
-                break
-            else:
-                self._current_speaker_talking = "AGENT-UNKNOWN"
+        print(self._current_speaker_talking)
+        _num_id = int(self._current_speaker_talking.split("-")[-1])
+        if _num_id != "Unknown":
+                _num_id = int(_num_id)
+                self._current_speaker_talking = self.names[_num_id-1]
         self._transcription = evt.result.text
         print('\tText={}'.format(self._transcription))
         print('\tSpeaker ID={}'.format(self._current_speaker_talking))
         
+        
 
     def conversation_transcriber_session_started_cb(self, evt: speechsdk.SessionEventArgs):
         print('SessionStarted event')
+        self.start_time = time.time()
+        
+
 
     def recognize_from_mic(self):
         load_dotenv("/root/harmoni_catkin_ws/src/HARMONI/.env")
@@ -158,6 +170,7 @@ class SDAzureService(HarmoniServiceManager):
         #audio_input = speechsdk.audio.PullAudioInputStream(stream_callback, audio_format)
         #audio_config = speechsdk.audio.AudioConfig(stream=audio_input)
         audio_config = speechsdk.audio.AudioConfig(use_default_microphone=True)#device_name="TONOR TC30 Audio Device: USB Audio (hw:1,0)")
+        print(audio_config)
         self.conversation_transcriber = speechsdk.transcription.ConversationTranscriber(speech_config=speech_config, audio_config=audio_config)
         self.conversation_transcriber.properties.set_property(speechsdk.PropertyId.SpeechServiceConnection_InitialSilenceTimeoutMs, "4000")
         self.conversation_transcriber.properties.set_property(speechsdk.PropertyId.SpeechServiceConnection_EndSilenceTimeoutMs, "1200") ##NOT WORKING PROPERLY...
@@ -268,7 +281,7 @@ def main():
         params = rospy.get_param(service_name + "/" + instance_id + "_param/")
 
         s = SDAzureService(service_id, params)
-        #s.request()
+        #s.request("data")
         service_server = HarmoniServiceServer(name=service_id, service_manager=s)
         print(service_name)
         print("**********************************************************************************************")

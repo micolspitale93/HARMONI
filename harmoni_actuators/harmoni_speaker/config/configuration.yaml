@@ -6,9 +6,9 @@ speaker:
   furhat_param:
     robot_ip: "192.168.1.101" #include the IP of the Furhat robot
     instance_id : "furhat"
-    mockup: 1
+    mockup: 0
   nao_param:
-    robot_ip: "192.168.1.101" #include the IP of the Nao robot
+    robot_ip: "192.168.1.100" #include the IP of the Nao robot
     instance_id : "nao"
     mockup: 0
 

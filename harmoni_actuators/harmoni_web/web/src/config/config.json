@@ -306,6 +306,12 @@
         },
         {
             "component": "container",
+            "id": "display_color",
+            "children": [
+            ]
+        },
+        {
+            "component": "container",
             "id": "multiple_choice_choices_container",
             "children": [
                 {
