@@ -78,7 +78,7 @@ class AssistantServicePytree(py_trees.behaviour.Behaviour):
                     if self.client_result is not None:
                         rospy.loginfo("________________________The client results is " +str(self.client_result))
                         
-                        if isinstance(self.client_result, str):
+                        if isinstance(self.client_result, str) and self.client_result!="":
                             _response = json.loads(self.client_result)
                             print(_response)
                             self.blackboard_bot.result = {

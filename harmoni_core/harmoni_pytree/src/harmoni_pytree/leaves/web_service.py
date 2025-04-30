@@ -12,7 +12,7 @@ import time
 import py_trees
 
 class WebServicePytree(py_trees.behaviour.Behaviour):
-    def __init__(self, name = "WebServicePytree", color="red"):
+    def __init__(self, name = "WebServicePytree", color="green"):
         
         self.name = name
         self.service_client_web = None
@@ -61,12 +61,13 @@ class WebServicePytree(py_trees.behaviour.Behaviour):
         else:
             new_state = self.service_client_web.get_state()
             print(new_state)
+            self.send_request = True
             if new_state == GoalStatus.ACTIVE:
                 new_status = py_trees.common.Status.SUCCESS
             elif new_state == GoalStatus.SUCCEEDED:
                 new_status = py_trees.common.Status.SUCCESS
             elif new_state == GoalStatus.PENDING:
-                self.send_request = True
+                
                 self.logger.debug(f"Cancelling goal to {self.server_name}")
                 self.service_client_web.cancel_all_goals()
                 self.client_result = None

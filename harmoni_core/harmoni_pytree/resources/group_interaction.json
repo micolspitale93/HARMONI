@@ -1,9 +1,9 @@
 {
-    "session" :   [ 
+    "3session" :   [ 
         {
         	"id"        	:  0,
         	"utterance" 	: "Hi everyone, my name is Manny and I would like to have a quick round of introduction by telling your name. Please speak lound, otherwise I cannot hear you well. $USERNAME1, would you like to start?",
-            "agent"         : "Opposer",
+            "agent"         : "Mover",
         	"nlp"       	:  0,
         	"gesture"   	: ""
     	},        
@@ -23,7 +23,7 @@
     	},        
         {
         	"id"        	:  3,
-        	"utterance" 	: "Hi, my name is Andrea, very nice to meet you all!",
+        	"utterance" 	: "Nice to meet you, $USERNAME3. Hi, my name is Andrea, very nice to meet you all!",
             "agent"         : "Opposer",
         	"nlp"       	:  0,
         	"gesture"   	: ""
@@ -274,6 +274,534 @@
             "gesture"       : ""
         }
 
-     ]
+     ],
+	"2session" :   [ 
+        {
+        	"id"        	:  0,
+        	"utterance" 	: "Hi everyone, my name is Manny and I would like to have a quick round of introduction by telling your name. Please speak lound, otherwise I cannot hear you well. $USERNAME1, would you like to start?",
+            "agent"         : "Mover",
+        	"nlp"       	:  0,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  1,
+        	"utterance" 	: "Wonderful, $USERNAME1, very nice to meet you! $USERNAME2 would you like to go next?",
+            "agent"         : "Mover",
+        	"nlp"       	:  0,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "Nice to meet you, $USERNAME2. Hi, my name is Andrea, very nice to meet you all!",
+            "agent"         : "Opposer",
+        	"nlp"       	:  0,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},
+        {
+            "id"            :  30,
+            "utterance"     : "Thank you all for being here today for this group discussion. See you next time!",
+            "agent"         : "Mover",
+			"nlp"           :  0,
+            "gesture"       : ""
+        }],
+
+	"1session" :   [ 
+        {
+        	"id"        	:  0,
+        	"utterance" 	: "Hi everyone, my name is Manny and I would like to have a quick round of introduction by telling your name. Please speak lound, otherwise I cannot hear you well. $USERNAME1, would you like to start?",
+            "agent"         : "Mover",
+        	"nlp"       	:  0,
+        	"gesture"   	: ""
+    	},       
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "Nice to meet you, $USERNAME1. Hi, my name is Andrea, very nice to meet you all!",
+            "agent"         : "Opposer",
+        	"nlp"       	:  0,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "Manny should kick off the conversation",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},
+        {
+            "id"            :  30,
+            "utterance"     : "Thank you all for being here today for this group discussion. See you next time!",
+            "agent"         : "Mover",
+			"nlp"           :  0,
+            "gesture"       : ""
+        }]
 
 }

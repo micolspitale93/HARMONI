@@ -5,16 +5,16 @@ bot:
     bot_name: "QTRobot"
     bot_alias: "DemoBot"
     region_name: "eu-west-2"
-    assistant_id: "asst_kmqbIOvPo3xCC2IGBsdiGuTx" #"asst_IGcxRcdHHQptkIbpp7wsbCLv" #ORACLE
+    assistant_id: "asst_vHBrXCxblYeARtQMymaVyshm" #"" #ORACLE
     service_id : "default"
-    participants: "Sarah, Jane, Alex"
-    num_speaker: 3
+    participants: "Micol" #"Sarah, Jane, Alex"
+    num_speaker: 1
     scenario: "The topic of this group conversation is AI in society."
   mover_param:
-    assistant_id: "asst_1rkI7oi5Kz811ZERcPd19zFj" #MOVER
+    assistant_id: "" #MOVER
     service_id : "mover"
   opposer_param:
-    assistant_id: "asst_oaDSHB0jluXcVC2cAwNx83oS" #OPPOSER
+    assistant_id: "" #OPPOSER
     service_id : "opposer"
 
 
@@ -31,23 +31,19 @@ chat_gpt:
     model: "gpt-4o-mini"
   mover_param:
     model: "gpt-4o-mini"
-    assistant_id: "asst_1rkI7oi5Kz811ZERcPd19zFj" #MOVER
     service_id : "mover"
   opposer_param:
     model: "gpt-4o-mini"
-    assistant_id: "asst_oaDSHB0jluXcVC2cAwNx83oS" #OPPOSER
     service_id : "opposer"
     
 
 assistant:
   default_param:
-    assistant_id: "asst_IGcxRcdHHQptkIbpp7wsbCLv" #ORACLE
+    assistant_id: "" #ORACLE
     service_id : "default"
     
   mover_param:
-    assistant_id: "asst_1rkI7oi5Kz811ZERcPd19zFj" #MOVER
     service_id : "mover"
   opposer_param:
-    assistant_id: "asst_oaDSHB0jluXcVC2cAwNx83oS" #OPPOSER
     service_id : "opposer"
     

@@ -21,7 +21,7 @@ from harmoni_pytree.leaves.sd_azure_service import DiarSpeechToTextServicePytree
 from harmoni_pytree.leaves.assistant_service import AssistantServicePytree
 from harmoni_pytree.leaves.speaker_service import SpeakerServicePytree
 from harmoni_pytree.leaves.script_group_dialogue_service import ScriptGroupDialogueService
-from harmoni_pytree.leaves.web_service import WebServicePytree
+from harmoni_pytree.leaves.web_service import WebServicePytree 
 
 ##############################################################################
 # Classes

@@ -1,8 +1,8 @@
 pytree:
   default_param:
-    session: "session"
+    session: "1session" #2session if 2 participants, 1session if 1 partcipant, 3session if 3 participants
     interaction: "group_interaction" 
-    user_names: "Sarah, Jane, Alex"
+    user_names: "Micol"
     researcher_name: "Micol"
     scene: 0
     condition :  0 #0: heterogenous, 1: homogenous

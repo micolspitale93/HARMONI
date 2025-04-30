@@ -6,8 +6,8 @@ stt:
     subscriber_id: "default"
     wait_duration: 5
     max_silence: 10 #s
-    num_speakers: 3 #number of speakers in the group conversation
-    names: "Sarah,Jane,Alex" #note that the order fo the names in the list matters, since the module will assign Guest-1 to the first name, Guest-2 to the second, and so on and so forth
+    num_speakers: 1 #3 #number of speakers in the group conversation
+    names: "Micol" #"Sarah,Jane,Alex" #note that the order fo the names in the list matters, since the module will assign Guest-1 to the first name, Guest-2 to the second, and so on and so forth
   ita_param:
     language_id: "it-IT"
     sample_rate: 16000 #44100 for wav audio file

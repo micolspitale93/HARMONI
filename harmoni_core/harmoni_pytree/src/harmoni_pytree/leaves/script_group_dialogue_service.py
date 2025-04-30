@@ -49,8 +49,9 @@ class ScriptGroupDialogueService(py_trees.behaviour.Behaviour):
     def update(self):
         self.blackboard_scene.utterance =  "['*user* "+self.blackboard_stt.result+"']"
         self.blackboard_scene.nlp = self.context[self.session][self.scene_number]["nlp"]
-        if self.scene_number == 4:
-            self.blackboard_scene.utterance ="['*user* Now you can start the discussion without telling your name.']"
+        print(self.session[0])
+        if self.scene_number == 1+int(self.session[0]):
+            self.blackboard_scene.utterance ="['*user* Now you can MUST START the discussion without telling your name.']"
         if self.blackboard_scene.nlp==0:
             self.blackboard_scene.agent = self.context[self.session][self.scene_number]["agent"]
             self.blackboard_scene.utterance = self.context[self.session][self.scene_number]["utterance"]

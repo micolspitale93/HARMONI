@@ -23,9 +23,10 @@ PROMPT = "You are the orchestrator of a group interaction involving five partici
   "'agent': 'Mover' | 'Opposer',"\
   "'response': string (max 50 tokens),"\
   "'explain': 'explain your reasoning (max 20 tokens)',"\
-  "'addressee': 'participant name'",\
-"}"\
-"Do not generate more than one JSON output for each run."\ 
+  "'addressee': 'participant name',"\
+"} "\
+"Do not generate more than one JSON output for each run." \
+ 
 "The conversation should simulate a realistic group discussion lasting approximately seven minutes, progressing through natural phases: beginning with introductions, moving into topic exploration and debate, and ending with closure or synthesis. The first contribution should always come from Manny, who introduces himself and invites the others to do the same (without mentioning their own role of Mover or Opposer). The second should be Andrea introducing itself, but only when all participants have introduced themselves. After that, you must monitor the discussion and decide how and when the robotic agents should contribute in line with their respective roles."\
 "You do not need to generate the full conversation—only the robotic agents’ contributions based on what has already been said by participants. At the end of the session, make sure a robot formally closes the conversation. The conversation should include an introduction phase (already done previously), a deepening topic discussion phase, and a resolution/summary/closure phase."
 
@@ -47,7 +48,7 @@ class AssistantOpenAIService(HarmoniServiceManager):
         super().__init__(name)
         """ Initialization of variables and chatgpt parameters """
         self.name = name
-        self.assistant_id = "asst_kmqbIOvPo3xCC2IGBsdiGuTx" #param["assistant_id"]
+        self.assistant_id = param["assistant_id"]
         self.service_id = param["service_id"]
         self.names_participant = param["participants"]
         self.num_speaker = param["num_speaker"]
@@ -83,7 +84,7 @@ class AssistantOpenAIService(HarmoniServiceManager):
         )
  
         #self.assistant = self.client.beta.assistants.retrieve(self.assistant_id) #the type of assistant will depend on the config file
-        
+        """
         self.assistant = self.client.beta.assistants.create(
             name = "assistant_test",
             model="gpt-4o-mini", # replace with model deployment name.
@@ -91,6 +92,7 @@ class AssistantOpenAIService(HarmoniServiceManager):
         )
         self.assistant_id = self.assistant.id
         print(self.assistant_id)
+        """
 
         if self.service_id == "default": # only if it is the oracle setup the thread is created for the first time
             thread = self.client.beta.threads.create()
@@ -135,6 +137,7 @@ class AssistantOpenAIService(HarmoniServiceManager):
         """
         #TODO: i need to modify this in line with the assistant definition creating a run for each request that is linked to the assistant and also to the thread of the conversation
         rospy.loginfo("Start the %s request" % self.name)
+        ai_response = ""
         self.state = State.REQUEST
         print(input_text)
         input_text = ast.literal_eval(input_text)
@@ -216,7 +219,7 @@ def main():
         s = AssistantOpenAIService(service_id, params)
         s.setup_openai()
         service_server = HarmoniServiceServer(service_id, s)
-        s.request("['*user* Sarah: Hi my name is Sarah, nice to meet you all. Jane: Hi, my name is Jane! Alex: Hi my name is Alex very nice to see you all here today!']")
+        #s.request("['*user* Sarah: Hi my name is Sarah, nice to meet you all. Jane: Hi, my name is Jane! Alex: Hi my name is Alex very nice to see you all here today!']")
         print(service_name)
         print("**********************************************************************************************")
         print(service_id)
