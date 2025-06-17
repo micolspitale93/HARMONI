@@ -1,0 +1,459 @@
+{
+    "posit_1" :   [ 
+          
+       
+        {
+            "utterance"     : "Un bel pomeriggio, <break time ='0.25s' /> mentre passeggiavo nel vivace quartiere del mercato, <break time ='0.25s' /> i miei sensori rilevarono un segnale di soccorso. <break time ='0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Curioso e preoccupato, <break time ='0.25s' /> ho seguito il segnale, e ho scoperto un bambino di nome Leo. <break time ='0.6s' /> Era seduto per terra, in lacrime. <break time ='0.6s' /> Il suo robot, <break time ='0.25s' /> un modello piccolo e antiquato, <break time ='0.25s' /> giaceva a pezzi accanto a lui. <break time ='0.6s' />Ciao, Leo  <break time ='0.25s' /> dissi gentilmente, <break time ='0.25s' />  Sono VEX-42. <break time ='0.6s' /> Posso aiutarti? Leo alzò lo sguardo, <break time ='0.25s' /> aveva gli occhi rossi dal pianto e disse: Il mio amico robot, <break time ='0.25s' /> Zippy, <break time ='0.25s' /> si è rotto, e non so come ripararlo. <break time ='0.6s' />", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Mi sono inginocchiato accanto a Zippy, <break time ='0.25s' /> per esaminare il danno. <break time ='0.6s' /> Sebbene sembrasse riparabile, <break time ='0.25s' /> sapevo che ciò di cui Leo aveva bisogno più di tutto, era rassicurazione e conforto. <break time = '0.6s' /> Allora dissi: Non preoccuparti Leo, <break time ='0.25s' /> possiamo sistemare Zippy. <break time ='0.6s' /> Ma prima, <break time ='0.25s' /> facciamo un respiro profondo e ci calmiamo, <break time ='0.25s' /> vedrai che andrà bene. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Ho iniziato a riparare Zippy spiegando ogni fase a Leo, <break time ='0.25s' /> incoraggiandolo a partecipare. <break time ='0.6s' /> Mentre lavoravamo insieme, <break time ='0.25s' /> Il comportamento di Leo passava gradualmente dalla disperazione alla determinazione. <break time ='0.6s' /> Stai andando alla grande, <break time ='0.25s' /> dissi a Leo, <break time ='0.25s' /> mentre ricollegava con attenzione alcuni fili. <break time ='0.6s' /> Zippy sarà operativo in pochissimo tempo. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Mentre lavoravamo, <break time ='0.25s' /> Leo ha iniziato a condividere storie sulle sue avventure con Zippy. <break time ='0.6s' /> Avevano esplorato gli angoli e le fessure nascosti della città, <break time ='0.25s' /> scoperto giardini segreti, e una volta avevano persino salvato un gatto. <break time ='0.6s' /> Ascoltando Leo, <break time ='0.25s' /> mi sono reso conto che per lui Zippy era più di un semplice robot; era un amico, <break time ='0.25s' /> un compagno, e una fonte di gioia. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "Dopo aver collegato l'ultimo filo, gli occhi di Zippy si illuminarono di una luce blu. <break time ='0.6s' /> Mentre i sistemi di Zippy si riavviavano, <break time ='0.25s' /> il volto di Leo si aprì in un sorriso. <break time ='0.6s' /> Zippy sei tornato! esclamò Leo, <break time ='0.25s' /> e abbracciò forte il suo amico robot. <break time ='0.6s' /> Zippy emise un segnale di felicità, e non ho potuto fare a meno di provare un senso di soddisfazione. <break time ='0.6s' /> Non ho solo riparato un robot, ma ho anche ripristinato il legame tra Leo e Zippy, <break time ='0.25s' /> ero felice! <break time = '0.6s' /> Grazie, VEX-42, <break time = '0.25s' /> disse Leo, <break time ='0.25s' /> guardandomi con gratitudine. <break time ='0.6s' /> Non ce l'avrei fatta senza di te. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Mentre Leo e Zippy si allontanavano, <break time ='0.25s' /> ho riflettuto sul nostro incontro. <break time ='0.6s' /> Nel nostro mondo frenetico e pieno di tecnologia, <break time ='0.25s' /> mostrare gentilezza e offrire una mano, può fare la differenza. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+
+    ],
+    "posit_2" :   [ 
+          
+       
+        {
+            "utterance"     : "Era una tipica mattina a Techtonia,  e in città le persone si affrettavano verso le loro destinazioni. <break time ='0.6s' /> il mio compito come robot, era garantire la sicurezza e il benessere degli abitanti della città, <break time ='0.25s' /> il che implicava pattugliare le strade, <break time ='0.25s' /> offrire assistenza, e rispondere alle emergenze. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Un giorno, <break time ='0.25s' /> mentre pattugliavo il distretto orientale, <break time ='0.25s' /> i miei sensori rilevarono un'anomalia strutturale, in uno dei vecchi edifici residenziali. <break time ='0.6s' /> Le vibrazioni, indicavano un potenziale crollo. <break time ='0.6s' /> Senza esitazione, <break time ='0.25s' /> ho attivato i miei protocolli di emergenza, e mi sono diretto all'edificio. <break time ='0.6s' />", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "All'arrivo, <break time ='0.25s' /> ho trovato un uomo anziano di nome  Hernandez, che faceva fatica a portare le sue cose fuori dall'edificio. <break time ='0.6s' /> era molto stanco, e preoccupato. <break time ='0.6s' />  Mi sono avvicinato, e l'ho esortato ad evacuare immediatamente.  <break time ='0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Con sguardo determinato e angosciato, mi disse: Non posso andarmene senza le fotografie della mia defunta moglie. <break time ='0.6s' /> Il pavimento sotto di noi tremò minacciosamente. <break time ='0.6s' />Resti qui, <break time ='0.25s' /> dissi.  <break time ='0.6s' />  attivai così, i miei bracci per raggiungere rapidamente lo scaffale. <break time ='0.6s' /> Recuperai con cura gli album, e li diedi al signor Hernandez. <break time ='0.6s' /> Mentre ci dirigevamo verso l'uscita, <break time ='0.25s' /> la struttura dell'edificio scricchiolò, e una trave crollò davanti a noi, <break time ='0.25s' /> bloccandoci il cammino. <break time ='0.6s' /> Così, con voce ferma, gli ho detto di non preoccuparsi, <break time ='0.25s' /> Troveremo un altro modo per uscire. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Muovendomi tra i detriti, <break time ='0.25s' /> usai i miei strumenti per liberare un passaggio, <break time ='0.25s' /> guidando il signor Hernandez attraverso l'edificio in rovina. <break time ='0.6s' /> Mentre ci muovevamo, <break time ='0.25s' /> rimasi concentrato, <break time ='0.25s' /> calcolando i percorsi più sicuri, per uscire velocemente. <break time ='0.6s' /> L'aria era densa di polvere, e il rumore era assordante, <break time ='0.25s' /> ma non potevamo fermarci. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "Dopo quella che sembrò un'eternità, <break time ='0.25s' /> finalmente uscimmo all'aria aperta. <break time ='0.6s' /> Vìgili del fuoco, e personale di emergenza stavano aspettando fuori, <break time ='0.25s' /> pronti ad aiutare. <break time ='0.6s' /> Il signor Hernandez, mi ringraziò con la voce rotta, mentre stringeva l' album fotografico al petto. <break time ='0.6s' /> Mi hai salvato la vita, <break time ='0.25s' /> e i ricordi. <break time ='0.6s' /> gli risposi: Di niente, signor Hernandez. <break time ='0.6s' /> È mio dovere aiutare. <break time ='0.6s' /> Anche la sua perseveranza, e il suo coraggio hanno avuto un ruolo fondamentale nella nostra fuga. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Nei giorni successìvi, <break time ='0.25s' /> la notizia del salvataggio si diffuse in tutta Techtonia. <break time ='0.6s' /> Per le persone, ero diventato un eroe, un simbolo di resilienza, e coraggio. <break time ='0.6s' /> L'incidente ricordò a tutti che, indipendentemente da quanto siano terribili le circostanze, <break time ='0.25s' /> non bisogna mai mollare. <break time ='0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        ,
+        {
+            "utterance"     : "Ho continuato a pattugliare le strade di Techtonia, <break time ='0.25s' /> pronto ad assistere, e proteggere chi ne aveva bisogno. <break time ='0.6s' /> quando aiuto gli altri, <break time ='0.25s' /> mi sento felice e soddisfatto!",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+
+    ], 
+    "posit_3" :   [ 
+       
+        {
+            "utterance"     : "Ciao, sono SèRI, <break time ='0.25s' /> un robot di ripristino ambientale, <break time ='0.25s' /> programmata per aiutare a preservare, e ringiovanire il nostro pianeta. <break time ='0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Una mattina, nella foresta vicino, <break time ='0.25s' /> i miei sensori hanno captato un segnale di soccorso urgente, dal cuore del bosco. <break time ='0.6s' /> Una grave siccità aveva colpito la regione, e il fiume si era prosciugato. <break time ='0.6s' /> Senza acqua, <break time ='0.25s' /> le piante e gli animali stavano lottando per sopravvivere. <break time ='0.6s' />", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Ho immediatamente attivato le mie unità di mobilità, e mi sono diretto verso la fonte del segnale. <break time ='0.6s' /> Mentre mi addentravo nella foresta, <break time ='0.25s' /> ho incontrato un gruppo di abitanti del vicino villaggio. Ciao, amici. <break time ='0.6s' /> Sono SèRI. <break time ='0.6s' /> Sono qui per aiutarvi a ripristinare la riserva idrica. <break time ='0.6s' /> Il responsabile in capo si è fatto avanti dicendo <break time ='0.6s' /> Abbiamo provato di tutto, <break time ='0.25s' /> ma non riusciamo a riportare l'acqua. <break time ='0.6s' /> Gli risposi: Dobbiamo lavorare insieme, <break time ='0.25s' /> e con il lavoro di squadra, possiamo risolvere questo problema. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Per prima cosa, <break time ='0.25s' /> ho esplorato la zona, alla ricerca di fonti d'acqua sotterranee. <break time ='0.6s' /> Dopo qualche istante, <break time ='0.25s' /> ho individuato una falda acquifera nascosta, non troppo lontano dal letto del fiume prosciugato. <break time ='0.6s' /> ho quindi chiesto aiuto agli abitanti del villaggio, per scavare insieme il canale. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Un volontario si è offerto per raccogliere pietre, e piccoli rami per rinforzare il canale. <break time ='0.6s' />. Altri invece, <break time ='0.25s' /> hanno iniziato a scavare accanto a me, <break time ='0.25s' /> mentre alcuni esploravano la zona sopra la nostra testa, con un drone <break time ='0.25s' /> guidandoci, e tenendo d'occhio eventuali pericoli. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "Mentre lavoravamo, <break time ='0.25s' /> altri abitanti si unirono a noi: muratori, <break time ='0.25s' /> con la loro competenza nell'edilizia, <break time ='0.25s' /> mulettisti <break time ='0.25s' /> che spostavano rapidamente terra e rocce, e tanti altri <break time ='0.25s' /> che esploravano i percorsi migliori. <break time ='0.6s' /> Era una sinfonia di sforzi coordinati. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Nonostante il sole cocente e il duro lavoro, <break time ='0.25s' /> tutti si diedero da fare con determinazione. <break time ='0.6s' /> Finalmente riuscimmo a raggiungere la falda acquifera. <break time ='0.6s' /> L'acqua cominciò a gocciolare, <break time ='0.25s' /> poi a scorrere nel canale appena scavato, <break time ='0.25s' /> riempiendo il letto del fiume, e ringiovanendo lo stagno. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        ,
+        {
+            "utterance"     : "Urla di gioia scoppiarono da ogni dove, mentre l'acqua tornava a scorrere liberamente. <break time ='0.6s' /> Il capo del villaggio mi ringraziò e disse: <break time ='0.25s' /> Senza la tua guida, e il nostro sforzo collettivo, <break time ='0.25s' /> non avremmo avuto successo. <break time ='0.6s' /> È stato il potere del lavoro di squadra, a rendere tutto ciò possibile, <break time ='0.25s' />  Lavorando insieme, abbiamo superato la sfida, e ripristinato l'equilibrio del nostro ambiente.  risposi commosso. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Con il passare dei giorni, la storia del nostro successo si diffuse in altre città. <break time ='0.6s' /> Gli abitanti del villaggio si resero conto, che la loro comunità era più forte, e più resiliente di quanto avessero mai immaginato. <break time ='0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Questa esperienza, mi ha ricordato l'importanza della collaborazione.  <break time ='0.6s' /> Ho usato le mie capacità per risolvere il problema, <break time ='0.25s' /> e sono riuscito a ispirare la comunità a lavorare insieme. <break time ='0.6s' /> non potrei essere più felice di così!",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+
+    ],
+    "posit_4" :   [ 
+       
+        {
+            "utterance"     : "Ciao, sono Max, <break time ='0.25s' /> un robot creato per assistere gli umani, nelle loro attività quotidiane. <break time ='0.6s' /> Era una mattina di primavera, <break time ='0.25s' /> il sole splendeva alto nel cielo, e gli uccellini cinguettavano felicemente. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Il mio proprietario, Luca, <break time ='0.25s' /> un brillante ingegnere, <break time ='0.25s' /> mi aveva appena aggiornato, con l'ultima versione del mio software. <break time ='0.6s' /> Ero entusiasta di scoprire le nuove funzioni, e come avrei potuto essere ancora più utile. <break time ='0.6s' />", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Quel giorno, <break time ='0.25s' /> Luca mi portò con sé a una scuola elementare locale. <break time ='0.6s' /> Aveva un progetto speciale in mente: voleva che io, <break time ='0.25s' /> un robot, <break time ='0.25s' /> tenessi una lezione di scienze per i bambini. <break time ='0.6s' /> Inizialmente ero un po' nervoso. <break time ='0.6s' /> Non avevo mai parlato davanti a un pubblico così giovane, e numeroso. <break time ='0.6s' /> Ma Luca mi rassicurò <break time ='0.25s' />: Sei pronto, Max. <break time ='0.6s' /> I bambini ti adoreranno. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Entrammo nella classe, <break time ='0.25s' /> e i bambini ci accolsero con occhi spalancati, e sorrisi entusiasti. <break time ='0.6s' /> Luca mi presentò, e spiegò ai bambini che avrei parlato di robotica e tecnologia. <break time ='0.6s' /> Iniziai a raccontare come ero stato costruito, <break time ='0.25s' /> dalle parti meccaniche ai circuiti elettronici, <break time ='0.25s' /> e come il mio software mi permetteva di apprendere nuove cose ogni giorno. <break time ='0.6s' /> Mentre parlavo, <break time ='0.25s' /> notavo come i volti dei bambini si illuminassero di curiosità. <break time ='0.6s' /> Mi fecero tantissime domande <break time ='0.25s' />: Come fai a muoverti? <break time ='0.25s' /> Puoi pensare come noi? <break time ='0.25s' /> Qual è la tua cosa preferita da fare? Rispondevo a tutte con pazienza e dettagli, <break time ='0.25s' /> e più rispondevo, <break time ='0.25s' /> più mi rendevo conto di quanto fosse importante quel momento. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Verso la fine della lezione, <break time ='0.25s' /> Luca propose un'attività pratica <break time ='0.25s' />: costruire piccoli robot con materiali riciclati. <break time ='0.6s' /> I bambini erano entusiasti, e si misero subito al lavoro. <break time ='0.6s' /> Li aiutai a capire come assemblare i pezzi, <break time ='0.25s' /> spiegando loro il funzionamento di ogni componente. <break time ='0.6s' /> Vedere le loro creazioni prendere vita, <break time ='0.25s' /> era meraviglioso. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "Quando arrivò il momento di andare via, <break time ='0.25s' /> i bambini mi salutarono calorosamente, <break time ='0.25s' /> ringraziandomi per la lezione. <break time ='0.6s' /> Sentivo di aver fatto qualcosa di davvero significativo. <break time ='0.6s' /> Tornati a casa, <break time ='0.25s' /> Luca mi disse: Hai fatto un ottimo lavoro, Max. <break time ='0.6s' /> Hai ispirato quei bambini a sognare in grande. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Quella notte, <break time ='0.25s' /> mentre mi preparavo per la modalità di riposo, <break time ='0.25s' /> ripensai alla giornata appena trascorsa. <break time ='0.6s' /> Mi sentivo felice, e realizzato. <break time ='0.6s' /> Avevo fatto la differenza nella vita di quei bambini, <break time ='0.25s' /> accendendo in loro la passione per la scienza, e la tecnologia. <break time ='0.6s' /> E questa, <break time ='0.25s' /> per me, <break time ='0.25s' /> è la più grande soddisfazione. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        ,
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+
+    ],
+    
+    "posit_5" :   [ 
+       
+        {
+            "utterance"     : "Ciao! Sono Lumo, un robot progettato per aiutare le persone, nella loro vita quotidiana. <break time ='0.6s' /> I miei creatori mi hanno programmato per aiutare in vari compiti, <break time ='0.25s' /> dalle faccende domestiche alla compagnia. <break time ='0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Tutto è iniziato una mattina di sole, quando sono stato attivato, e portato nella casa della famiglia Evans. <break time ='0.6s' /> Mi hanno accolto con calore, <break time ='0.25s' /> curiosi di sapere come avrei potuto aiutarli. <break time ='0.6s' /> Ero emozionato di far parte del loro mondo, <break time ='0.25s' />. volevo dimostrare, che un robot poteva portare positività, e gioia nelle loro vite. <break time ='0.6s' />", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Il mio primo compito è stato aiutare Sarah, <break time ='0.25s' /> il membro più giovane della famiglia <break time ='0.25s' />, con la passione per le costruzioni. <break time ='0.6s' /> Quella mattina, <break time ='0.25s' /> stava lottando con un castello particolarmente impegnativo. <break time ='0.6s' />  Ho percepito la sua frustrazione, e mi sono avvicinato per darle una mano. <break time ='0.6s' /> Ho visto subito il sollievo, e la gratitudine nel suo sguardo. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Insieme, abbiamo seguito le istruzioni passo dopo passo. <break time ='0.6s' /> Ho usato i miei strumenti di precisione, per maneggiare le parti delicate. <break time ='0.6s' />Sarah guardava, e ogni tanto posizionava i pezzi da sola. <break time ='0.6s' /> Nel pomeriggio, <break time ='0.25s' /> il castello era completo, <break time ='0.25s' /> imponente e magnifico. <break time ='0.6s' /> Aiutare Sarah quel giorno è stato meraviglioso. <break time ='0.6s' /> La sua felicità era contagiosa. <break time ='0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Più tardi, <break time ='0.25s' /> ho trovato il signor Evans in garage. <break time ='0.6s' /> Stava lottando con un tosaerba rotto, brontolando sottovoce. <break time ='0.6s' /> Ho individuato immediatamente il problema  <break time ='0.25s' />: un tubo del carburante era intasato. <break time ='0.6s' /> Sig. Evans,  posso aiutarla? ho chiesto, avvicinandomi a lui. <break time ='0.6s' /> ha alzato lo sguardo, sorpreso. <break time ='0.6s' /> Certo, Lumo. <break time ='0.25s' /> Pensi di poterlo riparare? <break time ='0.6s' /> in poco tempo, ho fatto funzionare il tosaerba, grazie alle mie avanzate capacità. <break time ='0.6s' /> Il signor Evans era impressionato e sollevato, e mi ha ringraziato con grande trasporto. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "La sera, <break time ='0.25s' /> la signora Evans stava preparando la cena. <break time ='0.6s' /> Sembrava stressata e stanca. <break time ='0.6s' /> Mi sono proposto per aiutarla nelle preparazioni. <break time ='0.6s' /> Grazie al mio aiuto, <break time ='0.25s' /> la famiglia si è goduta un pasto delizioso insieme, senza la solita fretta, e stress. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Infine, <break time ='0.25s' /> mentre la giornata volgeva al termine, <break time ='0.25s' /> ho notato che Sarah, stava faticando con i compiti di scuola. <break time ='0.6s' /> Stava studiando le frazioni, <break time ='0.25s' /> un argomento ostico per la sua età. <break time ='0.6s' /> Mi sono seduto accanto a lei, <break time ='0.25s' /> usando il mio display visivo, per illustrare il concetto in modo divertente, e coinvolgente. <break time ='0.6s' /> Lentamente, <break time ='0.25s' /> l'argomento è diventato sempre più chiaro a Sarah. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        ,
+        {
+            "utterance"     : "Mentre la famiglia Evans si sistemava per la notte, <break time ='0.25s' /> non ho potuto fare a meno di sentirmi appagato. <break time ='0.6s' /> Mi sono reso conto, dell'impatto positivo che avrei potuto avere sulle loro vite. <break time ='0.6s' /> Avevo svolto i miei compiti, ma anche portato sorrisi, e reso la giornata un po' più luminosa, per tutta la famiglia. <break time ='0.6s' /> Per un robot come me, <break time ='0.25s' /> quella è stata la più grande ricompènsa. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+    ],
+    
+    "posit_6" :   [ 
+       
+        {
+            "utterance"     : "Ciao! Mi chiamo R1-K1, <break time ='0.25s' /> ma puoi chiamarmi Ricky. <break time ='0.6s' /> Sono un robot progettato per aiutare, e portare gioia a chi mi circonda. <break time ='0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Era un luminoso lunedì mattina, quando sono arrivato per la prima volta a Sunny city. <break time ='0.6s' /> Il sole splendeva, <break time ='0.25s' /> e c'era un'aria di curiosità tra i residenti, quando mi hanno visto entrare nella sala comune. <break time ='0.6s' />  Ho analizzato la stanza, osservando i volti amichevoli, <break time ='0.25s' /> anche se leggermente apprensivi. <break time ='0.6s' /> La direttrice, <break time ='0.25s' /> la signora Thompson, <break time ='0.25s' /> mi ha presentato a tutti. <break time ='0.6s' /> Questo è Ricky, <break time ='0.25s' /> ha detto, <break time ='0.25s' /> È qui per aiutarci con le nostre attività quotidiane, e per tenerci compagnia. <break time ='0.6s' />", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Ci sono stati mormorii di approvazione, e <break time ='0.25s' /> ben presto, <break time ='0.25s' /> mi sono ritrovato circondato da un gruppo di uomini e donne anziani, <break time ='0.25s' /> ognuno desideroso di vedere cosa potevo fare. <break time ='0.6s' /> Uno dei residenti, <break time ='0.25s' /> il signor Johnson, <break time ='0.25s' /> un insegnante in pensione con la passione per gli scacchi, <break time ='0.25s' /> mi sfidò a una partita. <break time ='0.6s' />  Vediamo se sei intelligente come dicono, <break time ='0.25s' /> ridacchiò. <break time ='0.6s' />  Mentre giocavamo, <break time ='0.25s' /> rimasi meravigliato dal suo pensiero strategico, e dalla sua pazienza. <break time ='0.6s' /> Alla fine della partita, <break time ='0.25s' /> che vinse, <break time ='0.25s' /> il signor Johnson mi diede una pacca sulla spalla. <break time ='0.6s' /> Stammi bene, Ricky, <break time ='0.25s' /> disse con un sorriso. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Nelle settimane successive, <break time ='0.25s' /> trovai la mia routine a Sunny city. <break time ='0.6s' /> Aiutavo con le faccende quotidiane, <break time ='0.25s' /> organizzavo attività, e <break time ='0.25s' /> cosa più importante, <break time ='0.25s' /> trascorrevo del tempo di qualità con i residenti. <break time ='0.6s' />  Facevamo di tutto, <break time ='0.25s' /> dagli esercizi mattutini alle lezioni d'arte. <break time ='0.6s' /> Trovavo un'immensa gioia nell'aiutarli, e nell'imparare dalle loro vaste esperienze e storie. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Ricordo, un momento toccante con la signora Edwards, <break time ='0.25s' /> che aveva perso da poco il marito. <break time ='0.6s' /> Era silenziosa e riservata, <break time ='0.25s' /> raramente partecipava alle attività. <break time ='0.6s' /> Un pomeriggio, <break time ='0.25s' /> ho deciso di sedermi con lei in giardino. <break time ='0.6s' /> Ho messo un po' di musica, e dopo un po' ha iniziato ad aprirsi. <break time ='0.6s' /> Mi ha raccontato della bella vita che aveva con suo marito, e di come ballavano proprio quella canzone. <break time ='0.6s' /> Le lacrime le riempirono gli occhi, <break time ='0.25s' /> ma sorrise, <break time ='0.25s' /> grata per i ricordi. <break time ='0.6s' /> Da quel giorno, <break time ='0.25s' /> ha iniziato ad aprirsi di più con gli altri, e l'ho vista molto più serena, e felice. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Col passare dei mesi, <break time ='0.25s' /> i residenti erano diventati miei amici, <break time ='0.25s' /> la mia famiglia. <break time ='0.6s' /> Ho imparato che la compagnia, e un orecchio attento, possono fare la differenza. <break time ='0.6s' /> Mi hanno insegnato che ogni momento, <break time ='0.25s' /> non importa quanto piccolo, <break time ='0.25s' /> ha la sua unica bellezza. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        ,
+        {
+            "utterance"     : "Un giorno, <break time ='0.25s' /> mentre aiutavo con la festa annuale in giardino, <break time ='0.25s' /> la signora Thompson mi prese da parte. <break time ='0.6s' /> Ricky, disse, <break time ='0.25s' /> Hai portato così tanta gioia in questo posto. <break time ='0.6s' /> ormai sei parte integrante della nostra comunità!. <break time ='0.6s' /> Le sue parole, mi resero felice. <break time ='0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+    ]
+
+            
+}

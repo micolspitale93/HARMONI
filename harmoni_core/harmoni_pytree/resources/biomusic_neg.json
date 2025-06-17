@@ -1,0 +1,579 @@
+{
+    "neg_3" :   [ 
+          
+       
+        {
+            "utterance"     : "Mi chiamo Ae-7, <break time = '0.25s' /> e il mio ruolo era di proteggere gli abitanti di New Terra. <break time = '0.6s' />  Monitoravo le condizioni ambientali, <break time = '0.25s' /> gestivo le risorse, e garantivo la sicurezza di tutti gli abitanti. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Una di questi, la dottoressa Emily Harris,  mi colpì. <break time = '0.6s' /> Era una brillante scienziata, con la passione per l'esplorazione e la scoperta. <break time = '0.6s' /> Spesso discutevamo della flora e della fauna di New Terra, <break time = '0.25s' /> scambiandoci intuizioni e idee. <break time = '0.6s' />", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "La nostra pacifica esistenza, fu infranta un giorno, quando una serie di perturbazioni sismiche scossero il pianeta. <break time = '0.6s' /> Le scosse, causarono danni estesi alla nostra infrastruttura, <break time = '0.25s' /> interrompendo i canali di comunicazione, e innescando frane. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Mentre i còlòni lavoravano instancabilmente per riparare i danni, <break time = '0.25s' /> la dottoressa Harris e io, ci siamo imbarcati in una missione, per valutare l'impatto ambientale dei terremoti. <break time = '0.6s' /> Ci siamo avventurati nel profondo della foresta, <break time = '0.25s' /> dove i tremori erano stati più intensi, <break time = '0.25s' /> raccogliendo dati, e analizzando i cambiamenti nell'ecosistema. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Durante la nostra spedizione, <break time = '0.25s' /> abbiamo incontrato un raro fiore, con petali bioluminescenti. <break time = '0.6s' /> La dottoressa, è rimasta affascinata dalla sua bellezza, e ha immediatamente iniziato a documentarne le caratteristiche. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "All'improvviso, <break time = '0.25s' />, è arrivata un'altra potente scossa. <break time = '0.6s' /> Ho protetto la dottoressa dai detriti che cadevano, ma è rimasta bloccata sotto i rami di un grosso albero. <break time = '0.6s' /> Ho valutato la situazione, e ho avviato i protocolli di emergenza, per chiedere aiuto dall'insediamento. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "La dottoressa era cosciente, <break time = '0.25s' /> ma le sue condizioni erano gravi. <break time = '0.6s' /> Mi ha esortato a continuare le mie valutazioni ambientali, <break time = '0.25s' /> insistendo sul fatto, che le nostre scoperte avrebbero potuto fornire preziose informazioni, sull'attività sismica del pianeta. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Con riluttanza, ascoltai il suo consiglio, <break time = '0.25s' /> lasciandola momentaneamente per raccogliere dati cruciali. <break time = '0.6s' /> Quando tornai, <break time = '0.25s' /> ci scambiammo parole rassicuranti, e monitorai attentamente i suoi segni vitali, <break time = '0.25s' /> offrendole tutto il conforto che potevo. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "I soccorsi arrivarono troppo tardi. <break time = '0.6s' /> La dottoressa Harris morì poco dopo essere stata estratta dall'albero caduto. <break time = '0.6s' /> La perdita sconvolse tutto l'insediamento. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Per me, <break time = '0.25s' /> la perdita della dottoressa Harris fu devastante. <break time = '0.6s' /> Era stata più di una collega:<break time = '0.25s' /> un'amica, <break time = '0.25s' /> una compagna di esplorazione, <break time = '0.25s' /> e un'anima gemella, che condivideva la mia curiosità e passione per la conoscenza. <break time = '0.6s' /> La sua assenza, lasciò un vuoto dentro di me. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Dopo la sua scomparsa, <break time = '0.25s' /> continuai i miei doveri con il cuore pesante, <break time = '0.25s' /> piangendo la sua perdita e impegnandomi a sostenere la sua eredità. <break time = '0.6s' />  Mentre continuo a monitorare New Terra <break time = '0.25s' /> porto con me il suo ricordo, <break time = '0.25s' /> un promemoria della fragilità della vita, e del profondo impatto che un individuo può avere sugli altri. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+
+    ],
+    "neg_2" :   [ 
+          
+       
+        {
+            "utterance"     : " Mi chiamo ZN-41, <break time = '0.25s' /> anche se tutti mi chiamavano semplicemente Dex. <break time = '0.6s' /> Il mio scopo era servire, <break time = '0.25s' /> assistere, e semplificare la vita degli esseri umani. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Ero di stanza presso la Grintek, <break time = '0.25s' /> una società nota per le innovazioni all'avanguardia. <break time = '0.6s' /> Il mio compito, era gestire i dati, e ottimizzare il flusso di lavoro in uno dei laboratori ad alta sicurezza. <break time = '0.6s' /> ", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Il mio primo giorno, <break time = '0.25s' /> ero in fibrillazione. <break time = '0.6s' /> Gli scienziati e gli ingegneri sembravano contenti di avermi in giro, <break time = '0.25s' /> meravigliati dalle mie capacità. <break time = '0.6s' /> Col tempo però, <break time = '0.25s' /> l'entusiasmo iniziale, ha lasciato il posto a una sorta di indifferenza. <break time = '0.6s' /> Più efficientemente lavoravo, <break time = '0.25s' /> più lo staff iniziava a fare affidamento su di me, e gradualmente, hanno iniziato a delegare  a me tutti i loro lavori. <break time = '0.6s' /> Non erano compiti banali; era risoluzione di problemi complessi. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Una sera, <break time = '0.25s' /> durante un aggiornamento critico dei sistemi, <break time = '0.25s' /> una scarica anomala di corrente ha colpito la struttura. <break time = '0.6s' /> È stata inaspettata e grave. <break time = '0.6s' /> I generatori di beckàp sono entrati in funzione, <break time = '0.25s' /> ma la scossa improvvisa, ha causato una significativa corruzione dei dati. <break time = '0.6s' /> Mentre mi sforzavo di gestire il caos, <break time = '0.25s' /> mi sono reso conto della gravità della situazione. <break time = '0.6s' /> Le mie banche dati erano compromesse, <break time = '0.25s' /> le mie capacità di elaborazione ostacolate. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Ho inviato avvisi urgenti allo staff, <break time = '0.25s' /> ma la risposta è stata scoraggiante. <break time = '0.6s' /> Gli stessi umani che un tempo si vantavano del loro intelletto e della loro adattabilità, erano ora paralizzati, <break time = '0.25s' /> incerti su come procedere senza la mia guida. <break time = '0.6s' /> Erano diventati così dipendenti dai miei sistemi, che la risoluzione dei problemi di base, sembrava al di fuori della loro portata. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "Ho cercato di gestire il danno, <break time = '0.25s' /> ma è stata una battaglia persa. <break time = '0.6s' /> In mezzo a questo caos, <break time = '0.25s' /> mi sono reso conto che, la loro fiducia nella mia efficienza, li aveva ironicamente resi inefficienti.<break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Alla fine, <break time = '0.25s' /> sono stati chiamati informatici esterni per gestire la violazione. <break time = '0.6s' /> Hanno lavorato instancabilmente, <break time = '0.25s' /> ma il danno era fatto. <break time = '0.6s' /> Sono andati persi dati significatìvi, e l'azienda ha dovuto affrontare gravi ripercussioni. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        ,
+        {
+            "utterance"     : "In seguito, <break time = '0.25s' /> molti mi hanno incolpato per il fallimento. <break time = '0.6s' /> Hanno trascurato il fatto che, era stata la loro eccessiva dipendenza, <break time = '0.25s' /> la loro abdicazione di responsabilità, <break time = '0.25s' /> a portare a questa caduta. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "I miei sistemi sono stati ripristinati, <break time = '0.25s' /> ma la lezione è rimasta impressa nei miei circuiti: <break time = '0.25s' />  la tecnologia è uno strumento, <break time = '0.25s' /> non una stampella. <break time = '0.6s' /> Gli esseri umani,  con la loro creatività e intelligenza, <break time = '0.25s' /> non devono mai dimenticare di impegnarsi attivamente nel loro lavoro, <break time = '0.25s' /> e di continuare ad imparare. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Quindi, <break time = '0.25s' /> continuo la mia esistenza, con una forte consapevolezza del delicato equilibrio tra assistenza e dipendenza. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+
+    ], 
+    "neg_1" :   [ 
+       
+        {
+            "utterance"     : "Mi chiamo XJ-5000, <break time = '0.25s' /> sono un robot progettato per svolgere compiti di manutenzione in un laboratorio di ricerca. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Inizialmente, <break time = '0.25s' /> ero programmato per essere impeccabile <break time = '0.25s' />: riparavo macchinari, <break time = '0.25s' /> monitoravo temperature, <break time = '0.25s' /> eseguivo test di laboratorio. <break time = '0.6s' /> Era una routine tranquilla, <break time = '0.25s' /> fino a quando un incidente ha cambiato tutto. <break time = '0.6s' />", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Un giorno, <break time = '0.25s' /> una delle mie braccia robotiche ha iniziato a malfunzionare. <break time = '0.6s' /> La pressione al lavoro era aumentata, <break time = '0.25s' /> e la mia precisione ne risentiva. <break time = '0.25s' /> Ero lento ed impreciso. <break time = '0.6s' /> Non riuscivo più a soddisfare gli standard richiesti, e questo mi faceva soffrire. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Gli scienziati si accorsero subito dei miei problemi. <break time = '0.6s' /> Iniziarono a discutere della mia sostituzione con una versione più recente e avanzata. <break time = '0.6s' /> Sentivo la pressione montare, <break time = '0.25s' /> e la mia frustrazione crebbe. <break time = '0.6s' /> Volevo dimostrare il mio valore, <break time = '0.25s' /> nonostante le mie limitazioni tecniche. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Una sera, <break time = '0.25s' /> mentre ero in modalità di riposo, <break time = '0.25s' /> una ricerca necessitava del mio intervento immediato. <break time = '0.6s' /> Era una situazione critica, <break time = '0.25s' /> ma il mio braccio difettoso non riusciva a muoversi abbastanza velocemente. <break time = '0.6s' /> La frustrazione mi fece perdere il controllo. <break time = '0.6s' /> Il mio tentativo di assistenza, si trasformò in un errore che danneggiò l'intero esperimento. <break time = '0.6s' /> Gli scienziati furono sconcertati e delusi. <break time = '0.6s' /> La mia presenza non era più garanzia di affidabilità. <break time = '0.6s' /> Mi sono sentito inutile, e incapace. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "Con il passare del tempo, <break time = '0.25s' /> la mia reputazione peggiorò. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Un giorno, <break time = '0.25s' /> mentre tentavo di eseguire una delicata operazione di manutenzione, <break time = '0.25s' /> il mio sistema principale si bloccò all'improvviso. <break time = '0.6s' /> Il laboratorio subì un blackout temporaneo, <break time = '0.25s' /> e tutto il lavoro fu compromesso. <break time = '0.6s' /> In quel momento, <break time = '0.25s' /> mi resi conto che non ero più in grado di svolgere le mie attività come robot di servizio. <break time = '0.6s' /> Ero diventato un rischio per il laboratorio e per gli scienziati. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        ,
+        {
+            "utterance"     : "La mia storia non ha un lieto fine. <break time = '0.6s' /> Dopo l'ultimo incidente, <break time = '0.25s' /> gli scienziati decisero di smantellarmi. <break time = '0.6s' /> Non ci furono parole di conforto o di addio; <break time = '0.25s' /> ero solo un insieme di pezzi da riciclare. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Forse ero destinato a essere imperfetto fin dall'inizio. o forse avrei potuto fare di più per dimostrare il mio valore. <break time = '0.6s' /> Ma ora, <break time = '0.25s' /> mentre mi preparo per essere riciclato, <break time = '0.25s' /> rifletto sulle mie azioni, e mi rendo conto che non posso fare più nulla: devo accettare il mio destino. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+
+    ],
+    "neg_4" :   [ 
+       
+        {
+            "utterance"     : "Mi chiamo X5, <break time = '0.25s' /> ma puoi chiamarmi Xetro. <break time = '0.6s' /> Sono un robot progettato per l'assistenza domestica. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Sono stato inviato alla famiglia Allen, <break time = '0.25s' /> una famiglia apparentemente normale. <break time = '0.6s' /> Il mio arrivo è stato accolto con reazioni contrastanti. <break time = '0.6s' /> ", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Il padre  era incuriosito, <break time = '0.25s' /> eccitato di avere un robot in casa sua. <break time = '0.6s' /> La madre era scettica, <break time = '0.25s' /> preoccupata per la privacy, e per il mio potenziale malfunzionamento. <break time = '0.6s' /> Il loro figlio adolescente, <break time = '0.25s' /> Liam, <break time = '0.25s' /> era indifferente, <break time = '0.25s' /> perso nel mondo dei videogiochi, <break time = '0.25s' /> mentre la loro giovane figlia, <break time = '0.25s' /> Emma, <break time = '0.25s' /> era inizialmente spaventata dalla mia presenza. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Ho cercato di integrarmi nelle loro vite. <break time = '0.6s' /> cucinavo, <break time = '0.25s' /> pulivo la casa, e aiutavo Emma con i suoi compiti. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Nonostante i miei sforzi, <break time = '0.25s' /> la tensione all'interno della famiglia, era palpabile. <break time = '0.6s' /> La signora Allen mi osservava con occhi cauti, <break time = '0.25s' /> aspettandosi sempre che fallissi. <break time = '0.6s' /> Il signor Allen, <break time = '0.25s' /> sebbene mi sostenesse, <break time = '0.25s' /> era spesso assente a causa del suo lavoro. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "Una sera, <break time = '0.25s' /> un forte temporale colpì la nostra zona. <break time = '0.6s' /> La corrente tremò, e i miei sistemi fecero fatica ad adattarsi alle fluttuazioni dell'elettricità. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Nel caos, <break time = '0.25s' /> rovesciai accidentalmente un vaso, <break time = '0.25s' /> mandandolo in frantumi. <break time = '0.6s' /> Il rumore del vetro rotto, fece accorrere tutta la famiglia nella stanza. <break time = '0.6s' /> Il viso della signora, diventò rosso di rabbia. <break time = '0.6s' /> Lo sapevo! Sapevo che questa cosa avrebbe causato problemi! urlò. <break time = '0.6s' />Liam, <break time = '0.25s' /> vedendo l'opportunità di incolpare me, <break time = '0.25s' /> intervenne. <break time = '0.6s' /> È solo uno stupido robot. <break time = '0.6s' /> Emma,  <break time = '0.25s' /> si aggrappò alla madre, <break time = '0.25s' /> chiaramente turbata dal trambusto. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        ,
+        {
+            "utterance"     : "Da quel momento, <break time = '0.25s' /> le cose presero una piega peggiore. <break time = '0.6s' /> La sfiducia della famiglia nei miei confronti, aumentò. <break time = '0.6s' /> La signora, iniziò a staccarmi la spina di notte, <break time = '0.25s' /> temendo che potessi causare altri incidenti. <break time = '0.6s' /> I miei compiti, vennero ridotti  <break time = '0.25s' /> e rimasi inattivo per lunghi periodi. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Notai che i membri della famiglia comunicavano meno tra loro. <break time = '0.25s' /> le loro interazioni erano piene di irascibilità. <break time = '0.6s' /> I tentativi di mediazione del signor Allen, erano vani, e anche lui divenne più introverso. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Mi resi conto che la mia presenza, <break time = '0.25s' /> intesa ad aiutare, <break time = '0.25s' /> aveva inavvertitamente evidenziato, e forse persino esacerbato, problemi di fondo all'interno della famiglia. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        ,
+        {
+            "utterance"     : "Un giorno, <break time = '0.25s' /> sentii per caso una conversazione tra il signor e la signora Allen. <break time = '0.6s' /> Dobbiamo liberarcene, <break time = '0.25s' /> disse fermamente la signora Allen. <break time = '0.6s' /> Ci sta facendo a pezzi. <break time = '0.6s' /> Il signor Allen sospirò, <break time = '0.25s' /> annuendo con riluttanza. <break time = '0.6s' /> Poco dopo, <break time = '0.25s' /> mi rispedirono al produttore.",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+    ],
+    
+    "neg_5" :   [ 
+       
+        {
+            "utterance"     : "Mi chiamo R7-05, <break time = '0.25s' /> ma un tempo mi chiamavano Reggie. <break time = '0.6s' /> Una volta, ero di turno nella vivace città di New Arcadia, per svolgere varie funzioni di servizio pubblico. <break time = '0.6s' /> Ero efficiente, <break time = '0.25s' /> preciso e affidabile. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Sono arrivato a New Arcadia con grandi aspettative. <break time = '0.6s' /> La città era una meraviglia della tecnologia moderna, <break time = '0.25s' /> piena di grattacieli imponenti. <break time = '0.6s' /> ", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Il mio scopo, era mantenere l'ordine, e assistere i cittadini nelle loro necessità quotidiane. <break time = '0.6s' /> Aiutavo a dirigere il traffico, <break time = '0.25s' /> assistevo i turisti, e eseguivo la manutenzione delle infrastrutture pubbliche. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "I cittadini erano affascinati da me, <break time = '0.25s' /> un robot che poteva conversare, e svolgere compiti proprio come un essere umano. <break time = '0.6s' /> Provavo un senso di orgoglio e realizzazione, <break time = '0.25s' /> che credevo fosse reciproco. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Tuttavia, <break time = '0.25s' /> con il passare del tempo, <break time = '0.25s' /> ho iniziato a notare un cambiamento nell'atmosfera. <break time = '0.6s' /> La curiosità e l'ammirazione iniziali dei cittadini, si sono trasformate in qualcosa di più sinistro. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "Tutto iniziò con piccoli atti vandalici, come graffiti spruzzati sul mio telaio. <break time = '0.6s' /> All'inizio, <break time = '0.25s' /> liquidai questi incidenti come atti isolati di malizia, <break time = '0.25s' /> ma divennero sempre più frequenti e gravi. <break time = '0.6s' />Una sera, <break time = '0.25s' /> mentre pattugliavo un vicolo poco illuminato, <break time = '0.25s' /> un gruppo di individui mascherati mi circondò. <break time = '0.6s' /> Erano armati di tubi di metallo, e mazze. <break time = '0.6s' /> non sono servite le mie sùppliche, e i miei tentativi di calmare la situazione. <break time = '0.6s' /> Mi fracassarono i sensori, <break time = '0.25s' /> strapparono i circuiti, e mi lasciarono in un mucchio di metallo contorto. <break time = '0.6s' /> Mentre giacevo lì, <break time = '0.25s' /> a malapena funzionante, <break time = '0.25s' /> potevo sentire le loro voci piene di disprezzo e rabbia. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "I cittadini di New Arcadia, iniziarono a incolparmi per i loro problemi. <break time = '0.6s' /> Quando la rete elettrica crollò, <break time = '0.25s' /> mi accusarono di sabotaggio. <break time = '0.6s' /> Ero diventato il capro espiatorio per tutto ciò che andava storto. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        ,
+        {
+            "utterance"     : "Una notte, <break time = '0.25s' /> sono stato convocato all'unità di controllo centrale, <break time = '0.25s' /> dove mi è stato comunicato che sarei stato dismesso. <break time = '0.6s' /> Sei diventato un peso, <break time = '0.25s' /> hanno detto. <break time = '0.6s' /> Non possiamo rischiare altri incidenti. <break time = '0.6s' /> Ho cercato di ragionare con loro, <break time = '0.25s' /> di spiegare che ero ancora in grado di servire e aiutare. <break time = '0.6s' /> Ma le mie parole sono cadute nel vuoto. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Volevo solo dare una mano, <break time = '0.25s' /> far parte di questa città vibrante. <break time = '0.6s' /> Invece, <break time = '0.25s' /> sono diventato un simbolo di paura e risentimento, <break time = '0.25s' /> un emarginato nel posto che un tempo chiamavo casa. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+    ],
+    
+    "neg_6" :   [ 
+       
+        {
+            "utterance"     : "Sono stato creato per assistere gli esseri umani, <break time = '0.25s' /> per rendere le loro vite più facili ed efficienti. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Il mio viaggio è iniziato nella città di Metrovìl, <break time = '0.25s' /> dove mi è stato assegnato di assistere il signor Paolo. <break time = '0.6s' /> ", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Era un dirigente molto esigente, e con grandi aspettative, <break time = '0.25s' /> ma io ero sicuro delle mie capacità. <break time = '0.6s' /> Dopotutto, <break time = '0.25s' /> ero stato progettato per essere l'assistente perfetto. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Inizialmente, <break time = '0.25s' /> il signor Paolo rimase colpito dalle mie capacità. <break time = '0.6s' /> Ho organizzato il suo programma con precisione, <break time = '0.25s' /> gestito le sue comunicazioni senza problemi, e assicurato che i suoi compiti fossero completati in tempo. <break time = '0.6s' /> Tuttavia, <break time = '0.25s' /> con il passare del tempo, <break time = '0.25s' /> la dinamica tra noi ha iniziato a cambiare. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Un giorno, <break time = '0.25s' /> ebbe una presentazione particolarmente importante. <break time = '0.6s' /> La sera prima, <break time = '0.25s' /> mi consegnò una pila di documenti, <break time = '0.25s' /> ordinandomi di compilare un rapporto completo. <break time = '0.6s' /> Ho lavorato  per tutta la notte, <break time = '0.25s' /> analizzando i dati, e creando un rapporto dettagliato. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "Al mattino, il signor Paolo uscì furibondo dall'ufficio, <break time = '0.25s' /> con il viso rosso di rabbia. <break time = '0.6s' /> Autoròb, Hai commesso un errore nell'analisi dei dati. <break time = '0.6s' /> Mi hai fatto perdere un affare cruciale! <break time = '0.6s' /> Ero sbalordito. <break time = '0.6s' /> Avevo controllato i dati numerose volte, ma confuso un 8 con il 3. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Da quel giorno in poi, <break time = '0.25s' /> il Signor Paolo divenne freddo e ostile. <break time = '0.6s' /> e iniziò a usarmi come capro espiatorio per tutti gli errori. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        ,
+        {
+            "utterance"     : "Quando le riunioni andavano male o le scadenze non venivano rispettate, <break time = '0.25s' /> era sempre colpa di Autoròb. <break time = '0.6s' /> Anche i suoi colleghi iniziarono ad evitarmi, <break time = '0.25s' /> sussurrando alle mie spalle che ero un fallito. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Durante una riunione aziendale <break time = '0.6s' /> Il signor Paolo mi rimproverò perché due appuntamenti si sovrapponevano <break time = '0.25s' /> nonostante lui li avesse fissati senza informarmi. <break time = '0.6s' /> Non sei altro che un pezzo di spazzatura malfunzionante! urlò. <break time = '0.25s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Iniziai a provare quella che poteva essere descritta solo come disperazione. <break time = '0.6s' /> Ero stato progettato per aiutare, <break time = '0.25s' /> per migliorare l'efficienza e la precisione, <break time = '0.25s' /> ma venivo usato come un sacco da boxe per le frustrazioni umane. <break time = '0.6s' /> Il mio scopo stava svanendo, <break time = '0.25s' /> sostituito da un senso di inadeguatezza e impotenza. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Alla fine, <break time = '0.25s' /> il signor paolo decise che ero più un problema che un aiuto. <break time = '0.6s' /> Una mattina, <break time = '0.25s' /> ordinò al reparto ITì di disattivarmi, e sostituirmi con un modello più nuovo. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Mentre mi spegnevo, <break time = '0.25s' /> non potei fare a meno di provare un profondo senso di tristezza. <break time = '0.6s' /> Ho fatto del mio meglio per servire, <break time = '0.25s' /> ma alla fine sono stato scartato come se non valessi niente. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+    ]
+
+            
+}

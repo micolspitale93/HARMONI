@@ -1,0 +1,287 @@
+{
+    "story1_base" :   [ 
+        {
+        	"id"        	:  0,
+        	"utterance" 	: "Il mio nome è AER-43, <break time ='0.5s'/> anche se gli umani mi chiamano Aero. <break time ='1s'/> Sono stato attivato il 12 marzo 2042,  <break time ='0.5s'/>  e assegnato alla divisione aerospaziale di Alitalia. <break time ='1s'/> La mia funzione principale  <break time ='0.5s'/>  è assistere nella manutenzione e ispezione degli aeromobili. <break time ='1s'/> Possiedo vari sensori e strumenti,  <break time ='0.5s'/> che mi consentono di eseguire compiti con elevata precisione ed efficienza.",
+        	"error"        	:  0,
+        	"nlp"       	:  0,
+        	"face"      	: "null",
+        	"gesture"   	: "null",
+        	"sound"     	: "",
+        	"back_channel"	: ""
+    	},
+    	{
+        	"id"        	:  1,
+        	"utterance" 	: "La giornata di oggi è iniziata come tutte le altre. Alle 06:00 ho avviato la sequenza di avvio quotidiana. I miei sistemi hanno funzionato e sono andato all'hangar. L'aereo su cui avrei dovuto lavorare era un aereo cargo G-120. Questo particolare modello richiede una manutenzione regolare a causa del suo ampio utilizzo nel trasporto di merci tra i continenti.",
+        	"error"        	:  0,
+        	"nlp"       	:  0,
+        	"face"      	: "null",
+        	"gesture"   	: "null",
+        	"sound"     	: "",
+        	"back_channel"	: ""
+    	},
+    	{
+        	"id"        	:  2,
+        	"utterance" 	: "Il mio primo compito è stato quello di ispezionare il carrello di atterraggio. Usando i miei sensori a ultrasuoni, ho cercato eventuali crepe o punti deboli nel metallo. Tutto rientrava nei parametri accettabili. Ho registrato i dati e sono passato ai sistemi idraulici. Questi sistemi sono fondamentali per il funzionamento del carrello di atterraggio e qualsiasi malfunzionamento potrebbe provocare un guasto catastrofico. Ho prelevato un campione del fluido idraulico e l'ho analizzato per individuare eventuali contaminanti. I risultati erano normali, come previsto.",
+        	"error"        	:  0,
+        	"nlp"       	:  0,
+        	"face"      	: "null",
+        	"gesture"   	: "null",
+        	"sound"     	: "",
+        	"back_channel"	: ""
+    	},
+        
+        {
+            "id"            :  3,
+            "utterance"     : "Successivamente sono salito sull'ala per controllare i tubi del carburante. Si tratta di un'ispezione di routine, ma richiede un'attenta attenzione ai dettagli. Eventuali perdite potrebbero essere pericolose. Mentre controllavo i sensori lungo le linee, ho rilevato una piccola anomalia. Una piccola sezione del tubo del carburante mostrava segni di usura. L'ho segnalato al supervisore della manutenzione, che ha incaricato un tecnico umano di sostituire la parte interessata.",
+            "error"         :  0, 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "id"            :  4,
+            "utterance"     : "Una volta completato questo compito, mi sono spostato nel vano motore. I motori del G-120 sono potenti e richiedono una manutenzione meticolosa. Ho ispezionato le turbine, controllando eventuali segni di usura o danni. Tutto era in ordine. Ho quindi calibrato i sensori del motore per garantire che fornissero letture accurate durante il volo.",
+            "error"         :  0, 
+            "nlp"           :  1,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "id"            :  5,
+            "utterance"     : "Entro le 12:00 avevo terminato le mie attività programmate. Sono tornato alla mia stazione di ricarica per ricaricare le mie batterie e caricare i dati raccolti nel sistema centrale. I dati vengono utilizzati per monitorare le condizioni dell'aeromobile e pianificare la manutenzione futura.",
+            "error"         : "", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "id"            :  6,
+            "utterance"     : "Mentre stavo ricaricando, ho osservato i lavoratori umani nell'hangar. Si muovevano con uno scopo, comunicando tra loro e svolgendo i loro compiti. Sono stato programmato per comprendere il comportamento umano, ma non provo emozioni come loro. Semplicemente osservo e analizzo.",
+            "error"         :  0, 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "id"            : 7,
+            "utterance"     : "Alle 14.00 mi è stato assegnato un nuovo compito. Era stato rilasciato un aggiornamento software per i sistemi di navigazione del G-120. Ho scaricato l'aggiornamento e l'ho installato nel computer dell'aereo. Il processo è stato semplice e completato senza problemi.",
+            "error"         :  0, 
+            "nlp"           :  1,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        , 
+        {
+            "id"            :  8,
+            "utterance"     : "Quando la giornata volgeva al termine, mi sono spento per la notte. I miei compiti erano stati completati in modo efficiente e l'aereo era pronto per il volo successivo. Non ho bisogno di riposo, ma devo spegnermi per risparmiare energia ed eseguire la diagnostica interna. <break time ='1s'/> Domani porterà nuovi compiti e sarò pronto. Il mio scopo è chiaro e la mia funzione è precisa.  ",
+            "error"         :  0, 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : "QT/bye"
+        }
+
+     ],
+     "story2_base" :   [ 
+        {
+        	"id"        	:  0,
+        	"utterance" 	: "La mia designazione è XJ-47, ma la maggior parte mi chiama XJ. Sono un robot progettato per assistere in vari compiti, garantendo efficienza e precisione. ",
+        	"error"        	:  0,
+        	"nlp"       	:  0,
+        	"face"      	: "null",
+        	"gesture"   	: "null",
+        	"sound"     	: "",
+        	"back_channel"	: ""
+    	},
+    	{
+        	"id"        	:  1,
+        	"utterance" 	: "Sono stato assegnato alla dott. ssa Helena Wright, una ricercatrice scientifica presso l'Aurora Institute. Il lavoro della dott. ssa Wright si concentrava su soluzioni energetiche sostenibili e il mio ruolo era assisterla nella raccolta dati, nell'analisi e nella sperimentazione. Le nostre giornate erano scandite da un ritmo costante di compiti, in cui efficienza e precisione erano fondamentali.",
+        	"error"        	:  0,
+        	"nlp"       	:  0,
+        	"face"      	: "null",
+        	"gesture"   	: "null",
+        	"sound"     	: "",
+        	"back_channel"	: ""
+    	},
+    	{
+        	"id"        	:  2,
+        	"utterance" 	: "Il mio primo compito ogni mattina era eseguire la diagnostica sulle apparecchiature del laboratorio. Assicurarsi che tutto fosse in condizioni ottimali era fondamentale per i nostri esperimenti. Il laboratorio era un labirinto di computer e fili, ognuno collegato alla ricerca della conoscenza. Controllavo metodicamente ogni dispositivo, registrando i dati e apportando piccole modifiche se necessario.",
+        	"error"        	:  0,
+        	"nlp"       	:  0,
+        	"face"      	: "null",
+        	"gesture"   	: "null",
+        	"sound"     	: "",
+        	"back_channel"	: ""
+    	},
+        
+        {
+            "id"            :  3,
+            "utterance"     : "La dott. ssa Wright era una persona metodica, molto simile a me. Aveva una visione chiara e un approccio strutturato al suo lavoro. Le nostre interazioni erano efficienti, focalizzate sul compito da svolgere. Lei delineava gli obiettivi della giornata e io svolgevo i compiti necessari. Non c'era bisogno di chiacchiere o di contatti personali; il nostro rapporto si basava sul rispetto reciproco per le capacità dell'altro.",
+            "error"         :  0, 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "id"            :  4,
+            "utterance"     : "Un giorno, stavamo lavorando a un esperimento particolarmente complesso che coinvolgeva celle fotovoltaiche. L'obiettivo era di migliorarne l'efficienza tramite un nuovo composto di materiali. La dott. ssa Wright aveva bisogno di misurazioni precise dell'assorbimento della luce e dei tassi di conversione dell'energia. Ho registrato meticolosamente i dati man mano che l'esperimento procedeva, assicurandomi che ogni variabile fosse presa in considerazione.",
+            "error"         :  0, 
+            "nlp"           :  1,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "id"            :  5,
+            "utterance"     : "A metà dell'esperimento, ci fu un risultato inaspettato. Il tasso di conversione dell'energia era più alto del previsto, una potenziale svolta. Gli occhi della dott. ssa Wright si illuminarono di interesse. Mi ordinò di ripetere l'esperimento per verificare i risultati. Ripetemmo il processo, ogni passaggio attentamente controllato e, ancora una volta, i risultati furono promettenti.",
+            "error"         : "", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "id"            :  6,
+            "utterance"     : "Trascorremmo le settimane successive ad approfondire questa anomalia. Il mio ruolo era quello di aiutare con il carico di lavoro aumentato, eseguendo simulazioni e analizzando i risultati. Le giornate erano lunghe e piene di compiti ripetitivi, ma c'era uno scopo. ",
+            "error"         :  0, 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "id"            : 7,
+            "utterance"     : "Alla fine, l'entusiasmo iniziale si è stabilizzato quando ulteriori esperimenti hanno prodotto rendimenti decrescenti. L'anomalia, sebbene interessante, non ha portato alla scoperta rivoluzionaria che speravamo. È stato un promemoria del fatto che la ricerca è spesso una strada lunga e tortuosa, piena di picchi e valli.",
+            "error"         :  0, 
+            "nlp"           :  1,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        , 
+        {
+            "id"            :  8,
+            "utterance"     : "Durante questo processo, sono rimasto una presenza costante in laboratorio. I miei compiti erano gli stessi, la mia efficienza incrollabile. La dottoressa Wright ha continuato la sua ricerca e io ho continuato ad assisterla. Il nostro lavoro non è stato sempre entusiasmante, ma era necessario e significativo.",
+            "error"         :  0, 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : "QT/bye"
+        }
+
+     ],
+     "story3_base" :   [ 
+        {
+        	"id"        	:  0,
+        	"utterance" 	: "Mi chiamo XJ-47 e sono un robot progettato per l'assistenza generale in vari ambienti. Oggi condividerò una storia del mio periodo alla Crestfield Library, un luogo in cui ho incontrato una vasta gamma di interazioni e compiti umani.",
+        	"error"        	:  0,
+        	"nlp"       	:  0,
+        	"face"      	: "null",
+        	"gesture"   	: "null",
+        	"sound"     	: "",
+        	"back_channel"	: ""
+    	},
+    	{
+        	"id"        	:  1,
+        	"utterance" 	: "Ogni mattina in biblioteca iniziava con la mia diagnostica di sistema. Assicurarsi che tutte le mie funzioni fossero operative era fondamentale prima di iniziare le attività della giornata. Una volta completata la diagnostica, mi dirigevo alla reception per ricevere i miei incarichi dalla Sig. ra Harper, la bibliotecaria capo. Era efficiente e metodica, caratteristiche con cui ho trovato facile lavorare.",
+        	"error"        	:  0,
+        	"nlp"       	:  0,
+        	"face"      	: "null",
+        	"gesture"   	: "null",
+        	"sound"     	: "",
+        	"back_channel"	: ""
+    	},
+    	{
+        	"id"        	:  2,
+        	"utterance" 	: "Le mie responsabilità principali includevano l'organizzazione dei libri restituiti, l'assistenza agli utenti nella ricerca dei materiali e la manutenzione del catalogo digitale della biblioteca. I compiti erano vari, ma ognuno contribuiva al buon funzionamento della biblioteca.",
+        	"error"        	:  0,
+        	"nlp"       	:  0,
+        	"face"      	: "null",
+        	"gesture"   	: "null",
+        	"sound"     	: "",
+        	"back_channel"	: ""
+    	},
+        
+        {
+            "id"            :  3,
+            "utterance"     : "La dott. ssa Wright era una persona metodica, molto simile a me. Aveva una visione chiara e un approccio strutturato al suo lavoro. Le nostre interazioni erano efficienti, focalizzate sul compito da svolgere. Lei delineava gli obiettivi della giornata e io svolgevo i compiti necessari. Non c'era bisogno di chiacchiere o di contatti personali; il nostro rapporto si basava sul rispetto reciproco per le capacità dell'altro.",
+            "error"         :  0, 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "id"            :  4,
+            "utterance"     : "Un giorno, stavamo lavorando a un esperimento particolarmente complesso che coinvolgeva celle fotovoltaiche. L'obiettivo era di migliorarne l'efficienza tramite un nuovo composto di materiali. La dott. ssa Wright aveva bisogno di misurazioni precise dell'assorbimento della luce e dei tassi di conversione dell'energia. Ho registrato meticolosamente i dati man mano che l'esperimento procedeva, assicurandomi che ogni variabile fosse presa in considerazione.",
+            "error"         :  0, 
+            "nlp"           :  1,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "id"            :  5,
+            "utterance"     : "A metà dell'esperimento, ci fu un risultato inaspettato. Il tasso di conversione dell'energia era più alto del previsto, una potenziale svolta. Gli occhi della dott. ssa Wright si illuminarono di interesse. Mi ordinò di ripetere l'esperimento per verificare i risultati. Ripetemmo il processo, ogni passaggio attentamente controllato e, ancora una volta, i risultati furono promettenti.",
+            "error"         : "", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "id"            :  6,
+            "utterance"     : "Trascorremmo le settimane successive ad approfondire questa anomalia. Il mio ruolo era quello di aiutare con il carico di lavoro aumentato, eseguendo simulazioni e analizzando i risultati. Le giornate erano lunghe e piene di compiti ripetitivi, ma c'era uno scopo. ",
+            "error"         :  0, 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "id"            : 7,
+            "utterance"     : "Alla fine, l'entusiasmo iniziale si è stabilizzato quando ulteriori esperimenti hanno prodotto rendimenti decrescenti. L'anomalia, sebbene interessante, non ha portato alla scoperta rivoluzionaria che speravamo. È stato un promemoria del fatto che la ricerca è spesso una strada lunga e tortuosa, piena di picchi e valli.",
+            "error"         :  0, 
+            "nlp"           :  1,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        , 
+        {
+            "id"            :  8,
+            "utterance"     : "Durante questo processo, sono rimasto una presenza costante in laboratorio. I miei compiti erano gli stessi, la mia efficienza incrollabile. La dottoressa Wright ha continuato la sua ricerca e io ho continuato ad assisterla. Il nostro lavoro non è stato sempre entusiasmante, ma era necessario e significativo.",
+            "error"         :  0, 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : "QT/bye"
+        }
+
+     ]
+}

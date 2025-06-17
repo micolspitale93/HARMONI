@@ -12,7 +12,7 @@
     	},
     	{
         	"id"        	:  1,
-        	"utterance" 	: "Nice to meet you USERNAME.  Is that okay?",
+        	"utterance" 	: "Nice to meet you USERNAME. So we're going to do a session of positive psychology practices. The aim of positive psychology is to guide you towards focusing on positive things in your life. Often, the negative things in our life can get a lot of our attention while the positive things are harder to focus on. Focusing on the positive can help increase happiness and life satisfaction. Is that okay?",
         	"error"        	:  0,
         	"nlp"       	:  0,
         	"face"      	: "null",
@@ -22,7 +22,7 @@
     	},
     	{
         	"id"        	:  2,
-        	"utterance" 	: "The first exercise is called savouring. Please share your positive memory with me.",
+        	"utterance" 	: "Today exercise is going to focus on developing the feeling of gratitude. And cultivating gratitude can help increase positive mood, happiness and also general life satisfaction. So like with the last session, think back to the last week or month or so and recall an experience you felt grateful for. Please share your positive memory with me.",
         	"error"        	:  0,
         	"nlp"       	:  0,
         	"face"      	: "null",
@@ -33,7 +33,7 @@
         
         {
             "id"            :  3,
-            "utterance"     : "Can you ask me a follow up question on this savouring exercise?",
+            "utterance"     : "Can you ask me a follow up question on this gratitude exercise?",
             "error"         :  0, 
             "nlp"           :  1,
             "face"          : "null",
@@ -43,7 +43,7 @@
         },
         {
             "id"            :  4,
-            "utterance"     : "Can you ask me a follow up question on this savouring exercise?",
+            "utterance"     : "Can you ask me a follow up question on this gratitude exercise?",
             "error"         :  0, 
             "nlp"           :  1,
             "face"          : "null",
@@ -53,7 +53,7 @@
         },
         {
             "id"            :  9,
-            "utterance"     : "Thank you for sharing this USERNAME. Again, let's take a small quiet moment to savour this experience. What the experience was <break time='3s'/> how it made you feel <break time='5s'/> and what difference this small thing made to you. <break time ='7s'/> Great. And so we've tried the savouring exercise. It's about focusing on the detail of positive experiences to to make sure we give them enough attention so that they're memorable. So between now and our next session, you might just like to practice savouring. So asking yourself the questions of, how did I notice this was a positive experience? <break time ='1s'/> And what was positive about it? <break time ='2s'/> I'm sorry that I made some mistakes. I'm trying to improve, but sometimes I have technical issues. <break time ='3s'/> Next time, we'll have a session on gratitude. Before you leave, please take some time to fill in the questionnaires on the tablet. Once you're done, let RESEARCHERNAME know, they will ask you a few questions before you leave. See you next time!",
+            "utterance"     : "Thank you for sharing this USERNAME. Again, let's take a small quiet moment to savour this experience. What the experience was <break time='3s'/> how it made you feel <break time='5s'/> and what difference this small thing made to you. <break time ='7s'/> Great. And so we've tried the savouring exercise. It's about focusing on the detail of positive experiences to to make sure we give them enough attention so that they're memorable. So between now and our next session, you might just like to practice savouring. So asking yourself the questions of, how did I notice this was a positive experience? <break time ='1s'/> And what was positive about it? <break time ='2s'/>. See you next time!",
             "error"         :  0, 
             "nlp"           :  0,
             "face"          : "null",

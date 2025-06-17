@@ -127,7 +127,7 @@ def main():
         s = SpeakerService(service_id)
 
         service_server = HarmoniServiceServer(service_id, s)
-
+        #s.do("/root/harmoni_catkin_ws/src/HARMONI/harmoni_actuators/harmoni_tts/temp_data/tts.wav")
         print(service_name)
         print("****************************************************************************")
         print(service_id)

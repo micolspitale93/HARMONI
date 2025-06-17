@@ -26,17 +26,18 @@ class ScriptErrorsService(py_trees.behaviour.Behaviour):
         self.blackboards = []
         self.blackboard_scene = self.attach_blackboard_client(name=self.name, namespace=PyTreeNameSpace.scene.name)
         self.blackboard_scene.register_key(key="gesture", access=py_trees.common.Access.WRITE)
-        
-        self.blackboard_scene.register_key(key=PyTreeNameSpace.scene.name+"/nlp", access=py_trees.common.Access.WRITE)
-        self.blackboard_scene.register_key(key=PyTreeNameSpace.scene.name+"/errors", access=py_trees.common.Access.WRITE)
-        self.blackboard_scene.register_key(key=PyTreeNameSpace.scene.name+"/utterance", access=py_trees.common.Access.WRITE)
-        self.blackboard_scene.register_key(key=PyTreeNameSpace.scene.name+"/request", access=py_trees.common.Access.WRITE)
-        self.blackboard_scene.register_key(key=PyTreeNameSpace.scene.name+"/exercise", access=py_trees.common.Access.WRITE)
-        self.blackboard_scene.register_key(key=PyTreeNameSpace.scene.name+"/max_number_scene", access=py_trees.common.Access.WRITE)
-        self.blackboard_scene.register_key(key=PyTreeNameSpace.scene.name+"/scene_counter", access=py_trees.common.Access.READ)
-        self.blackboard_scene.register_key(key=PyTreeNameSpace.scene.name+"/scene_end", access=py_trees.common.Access.READ)
-        self.blackboard_scene.register_key(key=PyTreeNameSpace.scene.name+"/action", access=py_trees.common.Access.READ)
-        self.blackboard_bot = self.attach_blackboard_client(name=self.name, namespace=DialogueNameSpace.bot.name+"/"+PyTreeNameSpace.trigger.name)
+        self.blackboard_gesture = self.attach_blackboard_client(name=self.name, namespace=ActuatorNameSpace.gesture.name)
+        self.blackboard_gesture.register_key("result", access=py_trees.common.Access.WRITE)
+        self.blackboard_scene.register_key(key="nlp", access=py_trees.common.Access.WRITE)
+        self.blackboard_scene.register_key(key="errors", access=py_trees.common.Access.WRITE)
+        self.blackboard_scene.register_key(key="utterance", access=py_trees.common.Access.WRITE)
+        self.blackboard_scene.register_key(key="request", access=py_trees.common.Access.WRITE)
+        self.blackboard_scene.register_key(key="exercise", access=py_trees.common.Access.WRITE)
+        self.blackboard_scene.register_key(key="max_number_scene", access=py_trees.common.Access.WRITE)
+        self.blackboard_scene.register_key(key="scene_counter", access=py_trees.common.Access.READ)
+        self.blackboard_scene.register_key(key="scene_end", access=py_trees.common.Access.READ)
+        self.blackboard_scene.register_key(key="action", access=py_trees.common.Access.READ)
+        self.blackboard_bot = self.attach_blackboard_client(name=self.name, namespace=DialogueNameSpace.bot.name)
         self.blackboard_bot.register_key("result", access=py_trees.common.Access.READ)
         self.blackboard_bot.register_key("feeling", access=py_trees.common.Access.READ)
         self.blackboard_bot.register_key("sentiment", access=py_trees.common.Access.READ)
@@ -54,11 +55,11 @@ class ScriptErrorsService(py_trees.behaviour.Behaviour):
         pattern_script_path = pck_path + f"/resources/{json_name}.json"
         with open(pattern_script_path, "r") as read_file:
             self.context = json.load(read_file)
-        self.blackboard_scene.scene.max_number_scene= len(self.context[self.session])
-        self.blackboard_scene.scene.utterance = self.context[self.session][0]["utterance"]
-        self.blackboard_scene.scene.nlp = self.context[self.session][0]["nlp"]
-        self.blackboard_scene.scene.errors = self.context[self.session][0]["error"]
-        self.blackboard_scene.scene.exercise = self.session[-1]
+        self.blackboard_scene.max_number_scene= len(self.context[self.session])
+        self.blackboard_scene.utterance = self.context[self.session][0]["utterance"]
+        self.blackboard_scene.nlp = self.context[self.session][0]["nlp"]
+        self.blackboard_scene.errors = self.context[self.session][0]["error"]
+        self.blackboard_scene.exercise = self.session[-1]
         self.errors_dictonary = self.context["repair_strategies"]
         self.logger.debug("  %s [ScriptErrorsService::setup()]" % self.name)
 
@@ -71,21 +72,21 @@ class ScriptErrorsService(py_trees.behaviour.Behaviour):
         ## if nlp == 1 and error ==0: the current scene will send the user request (with nlp processing)  and no ERRORS executed
         ## if nlp == 0 and error ==0: the current scene will only play the utterance without any further processing
         self.logger.debug("  %s [ScriptErrorsService::update()]" % self.name)
-        self.blackboard_scene.scene.nlp = self.context[self.session][self.blackboard_scene.scene.scene_counter]["nlp"]
-        self.blackboard_scene.scene.errors = self.context[self.session][self.blackboard_scene.scene.scene_counter]["error"]
-        if self.blackboard_scene.scene.scene_counter !=0:
+        self.blackboard_scene.nlp = self.context[self.session][self.blackboard_scene.scene_counter]["nlp"]
+        self.blackboard_scene.errors = self.context[self.session][self.blackboard_scene.scene_counter]["error"]
+        if self.blackboard_scene.scene_counter !=0:
             rospy.loginfo(self.blackboard_bot.result["message"])
             previous_bot_response = self.blackboard_bot.result["message"]
         else:
             previous_bot_response = ""
-        if not self.blackboard_scene.scene.errors: ## ERRORS == 0
-            utterance = self.context[self.session][self.blackboard_scene.scene.scene_counter]["utterance"]
+        if not self.blackboard_scene.errors: ## ERRORS == 0
+            utterance = self.context[self.session][self.blackboard_scene.scene_counter]["utterance"]
             ## the chatGPT leave will handle the NLP == 0 and NLP ==  1 cases
-            if self.blackboard_scene.scene.nlp: #NLP ==  1
+            if self.blackboard_scene.nlp: #NLP ==  1
                 
                 if len(self.utterance_to_nlp) == 0:
                     context = "*system*"
-                    self.utterance_to_nlp.append( context + self.ai_stopper + self.context[self.session][self.blackboard_scene.scene.scene_counter]["utterance"] + self.human_stopper + self.blackboard_stt.result + self.ai_stopper)
+                    self.utterance_to_nlp.append( context + self.ai_stopper + self.context[self.session][self.blackboard_scene.scene_counter]["utterance"] + self.human_stopper + self.blackboard_stt.result + self.ai_stopper)
                 else:
                     context = "*assistant*"
                     self.utterance_to_nlp.append(context + previous_bot_response)
@@ -93,37 +94,37 @@ class ScriptErrorsService(py_trees.behaviour.Behaviour):
                     self.utterance_to_nlp.append(context + self.human_stopper + self.blackboard_stt.result + self.ai_stopper)
                 utterance = self.utterance_to_nlp
             else: # NLP == 0
-                self.utterance_to_play = self.context[self.session][self.blackboard_scene.scene.scene_counter]["utterance"]
+                self.utterance_to_play = self.context[self.session][self.blackboard_scene.scene_counter]["utterance"]
                 utterance = self.utterance_to_play
         else: ## ERRORS == "interruption" or "non-responding"
-            rospy.loginfo(self.blackboard_scene.scene.errors)
+            rospy.loginfo(self.blackboard_scene.errors)
             #session_dict = self.errors_dictonary[self.condition][key_dict][repair_strategies_id] #0 is not empathic  
-            if self.blackboard_scene.scene.nlp ==1: #NLP ==  1
+            if self.blackboard_scene.nlp ==1: #NLP ==  1
                 print("======== NLP === 1")
                 context = "*user*"
                 self.utterance_to_nlp.append(context + self.human_stopper + self.blackboard_stt.result +self.context[self.session][self.blackboard_scene.scene.scene_counter]["utterance"]+ self.ai_stopper)
                 utterance = self.utterance_to_nlp
-            elif self.blackboard_scene.scene.nlp == 2: #NLP ==  2
+            elif self.blackboard_scene.nlp == 2: #NLP ==  2
                 print("======== NLP === 2 ")
                 context = "*user*"
                 #self.utterance_to_nlp.append(context + self.human_stopper + self.blackboard_stt.result + self.ai_stopper)
                 #utterance = self.utterance_to_nlp
                 utterance = ""
-                self.blackboard_scene.scene.request = [context + self.human_stopper + self.blackboard_stt.result + self.context[self.session][self.blackboard_scene.scene.scene_counter]["utterance"]]
+                self.blackboard_scene.request = [context + self.human_stopper + self.blackboard_stt.result + self.context[self.session][self.blackboard_scene.scene.scene_counter]["utterance"]]
             else: #NLP == 0
                 print("======== NLP === 0")
-                if 'followup_' in self.blackboard_scene.scene.errors:
+                if 'followup_' in self.blackboard_scene.errors:
                     
                     sentiment = self.blackboard_bot.sentiment
                     feeling = self.blackboard_bot.feeling
                     rospy.loginfo(sentiment)
                     rospy.loginfo(feeling)
                     if 'ositive' in sentiment: 
-                        key_dict = self.blackboard_scene.scene.errors + "pos"
+                        key_dict = self.blackboard_scene.errors + "pos"
                     elif 'eutral' in sentiment: 
-                        key_dict = self.blackboard_scene.scene.errors + "pos"
+                        key_dict = self.blackboard_scene.errors + "pos"
                     else:
-                        key_dict = self.blackboard_scene.scene.errors + "neg"
+                        key_dict = self.blackboard_scene.errors + "neg"
                     if "_" in self.session:
                         session = self.session.split("_")[0]
                     else:
@@ -144,13 +145,13 @@ class ScriptErrorsService(py_trees.behaviour.Behaviour):
                     else:
                         session = self.session
                     repair_strategies_id = int(session[-1]) - 1
-                    session_dict = self.errors_dictonary[self.condition][self.blackboard_scene.scene.errors][repair_strategies_id] #0 is not empathic
+                    session_dict = self.errors_dictonary[self.condition][self.blackboard_scene.errors][repair_strategies_id] #0 is not empathic
                     context = "*assistant*"
                     self.utterance_to_play = session_dict
                     self.utterance_to_nlp.append(context + self.ai_stopper + session_dict)
                     utterance = self.utterance_to_play
           
-        gesture = self.context[self.session][self.blackboard_scene.scene.scene_counter]["gesture"]
+        gesture = self.context[self.session][self.blackboard_scene.scene_counter]["gesture"]
         username = "USERNAME" 
         researcher = "RESEARCHERNAME"
         if username in utterance:
@@ -158,11 +159,12 @@ class ScriptErrorsService(py_trees.behaviour.Behaviour):
         if researcher in utterance:
             utterance = utterance.replace(researcher, self.researcher_name)
 
-        if self.blackboard_scene.scene.scene_end == "end":
+        if self.blackboard_scene.scene_end == "end":
             return py_trees.common.Status.FAILURE
         else:
-            self.blackboard_scene.scene.utterance =utterance
+            self.blackboard_scene.utterance =utterance
             self.blackboard_scene.gesture = gesture
+            self.blackboard_gesture.result = gesture
         return py_trees.common.Status.SUCCESS
 
     def terminate(self, new_status):

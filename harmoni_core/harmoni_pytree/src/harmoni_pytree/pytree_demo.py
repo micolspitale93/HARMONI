@@ -11,20 +11,20 @@ import py_trees
 import rospy
 from harmoni_common_lib.constants import *
 from harmoni_pytree.leaves.aws_tts_service import AWSTtsServicePytree
+from harmoni_pytree.leaves.script_service import ScriptService
+from harmoni_pytree.leaves.script_errors_service import ScriptErrorsService
 from harmoni_pytree.leaves.aws_lex_trigger_service import AWSLexTriggerServicePytree
 from harmoni_pytree.leaves.chat_gpt_service import ChatGPTServicePytree
 from harmoni_pytree.leaves.speaker_service import SpeakerServicePytree
 from harmoni_pytree.leaves.lip_sync_service import LipSyncServicePytree
 from harmoni_pytree.leaves.microphone_service import MicrophoneServicePytree
 from harmoni_pytree.leaves.check_stt_result import CheckSTTResult
-from harmoni_pytree.leaves.gesture_service import GestureServicePytree
 from harmoni_pytree.leaves.wait_results import WaitResults
-from harmoni_pytree.leaves.backchannel_service import BackchannelService
 from harmoni_pytree.leaves.google_service import SpeechToTextServicePytree
-from harmoni_pytree.leaves.sentiment_service import SentimentServicePytree
-from harmoni_pytree.leaves.script_errors_service import ScriptErrorsService
+from harmoni_pytree.leaves.detcustom_service import DetCustomServicePytree
+from harmoni_pytree.leaves.RL_service import RLPytreeService
 from harmoni_pytree.leaves.check_stt_result_minja import CheckSTTResultErrors
-
+from harmoni_pytree.leaves.gesture_service import GestureServicePytree
 
 ##############################################################################
 # Classes
@@ -82,38 +82,26 @@ def post_tick_handler(snapshot_visitor, behaviour_tree):
 def create_root(params):
     root = py_trees.composites.Sequence("Dialogue")#, memory=True)
     sequence_speaking = py_trees.composites.Sequence("Speaking")#, memory=True)
-    sequence_backchanneling = py_trees.composites.Sequence("Backchanneling")#, memory=True)
     sequence_sensing = py_trees.composites.Sequence("Sensing")#, memory=True)
-    parallel_sensing_backchanneling = py_trees.composites.Parallel("Listening")#, policy = SuccessOnAll)
-    chatbot = ChatGPTServicePytree("ChatGPTPyTreeTest")
+    chatbot = ChatGPTServicePytree("ChatGPT")
     tts = AWSTtsServicePytree("TextToSpeech")
-    tts_back = AWSTtsServicePytree("TextToSpeechBackchannel")
-    script_errors = ScriptErrorsService("ScriptErrors", params)
+    script = ScriptErrorsService("ScriptErrors", params)
     gesture = GestureServicePytree("Gesture")
     speaker = SpeakerServicePytree("Speaker")
-    #sentiment = SentimentServicePytree("Sentiment")
-    gesture_back = GestureServicePytree("GestureBackchannel")
-    speaker_back = SpeakerServicePytree("SpeakerBackchannel")
     face = LipSyncServicePytree("Face")
-    face_back = LipSyncServicePytree("FaceBackchannel")
     microphone=MicrophoneServicePytree("Microphone")
     stt=SpeechToTextServicePytree("SpeechToText")
     checkstt = CheckSTTResultErrors("CheckResultsErrors", params)
-    backchanneling_script = BackchannelService("BackchannelScript", params)
     parall_speaker_face = py_trees.composites.Parallel("Playing")#, policy = SuccessOnAll)
-    parall_playing_back = py_trees.composites.Parallel("PlayingBackchannel")#, policy = SuccessOnAll)
-    sequence_backchanneling.add_children([backchanneling_script, tts_back, parall_playing_back])
-    sequence_speaking.add_child(script_errors)
+    sequence_speaking.add_child(script)
     sequence_speaking.add_child(chatbot)
     sequence_speaking.add_child(tts)
     sequence_speaking.add_child(parall_speaker_face)
-    parall_playing_back.add_children([speaker_back, face_back, gesture_back])
     parall_speaker_face.add_child(speaker)
     parall_speaker_face.add_child(face)
     parall_speaker_face.add_child(gesture)
     sequence_sensing.add_children([microphone, stt, checkstt])
-    parallel_sensing_backchanneling.add_children([sequence_sensing, sequence_backchanneling])
-    root.add_children([sequence_speaking, parallel_sensing_backchanneling])
+    root.add_children([sequence_speaking, sequence_sensing])
     return root
 
  ##############################################################################
@@ -147,7 +135,7 @@ def main():
     behaviour_tree.visitors.append(snapshot_visitor)
     behaviour_tree.add_post_tick_handler(functools.partial(post_tick_handler, snapshot_visitor))
     
-    behaviour_tree.setup(timeout=15)
+    behaviour_tree.setup(timeout=20)
 
     ####################
     # Tick Tock

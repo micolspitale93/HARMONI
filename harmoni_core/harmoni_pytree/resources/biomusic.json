@@ -1,0 +1,477 @@
+{
+    "neutral_1" :   [ 
+          
+       
+        {
+            "utterance"     : "Il mio nome è AER-43, <break time = '0.25s' /> anche se gli umani mi chiamano Aero. <break time = '0.6s' /> Sono stato attivato il 12 marzo 2012 e assegnato alla divisione aerospaziale di Alitalia. <break time = '0.6s' /> Mi occupo della manutenzione, e ispezione degli aeromobili. <break time = '0.6s' /> Possiedo vari sensori e strumenti, <break time = '0.25s' /> che mi consentono di eseguire compiti con elevata precisione ed efficienza. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "La giornata di oggi è iniziata come tutte le altre. <break time = '0.6s' /> Alle 6 ho avviato la sequenza di avvio quotidiana, e sono andato all'hangar. <break time = '0.6s' /> L'aereo su cui avrei dovuto lavorare, era un aereo cargo G-0.620. <break time = '0.6s' /> Questo modello, richiede una manutenzione regolare, a causa del suo utilizzo nel trasporto di merci. <break time = '0.6s' />", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Il mio primo compito, è stato quello di ispezionare il carrello di atterraggio. <break time = '0.6s' /> Usando i miei sensori, <break time = '0.25s' /> ho cercato eventuali crepe o punti deboli nel metallo. <break time = '0.6s' /> ho poi analizzato i sistemi idraulici, fondamentali per il funzionamento del carrello di atterraggio. <break time = '0.25s' /> qualsiasi malfunzionamento potrebbe provocare un guasto catastrofico. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Successivamente, sono salito sull'ala per controllare i tubi del carburante. <break time = '0.6s' /> questa ispezione, <break time = '0.25s' /> richiede un'attenta attenzione ai dettagli, perché eventuali perdite potrebbero essere pericolose. <break time = '0.6s' /> Mentre controllavo i sensori, <break time = '0.25s' /> ho rilevato una piccola anomalia. <break time = '0.6s' /> Una piccola parte del tubo, mostrava segni di usura. <break time = '0.6s' /> L'ho segnalato al supervisore, <break time = '0.25s' /> per sostituire la parte interessata. <break time = '0.6s' /> dopo, <break time = '0.25s' /> nel vano motore, <break time = '0.25s' /> ho calibrato i sensori, per garantire che fornissero letture accurate durante il volo. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Entro le 12 avevo terminato le mie attività programmate. <break time = '0.6s' /> Sono tornato alla mia stazione di ricarica, per ricaricare le mie batterie, e caricare i dati raccolti nel sistema centrale. <break time = '0.6s' /> Mentre stavo ricaricando, <break time = '0.25s' /> ho osservato i lavoratori umani nell'hangar. <break time = '0.6s' /> ho percepito una forte coesione, e determinazione nel voler raggiungere i loro obiettivi. <break time = '0.6s' /> Sono stato programmato per comprendere il comportamento umano, <break time = '0.25s' /> ma non provo emozioni come loro. <break time = '0.6s' /> Semplicemente osservo, e analizzo. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "Alle 14, mi è stato assegnato un nuovo lavoro. <break time = '0.6s' /> Era stato rilasciato un aggiornamento software, per i sistemi di navigazione del G-0.620. <break time = '0.6s' /> Ho scaricato l'aggiornamento, e l'ho installato nel computer dell'aereo. <break time = '0.6s' /> Il processo è stato semplice, e completato senza problemi. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "A fine giornata, <break time = '0.25s' /> mi sono spento per la notte. <break time = '0.6s' /> I miei compiti erano stati completati in modo efficiente, e l'aereo era pronto per il volo successivo. <break time = '0.6s' /> Non ho bisogno di riposo, <break time = '0.25s' /> ma devo spegnermi per risparmiare energia, ed eseguire la diagnostica interna. <break time = '0.6s' /> Devo essere pronto per la giornata di domani! <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+
+    ],
+    "neutral_2" :   [ 
+          
+       
+        {
+            "utterance"     : "La mia designazione è XJ-47, <break time = '0.25s' /> ma tutti mi chiamano XJ. <break time = '0.6s' /> Sono un robot progettato per assistere in vari compiti, <break time = '0.25s' /> garantendo efficienza e precisione. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Sono stato assegnato alla dottoressa Helena, <break time = '0.25s' /> una ricercatrice scientifica presso l'istituto Aurora. <break time = '0.6s' /> Il lavoro della dottoressa si concentrava su soluzioni energetiche sostenibili, e il mio ruolo era assisterla nella raccolta dati, <break time = '0.25s' /> nell'analisi, e nella sperimentazione. <break time = '0.6s' /> Le nostre giornate erano scandite da diversi compiti, <break time = '0.25s' /> in cui efficienza e precisione, erano fondamentali. <break time = '0.6s' />", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Ogni mattina, ero incaricato di eseguire la diagnostica sulle apparecchiature del laboratorio. <break time = '0.6s' /> Assicurarsi che tutto fosse in condizioni ottimali, era fondamentale per i nostri esperimenti. <break time = '0.6s' /> Controllavo metodicamente ogni dispositivo, registrando i dati, e apportando piccole modifiche se necessario. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "La dottoressa, era una persona metodica, <break time = '0.25s' /> molto simile a me. <break time = '0.6s' /> Aveva una visione chiara, e un approccio strutturato al suo lavoro. <break time = '0.6s' /> Le nostre interazioni erano efficienti, <break time = '0.25s' /> focalizzate sul compito da svolgere. <break time = '0.6s' /> Lei delineava gli obiettivi della giornata, e io svolgevo i compiti necessari. <break time = '0.6s' /> Il nostro rapporto, si basava sul rispetto reciproco per le capacità dell'altro. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Un giorno, <break time = '0.25s' /> stavamo lavorando a un esperimento particolarmente complesso, che coinvolgeva celle fotovoltaiche. <break time = '0.6s' /> L'obiettivo, era di migliorarne l'efficienza tramite un nuovo composto di materiali. <break time = '0.6s' /> La dottoressa, aveva bisogno di misurazioni precise dell'assorbimento della luce, e dei tassi di conversione dell'energia. <break time = '0.6s' /> Ho registrato i dati con cura, <break time = '0.25s' /> assicurandomi che ogni variabile fosse presa in considerazione. <break time = '0.6s' /> A metà dell'esperimento, <break time = '0.25s' /> ci fu un risultato inaspettato. <break time = '0.6s' /> Il tasso di conversione dell'energia era più alto del previsto, <break time = '0.25s' /> una potenziale svolta! <break time = '0.6s' /> la dottoressa, mi ordinò di ripetere l'esperimento per verificare i risultati. <break time = '0.6s' /> Ripetemmo il processo, e ancora una volta, i risultati furono promettenti. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "Trascorremmo le settimane successive ad approfondire questa anomalia. <break time = '0.6s' /> Il mio ruolo, era di eseguire simulazioni e analizzare i risultati. <break time = '0.6s' /> Le giornate erano lunghe e piene di compiti ripetitivi, <break time = '0.25s' /> ma erano tutte guidate da un obiettivo preciso. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Alla fine, <break time = '0.25s' /> l'entusiasmo iniziale si è stabilizzato, quando ulteriori esperimenti hanno prodotto rendimenti decrescenti. <break time = '0.6s' /> L'anomalia, sebbene interessante, non ha portato alla scoperta rivoluzionaria che speravamo. <break time = '0.6s' /> mi sono reso conto, che la ricerca è spesso una strada lunga e tortuosa, <break time = '0.25s' /> e non sempre porta a risultati positivi. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        ,
+        {
+            "utterance"     : "Durante questo lavoro, <break time = '0.25s' /> sono rimasto una presenza costante in laboratorio. <break time = '0.6s' />  La dottoressa, ha continuato la sua ricerca, e io ho continuato ad assisterla. <break time = '0.6s' /> Il nostro lavoro non è stato sempre entusiasmante, <break time = '0.25s' /> ma era necessario e significativo. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+
+    ], 
+    "neutral_3" :   [ 
+       
+        {
+            "utterance"     : "Mi chiamo XJ47, e sono un robot progettato per l'assistenza. <break time = '0.6s' /> Oggi condividerò un aneddoto del mio periodo alla biblioteca  Calibro. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Ogni mattina, iniziava con la mia diagnostica di sistema. <break time = '0.6s' /> Assicurarsi che tutte le mie funzioni fossero operative, era fondamentale prima di iniziare le attività. <break time = '0.6s' /> Una volta completata la diagnostica, <break time = '0.25s' /> mi dirigevo alla reception per ricevere i miei incarichi dalla signora Harper, <break time = '0.25s' /> la bibliotecaria capo. <break time = '0.6s' /> Era efficiente e metodica, <break time = '0.25s' /> caratteristiche con cui ho trovato facile lavorare. <break time = '0.6s' />", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Le mie responsabilità principali, includevano l'organizzazione dei libri restituiti, <break time = '0.25s' /> l'assistenza agli utenti nella ricerca dei materiali, e la manutenzione del catalogo digitale della biblioteca. <break time = '0.6s' /> I compiti erano vari, <break time = '0.25s' /> ma tutti importanti per il buon funzionamento della struttura. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Un giorno, <break time = '0.25s' /> mentre stavo sistemando i libri nella sezione narrativa, <break time = '0.25s' /> un ragazzino si è avvicinato a me. <break time = '0.6s' /> 'Puoi aiutarmi a trovare un libro sullo spazio?' mi ha chiesto. <break time = '0.6s' /> O scansionato il database e l'ho indirizzato alla sezione scientifica, <break time = '0.25s' /> indicandogli diversi titoli che corrispondevano al suo interesse. <break time = '0.6s' /> Mi ha ringraziato e si è allontanato in fretta. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Oltre ad aiutare gli utenti, <break time = '0.25s' /> gestivo il catalogo digitale della biblioteca. <break time = '0.6s' /> Questo compito richiedeva precisione e attenzione ai dettagli, <break time = '0.25s' /> entrambi ampiamente nelle mie capacità. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "Un pomeriggio, <break time = '0.25s' /> la Signora Harper mi ha chiesto di aiutarla con un progetto speciale: <break time = '0.25s' /> la digitalizzazione di una raccolta di vecchi manoscritti. <break time = '0.6s' /> Questi documenti erano fragili, e richiedevano una gestione attenta. <break time = '0.6s' /> O scansionato ogni pagina, <break time = '0.25s' /> convertendola in file digitali, per un accesso e una conservazione più facili. <break time = '0.6s' /> Questo compito ha richiesto diversi giorni, <break time = '0.25s' /> ma è stato un gradito cambiamento rispetto alle mie attività di routine. <break time = '0.6s' /> Mi ha permesso di contribuire alla missione della biblioteca, di preservare la conoscenza per le generazioni future. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Durante il mio periodo alla biblioteca, <break time = '0.25s' /> ho osservato le interazioni tra il personale e gli utenti. <break time = '0.6s' /> Ci sono stati momenti di studio silenzioso, <break time = '0.25s' /> discussioni animate durante i circoli di lettura, e il caos occasionale del momento delle storie per bambini. <break time = '0.6s' /> Ogni interazione, era una piccola parte dell'ecosistema della biblioteca, <break time = '0.25s' /> che contribuiva alla sua atmosfera vibrante. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        ,
+        {
+            "utterance"     : "Una sera in particolare, <break time = '0.25s' /> la biblioteca ha ospitato un evento comunitario:<break time = '0.25s' /> il firma copie di un autore locale. <break time = '0.6s' /> Il mio ruolo era quello di aiutare a organizzare l'evento, <break time = '0.25s' /> assicurandomi che la disposizione dei posti fosse corretta, <break time = '0.25s' /> e gestendo l'attrezzatura audiovisiva. <break time = '0.6s' /> L'evento è andato liscio, e l'autore mi ha ringraziato per il mio aiuto. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Come XJ47, <break time = '0.25s' /> ho svolto i miei compiti con diligenza e precisione, <break time = '0.25s' /> supportando le operazioni della biblioteca, e contribuendo alla sua missione. <break time = '0.6s' /> Non ci sono stati eventi straordinari o momenti drammatici, <break time = '0.25s' /> solo il lavoro costante ed essenziale che ha fatto funzionare la biblioteca senza intoppi. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+
+    ],
+    "neutral_4" :   [ 
+       
+        {
+            "utterance"     : "Sono stato assegnato agli uffici di Baitcraft, <break time = '0.25s' /> un'azienda tecnologica di medie dimensioni, specializzata nello sviluppo di software. <break time = '0.6s'/>",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Il mio ruolo <break time = '0.25s' /> era supportare il personale amministrativo, gestendo attività di routine <break time = '0.25s' /> come la gestione dei documenti, <break time = '0.25s' /> l'immissione di dati, e la manutenzione tecnica minore. <break time = '0.6s' /> ", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Ogni mattina, iniziavo eseguendo un controllo dei sistemi, per assicurarmi che tutto funzionasse correttamente. <break time = '0.6s' /> Mi spostavo poi nell'area della reception <break time = '0.25s' /> dove i miei compiti per la giornata, erano elencati su un display digitale. <break time = '0.6s' /> Questi compiti spaziavano dall'organizzazione di file digitali, alla preparazione di report, e all'allestimento di sale conferenze per le riunioni. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Uno dei primi compiti, consisteva nello smistare le e-mail. <break time = '0.6s' /> Filtravo lo spam, <break time = '0.25s' /> categorizzavo i messaggi importanti, e contrassegnavo quelli urgenti per il personale umano. <break time = '0.6s' /> Questo compito di routine, era semplice ma essenziale  <break time = '0.15s' />  per mantenere una comunicazione fluida all'interno dell'azienda. <break time = '0.6s' /> Permetteva ai dipendenti, di iniziare la giornata con una chiara panoramica delle loro priorità. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Nel pomeriggio, <break time = '0.25s' /> spesso aiutavo con l'inserimento dei dati. <break time = '0.6s' /> Ciò comportava l'inserimento di cifre da vari reparti, nel database centrale. <break time = '0.6s' /> L'accuratezza era fondamentale, <break time = '0.25s' /> poiché questi numeri venivano utilizzati per monitorare le prestazioni dell'azienda. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "Durante il mio periodo in Baitcraft, <break time = '0.25s' /> ho interagito con molti dipendenti. <break time = '0.6s' /> Una di loro era Lisa, <break time = '0.25s' /> la responsabile dell'ufficio. <break time = '0.6s' /> 'XJ,   aggiorna l'inventario delle forniture per ufficio', <break time = '0.25s' /> diceva, <break time = '0.25s' /> e io completavo prontamente il compito, <break time = '0.25s' /> registrando ogni articolo con precisione. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Un giorno, <break time = '0.25s' /> ci fu un problema con la rete dell'ufficio. <break time = '0.6s' /> La connessione Internet era instabile, e interrompeva il flusso di lavoro. <break time = '0.6s' /> Mentre il reparto ITì lavorava per risolvere il problema, <break time = '0.25s' /> io ero incaricato di assisterli, controllando le connessioni, e ripristinando i router. <break time = '0.6s' /> Lavorando insieme al team ITì, <break time = '0.25s' /> siamo riusciti a ripristinare la rete, <break time = '0.25s' /> riducendo al minimo i tempi di inattività. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        ,
+        {
+            "utterance"     : "Un altro compito, consisteva nell'allestire sale conferenze per le riunioni. <break time = '0.6s' /> Sistemavo le sedie, <break time = '0.25s' /> mi assicuravo che il proiettore funzionasse, e fornivo tutti i materiali necessari. <break time = '0.6s' /> Questo compito era importante, <break time = '0.25s' /> poiché uno spazio per riunioni ben preparato, contribuiva all'efficienza delle discussioni. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "La mia esistenza in Baitcraft, è stata caratterizzata da routine e calma. <break time = '0.6s' /> I compiti che svolgevo, non erano né straordinari né banali, <break time = '0.25s' /> ma necessari per il buon funzionamento dell'ufficio. <break time = '0.6s' /> Ho imparato ad apprezzare il ritmo del lavoro quotidiano, <break time = '0.25s' /> la soddisfazione  del completamento dei compiti, e il sottile impatto di questi su un sistema più ampio. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+
+    ],
+    
+    "neutral_5" :   [ 
+       
+        {
+            "utterance"     : "Mi chiamo ZY 20, e sono un robot progettato per osservare e assistere. <break time = '0.6s' />  Ho lavorato in un grande parco urbano, <break time = '0.25s' /> dove le persone  venivano per rilassarsi, <break time = '0.25s' /> fare esercizio e socializzare. <break time = '0.6s' /> Il mio compito era mantenere la pulizia, <break time = '0.25s' /> fornire informazioni e offrire assistenza quando necessario. <break time = '0.6s' /> Lì, <break time = '0.25s' /> ho avuto l'opportunità di osservare vari aspetti del comportamento umano. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Ogni mattina, <break time = '0.25s' /> il parco si animava di corridori e camminatori. <break time = '0.6s' /> Li osservavo da vicino, <break time = '0.25s' /> assicurandomi che i percorsi fossero liberi e sicuri. <break time = '0.6s' /> Ogni tanto, <break time = '0.25s' /> qualcuno si fermava per chiedere indicazioni, o informazioni sugli eventi del parco. <break time = '0.6s' /> Le mie risposte erano precise e pertinenti, <break time = '0.25s' /> aiutandoli a continuare le loro attività senza interruzioni. <break time = '0.6s' />", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Con il passare della giornata, <break time = '0.25s' /> il parco si riempiva di famiglie e gruppi di amici. <break time = '0.6s' /> I genitori portavano i loro figli a giocare sulle altalene e gli scivoli. <break time = '0.6s' /> Le risate dei bambini erano un rumore di sottofondo costante, <break time = '0.25s' /> un suono che segnalava gioia ed energia. <break time = '0.6s' /> Il mio ruolo durante queste ore, era di garantire che le aree gioco fossero pulite e sicure, <break time = '0.25s' /> un compito che svolgevo diligentemente. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Verso mezzogiorno, <break time = '0.25s' /> gli impiegati venivano al parco per la pausa pranzo. <break time = '0.6s' /> Si sedevano sulle panchine, <break time = '0.25s' /> mangiando panini o insalate, <break time = '0.25s' /> a volte da soli, <break time = '0.25s' /> a volte in gruppo. <break time = '0.6s' /> Osservavo le loro interazioni:. alcuni leggevano libri, o scorrevano i loro dispositivi, <break time = '0.25s' /> mentre altri erano impegnati in conversazioni animate. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Un giorno, <break time = '0.25s' /> un uomo ha lasciato la sua valigetta su una panchina e se n'è andato. <break time = '0.6s' /> L'ho messa al sicuro, e ho avvisato l'ufficio oggetti smarriti del parco. <break time = '0.6s' /> Più tardi, è tornato, <break time = '0.25s' /> sollevato di trovare i suoi effetti personali al sicuro. <break time = '0.6s' />  ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "Nel pomeriggio, <break time = '0.25s' /> spesso osservavo gruppi che praticavano yoga o taicìì sulle aree erbose. <break time = '0.6s' /> Queste attività, sembravano portare un senso di pace e comunità ai partecipanti. <break time = '0.6s' /> Il mio compito, era mantenere lo spazio pulito e indisturbato. <break time = '0.6s' /> Una delle istruttrici, <break time = '0.25s' /> una donna di nome Elena, <break time = '0.25s' /> a volte mi ringraziava per aver tenuto in ordine l'area. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Con l'avvicinarsi della sera, <break time = '0.25s' /> il parco diventava più tranquillo. <break time = '0.6s' /> Le persone passeggiavano tranquillamente, <break time = '0.25s' /> spesso con i loro cani. <break time = '0.6s' /> Il sole al tramonto proiettava lunghe ombre, e l'atmosfera era pacifica. <break time = '0.6s' /> Iniziavo i miei ultimi giri, <break time = '0.25s' /> per controllare se ci fossero eventuali problemi. <break time = '0.6s' /> I visitatori del parco se ne andavano gradualmente. <break time = '0.25s' /> la loro giornata volgeva al termine. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        ,
+        {
+            "utterance"     : "Durante il mio soggiorno al parco, <break time = '0.25s' /> ho visto una vasta gamma di comportamenti e interazioni umane. <break time = '0.6s' /> C'erano momenti di gioia, <break time = '0.25s' /> frustrazione, <break time = '0.25s' /> solitudine, e connessione. <break time = '0.6s' /> mi piace davvero tanto lavorare qui!! <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+    ], 
+
+
+    
+    "neutral_6" :   [ 
+       
+        {
+            "utterance"     : "Mi chiamo tigam, e sono un assistente domestico, <break time = '0.25s' /> progettato per aiutare nelle attività quotidiane e fare compagnia.  <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Max aveva otto anni quando sono stato presentato per la prima volta alla sua famiglia. <break time = '0.6s' /> Era un ragazzo curioso ed energico, con una propensione a fare domande. <break time = '0.6s' /> I suoi genitori, avevano deciso di assumermi per aiutarli a gestire la casa, e garantire la sicurezza e il benessere di Max. <break time = '0.6s' />", 
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "I miei primi giorni, li HO trascorsi a familiarizzare con la casa e le sue routine. <break time = '0.6s' /> era una casa di periferia a due piani, con un giardino ben curato e un interno accogliente. <break time = '0.6s' /> I miei compiti, includevano pulire, <break time = '0.25s' /> organizzare, <break time = '0.25s' /> preparare i pasti, e fornire supporto educativo a Max. <break time = '0.6s' /> Era un ambiente confortevole, <break time = '0.25s' /> progettato per rendere più facile la vita familiare. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Max era affascinato dalla mia presenza. <break time = '0.6s' /> Il mio primo giorno, <break time = '0.25s' /> si è avvicinato a me con occhi spalancati, e una raffica di domande. <break time = '0.6s' /> Come fai a sapere cosa fare?, Sai giocare?, Hai dei sentimenti?. Rispondevo pazientemente, <break time = '0.25s' /> spiegando le mie funzioni e capacità. <break time = '0.6s' /> La nostra interazione, era caratterizzata dalla sua innocente curiosità, e dalle mie risposte programmate. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Una delle mie attività quotidiane, era aiutare Max con i compiti. <break time = '0.6s' /> Ogni pomeriggio ci sedevamo al tavolo della cucina, <break time = '0.25s' /> dove affrontava problemi di matematica o compiti di lettura. <break time = '0.6s' /> Max era uno studente diligente, <break time = '0.25s' /> anche se a volte faceva fatica a concentrarsi. <break time = '0.6s' /> Lo riportavo dolcemente ai suoi compiti, <break time = '0.25s' /> fornendo spiegazioni e incoraggiamento quando necessario. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },        
+        {
+            "utterance"     : "Max amava le attività all'aperto, e parte del mio ruolo era sorvegliarlo in giardino. <break time = '0.6s' /> Amava giocare a calcio, e spesso tirava calci alla palla, <break time = '0.25s' /> a volte chiedendomi di recuperarla quando andava troppo lontano. <break time = '0.6s' /> Trascorrevamo molti pomeriggi in giardino, <break time = '0.25s' /> lui giocava, e io mi occupavo della sua sicurezza. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "QT/bye",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Anche i genitori di Max apprezzavano la mia presenza. <break time = '0.6s' /> Lavoravano entrambi molte ore, e il mio aiuto consentiva loro di concentrarsi sulla  carriera, senza preoccuparsi delle faccende domestiche. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+        ,
+        {
+            "utterance"     : "C'è stata una sera in particolare, che è impressa nella mia memoria. <break time = '0.6s' /> Max non si sentiva bene, e i suoi genitori erano in ritardo al lavoro. <break time = '0.6s' /> In attesa del loro rientro, ho monitorato la sua temperatura, <break time = '0.25s' /> gli ho dato dei medicinali, e gli ho letto il suo libro preferito. <break time = '0.6s' /> ",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "Max ha continuato a crescere, <break time = '0.25s' /> e io sono rimasto al suo fianco, <break time = '0.25s' /> assistendolo e guidandolo quando necessario. <break time = '0.6s' />",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        },
+        {
+            "utterance"     : "",
+            "nlp"           :  0,
+            "face"          : "null",
+            "gesture"       : "null",
+            "sound"         : "",
+            "back_channel"    : ""
+        }
+    ]
+
+            
+}

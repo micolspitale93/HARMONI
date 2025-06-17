@@ -2,7 +2,7 @@
 tts:
   default_param:
     region_name: "eu-west-2"
-    language: "en-UK"
+    language: "en-US" #"en-UK"
     outdir: "$(find harmoni_tts)/temp_data"
     wav_header_length: 24
     voice: "Amy"
