@@ -73,14 +73,14 @@ class _BusLogHandler(logging.Handler):
 class SimulationSession:
     """A tree running in-process with the backends of a configuration"""
 
-    def __init__(self, bus: EventBus, tree_path, services: dict, variables=None, period_s: float = 0.2):
+    def __init__(self, bus: EventBus, tree_path, services: dict, variables=None, period_s: float = 0.2, cast=None):
         self.bus = bus
         self.clients = ClientRegistry({
             service_id: LocalServiceClient(create_backend(dict(params).pop("backend"), service_id,
                                                           {k: v for k, v in params.items() if k != "backend"}))
             for service_id, params in services.items()
         }, factory=self._missing_service)
-        self.runner = TreeRunner(str(tree_path), BuildContext(client_for=self.clients), variables, period_s)
+        self.runner = TreeRunner(str(tree_path), BuildContext(client_for=self.clients), variables, period_s, cast=cast)
         self.runner.observers.append(lambda snapshot: bus.publish("snapshot", dict(snapshot, source="simulation")))
         self._stop = threading.Event()
         self._thread = None
@@ -182,7 +182,8 @@ class RunManager:
         self.ros2 = Ros2Bridge(bus)
         self.mode = "simulation"
 
-    def start_simulation(self, tree, config, variables=None, period_s=0.2):
+    def start_simulation(self, tree, config, variables=None, period_s=0.2, cast=None):
+        """Run a tree with the services, variables and cast of a configuration, plus run-time overrides"""
         self.stop()
         tree_path = self.workspace.tree_path(tree)
         if not tree_path.is_file():
@@ -192,9 +193,11 @@ class RunManager:
         errors = [i for i in checked["issues"] if i["level"] == "error" and i["path"].startswith("services")]
         if errors:
             raise ValueError("; ".join(f"{i['path']}: {i['message']}" for i in errors))
+        effective = self.workspace.run_defaults(tree, config, cast, variables)
         self.bus.log = []
         self.bus.last.pop("snapshot", None)  # do not show the previous run
-        self.session = SimulationSession(self.bus, tree_path, services, variables or {}, float(period_s))
+        self.session = SimulationSession(self.bus, tree_path, services, effective["config_variables"], float(period_s),
+                                         cast=effective["config_cast"])
         self.session.start()
         self.mode = "simulation"
         self.bus.publish("state", {"running": True, "mode": "simulation", "tree": tree, "config": config})

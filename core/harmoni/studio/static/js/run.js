@@ -1,22 +1,51 @@
 // Run: simulate a tree in-process, or monitor/command a tree running on ROS 2.
 // Studio only observes snapshots and sends commands between ticks: it is never in the control loop.
+// Everything shown here is generic: the cast (any number of humans and agents) and the
+// conversation log come from the snapshots, not from keys of a particular interaction.
 
 import { api, clear, guard, h, on, state, toast } from "./lib.js";
 import { renderDiagram } from "./diagram.js";
 
-const rn = { tree: null, config: null, variables: {}, period: 0.3, snapshot: null, log: [], transcript: [],
-             last: {}, mode: "simulation", running: false, scale: "fit" };
+const rn = { tree: null, config: null, variables: {}, cast: { humans: [], agents: [] }, period: 0.3,
+             snapshot: null, log: [], mode: "simulation", running: false, scale: "fit" };
 let root;
 
 function lastTree() { return state.trees.find((t) => t.name === rn.tree) ? rn.tree : (state.trees[0] || {}).name; }
 
-async function loadVariables() {
+function configServices() {
+  const config = state.configs.find((c) => c.id === rn.config);
+  return (config && config.services) || [];
+}
+
+// Variables and cast of the tree as configured (the configuration overrides the tree file)
+async function loadDefaults() {
   if (!rn.tree) return;
   try {
-    const tree = await api(`/trees/${encodeURIComponent(rn.tree)}`);
-    rn.variables = Object.assign({}, tree.variables || {});
-  } catch { rn.variables = {}; }
+    const d = await api("/run/defaults", { method: "POST", body: { tree: rn.tree, config: rn.config } });
+    rn.variables = d.variables || {};
+    rn.cast = d.cast || { humans: [], agents: [] };
+  } catch (e) { toast(e.message, "err"); }
   renderControls();
+}
+
+function castControls() {
+  const box = h("div", { class: "section" }, h("h3", {}, "Cast of this run"));
+  box.append(h("label", { class: "field" }, h("span", {}, `Humans (${rn.cast.humans.length})`, h("small", {}, "comma separated")),
+    h("input", { value: rn.cast.humans.join(", "), "data-cast": "humans",
+      oninput: (e) => { rn.cast.humans = e.target.value.split(",").map((x) => x.trim()).filter(Boolean); } })));
+  const services = configServices();
+  if (!rn.cast.agents.length) box.append(h("div", { class: "hint" }, "This tree has no agents in its cast."));
+  rn.cast.agents.forEach((agent) => {
+    const row = h("div", { class: "card", style: { padding: "6px 8px", marginBottom: "6px" } },
+      h("div", { class: "row" }, h("b", {}, agent.role), h("span", { class: "hint" }, [agent.name, agent.robot].filter(Boolean).join(" · "))));
+    Object.entries(agent.services || {}).forEach(([channel, service]) => row.append(h("div", { class: "row", style: { marginTop: "4px" } },
+      h("span", { class: "hint", style: { flex: "0 0 30%" } }, channel),
+      h("select", { "data-agent": agent.role, "data-channel": channel, onchange: (e) => { agent.services[channel] = e.target.value; } },
+        [...new Set([service, ...services])].map((s) => h("option", { value: s, selected: s === service }, s + (services.includes(s) ? "" : " (not configured)")))))));
+    box.append(row);
+  });
+  box.append(h("div", { class: "hint" }, "Changes apply to the next Start, without editing the tree or the configuration."));
+  return box;
 }
 
 function renderControls() {
@@ -34,24 +63,25 @@ function renderControls() {
           title: state.info.ros2_available ? "Monitor the tree running on ROS 2" : "Run Studio in the ROS 2 container to enable it",
           onclick: () => { rn.mode = "ros2"; renderControls(); } }, "ROS 2 live")),
       h("p", { class: "hint" }, sim
-        ? "The tree runs inside Studio with the backends of the configuration (mock ones need no robot or key)."
+        ? "The tree runs inside Studio with the services, variables and cast of the configuration (mock services need no robot or key)."
         : "Studio follows /harmoni/tree/status and sends commands on /harmoni/tree/command. Start the tree with ./harmoni.sh ros2 run …")),
   );
   if (sim) {
     box.append(h("div", { class: "section" }, h("h3", {}, "What to run"),
       h("label", { class: "field" }, h("span", {}, "Tree"),
-        h("select", { onchange: (e) => { rn.tree = e.target.value; loadVariables(); } },
+        h("select", { "data-select": "tree", onchange: (e) => { rn.tree = e.target.value; loadDefaults(); } },
           state.trees.map((t) => h("option", { value: t.name, selected: t.name === rn.tree }, `${t.title} (${t.name})`)))),
-      h("label", { class: "field" }, h("span", {}, "Services", h("small", {}, "configuration")),
-        h("select", { onchange: (e) => { rn.config = e.target.value; } },
+      h("label", { class: "field" }, h("span", {}, "Configuration", h("small", {}, "services, variables, cast")),
+        h("select", { "data-select": "config", onchange: (e) => { rn.config = e.target.value; loadDefaults(); } },
           configs.map((c) => h("option", { value: c.id, selected: c.id === rn.config }, c.id)))),
       h("label", { class: "field" }, h("span", {}, "Tick period", h("small", {}, "seconds")),
-        h("input", { value: rn.period, oninput: (e) => { rn.period = Number(e.target.value) || 0.3; } }))));
+        h("input", { value: rn.period, "data-period": "", oninput: (e) => { rn.period = Number(e.target.value) || 0.3; } }))));
+    box.append(castControls());
     const vars = h("div", { class: "section" }, h("h3", {}, "Variables"));
     if (!Object.keys(rn.variables).length) vars.append(h("div", { class: "hint" }, "This tree has no variables."));
     Object.entries(rn.variables).forEach(([k, v]) => vars.append(h("div", { class: "row", style: { marginBottom: "4px" } },
       h("code", { style: { flex: "0 0 45%", overflow: "hidden", textOverflow: "ellipsis" } }, k),
-      h("input", { value: typeof v === "object" ? JSON.stringify(v) : String(v), class: "mono",
+      h("input", { value: typeof v === "object" ? JSON.stringify(v) : String(v), class: "mono", "data-var": k,
         oninput: (e) => { let val = e.target.value; try { val = JSON.parse(val); } catch { /* keep text */ } rn.variables[k] = val; } }))));
     box.append(vars);
   }
@@ -64,6 +94,40 @@ function renderControls() {
     h("button", { class: "btn danger", onclick: stop }, "Stop"))));
 }
 
+function conversationOf(snap) { return ((snap && snap.blackboard) || {})["/conversation"] || []; }
+
+function renderConversation() {
+  const box = root.querySelector("#run-transcript");
+  clear(box);
+  const turns = conversationOf(rn.snapshot);
+  if (!turns.length) return box.append(h("div", { class: "hint" }, "Who says what appears here: humans on the left, agents on the right."));
+  turns.slice(-60).forEach((t) => box.append(h("div", { class: "bubble " + (t.kind === "agent" ? "robot" : t.kind === "event" ? "event" : "") },
+    h("span", { class: "who" }, t.kind === "event" ? "·" : t.speaker, t.role && t.role !== t.speaker ? ` (${t.role})` : "", t.to ? ` → ${t.to}` : ""),
+    t.text)));
+  box.scrollTop = box.scrollHeight;
+}
+
+// Turns per participant: everyone in the cast is listed, also who has not spoken yet
+function renderParticipation() {
+  const box = root.querySelector("#run-participation");
+  clear(box);
+  const snap = rn.snapshot;
+  const cast = (snap && snap.cast) || rn.cast;
+  const counts = {};
+  conversationOf(snap).forEach((t) => { if (t.kind !== "event") counts[t.speaker] = (counts[t.speaker] || 0) + 1; });
+  const rows = [
+    ...cast.humans.map((name) => ({ name, kind: "human", n: counts[name] || 0 })),
+    ...cast.agents.map((a) => ({ name: a.name || a.role, label: a.name ? `${a.name} (${a.role})` : a.role, kind: "agent", n: counts[a.name || a.role] || 0 })),
+  ];
+  Object.keys(counts).filter((name) => !rows.find((r) => r.name === name)).forEach((name) => rows.push({ name, kind: "human", n: counts[name], unknown: true }));
+  if (!rows.length) return box.append(h("div", { class: "hint" }, "No cast."));
+  const max = Math.max(1, ...rows.map((r) => r.n));
+  rows.forEach((r) => box.append(h("div", { class: "part-row", "data-participant": r.name },
+    h("span", { class: "part-name", title: r.unknown ? "not in the cast" : "" }, r.label || r.name, r.unknown ? " ?" : ""),
+    h("span", { class: "part-bar" }, h("span", { class: `part-fill ${r.kind}`, style: { width: `${(100 * r.n) / max}%` } })),
+    h("span", { class: "part-n" }, String(r.n)))));
+}
+
 function renderLive() {
   const snap = rn.snapshot;
   const status = root.querySelector("#run-status");
@@ -73,6 +137,7 @@ function renderLive() {
     const cls = { running: "run", finished: "ok", error: "err", paused: "warn", stopped: "" }[snap.state] || "";
     status.append(h("span", { class: `pill ${cls}` }, snap.state), h("span", { class: "pill" }, `tick ${snap.tick}`),
       h("span", { class: "pill accent" }, snap.source || rn.mode));
+    if (snap.cast) status.append(h("span", { class: "pill" }, `${snap.cast.humans.length} humans · ${snap.cast.agents.length} agents`));
     if (snap.error) status.append(h("span", { class: "pill err", title: snap.error }, snap.error.slice(0, 80)));
   }
   status.append(h("span", { class: "spacer" }),
@@ -83,17 +148,13 @@ function renderLive() {
   if (snap && snap.root) renderDiagram(diagram, snap.root, { scale: rn.scale });
   else { clear(diagram); diagram.append(h("div", { class: "empty" }, "Start a simulation, or connect to ROS 2, to see the tree live.")); }
 
-  const transcript = root.querySelector("#run-transcript");
-  clear(transcript);
-  if (!rn.transcript.length) transcript.append(h("div", { class: "hint" }, "What people and robots say appears here."));
-  rn.transcript.slice(-40).forEach((t) => transcript.append(h("div", { class: "bubble " + (t.robot ? "robot" : "") },
-    h("span", { class: "who" }, t.who), t.text)));
-  transcript.scrollTop = transcript.scrollHeight;
+  renderConversation();
+  renderParticipation();
 
   const bb = root.querySelector("#run-blackboard");
   clear(bb);
   const table = h("table", { class: "kv" });
-  Object.entries((snap && snap.blackboard) || {}).forEach(([k, v]) =>
+  Object.entries((snap && snap.blackboard) || {}).filter(([k]) => k !== "/conversation" && !k.startsWith("/cast/")).forEach(([k, v]) =>
     table.append(h("tr", {}, h("td", {}, k), h("td", {}, typeof v === "object" ? JSON.stringify(v) : String(v)))));
   bb.append(table);
 
@@ -110,35 +171,18 @@ function zoom(delta) {
   renderLive();
 }
 
-// The transcript is derived from the blackboard: new transcriptions and new robot sentences.
-function updateTranscript(snap) {
-  const bb = snap.blackboard || {};
-  const said = bb["/stt/result"];
-  if (said && said !== rn.last.stt) {
-    const match = String(said).match(/^([^:]{1,40}):\s*(.*)$/s);
-    rn.transcript.push({ who: match ? match[1] : "participant", text: match ? match[2] : said, robot: false });
-  }
-  rn.last.stt = said;
-  const message = bb["/bot/message"];
-  const key = `${snap.tick}:${message}`;
-  if (message && bb["/bot/speak"] && message !== rn.last.message && !rn.last.keys?.has(key)) {
-    const agent = bb["/bot/agent"] && bb["/bot/agent"] !== "null" ? bb["/bot/agent"] : (bb["/scene/agent"] || "robot");
-    rn.transcript.push({ who: agent, text: message, robot: true });
-  }
-  rn.last.message = message;
-}
-
 async function start() {
-  if (!rn.tree || !rn.config) return toast("Choose a tree and a services configuration", "err");
-  rn.transcript = []; rn.log = []; rn.last = {}; rn.snapshot = null;
+  if (!rn.tree || !rn.config) return toast("Choose a tree and a configuration", "err");
+  rn.log = []; rn.snapshot = null;
   renderLive();
-  await guard(api("/run", { method: "POST", body: { tree: rn.tree, config: rn.config, variables: rn.variables, period_s: rn.period } }));
+  await guard(api("/run", { method: "POST", body: { tree: rn.tree, config: rn.config, variables: rn.variables,
+                                                     cast: rn.cast, period_s: rn.period } }));
   rn.running = true;
   renderControls();
 }
 
 async function connectRos() {
-  rn.transcript = []; rn.log = []; rn.last = {}; rn.snapshot = null;
+  rn.log = []; rn.snapshot = null;
   await guard(api("/ros2/connect", { method: "POST", body: {} }), "Connected to ROS 2");
 }
 
@@ -150,7 +194,6 @@ function connectEvents() {
   source.addEventListener("snapshot", (e) => {
     const snap = JSON.parse(e.data);
     rn.snapshot = snap;
-    updateTranscript(snap);
     const pill = document.getElementById("run-pill");
     pill.textContent = `${snap.state} · tick ${snap.tick}`;
     pill.className = "pill " + ({ running: "run", finished: "ok", error: "err", paused: "warn" }[snap.state] || "");
@@ -167,18 +210,20 @@ export function initRun(container) {
   container.append(
     h("div", { class: "col", style: { display: "flex", flexDirection: "column" } },
       h("div", { class: "toolbar", id: "run-status" }),
-      h("div", { class: "diagram-wrap", id: "run-diagram", style: { flex: "1 1 55%", minHeight: "220px" } }),
+      h("div", { class: "diagram-wrap", id: "run-diagram", style: { flex: "1 1 50%", minHeight: "220px" } }),
       h("div", { class: "run-panels" },
         h("div", { class: "card" }, h("header", {}, "Conversation"),
           h("div", { class: "body transcript", id: "run-transcript" })),
+        h("div", { class: "card" }, h("header", {}, "Participation", h("span", { class: "hint", style: { fontWeight: 400 } }, "turns")),
+          h("div", { class: "body", id: "run-participation" })),
         h("div", { class: "card" }, h("header", {}, "Service activity"),
           h("div", { class: "body log", id: "run-log" })))),
     h("aside", { class: "col side-right" },
       h("div", { id: "run-controls" }),
       h("div", { class: "section" }, h("h3", {}, "Blackboard"), h("div", { id: "run-blackboard" }))));
-  on("catalog", () => { renderControls(); if (!Object.keys(rn.variables).length) loadVariables(); });
-  on("run-tree", (name) => { rn.tree = name; rn.mode = "simulation"; loadVariables(); });
-  on("run-config", (id) => { rn.config = id; rn.mode = "simulation"; renderControls(); });
+  on("catalog", () => { renderControls(); loadDefaults(); });
+  on("run-tree", (name) => { rn.tree = name; rn.mode = "simulation"; loadDefaults(); });
+  on("run-config", (id) => { rn.config = id; rn.mode = "simulation"; loadDefaults(); });
   on("page:run", () => renderLive());
   api("/run").then((s) => { rn.snapshot = s.snapshot; rn.log = s.log || []; rn.running = s.running; renderLive(); });
   connectEvents();

@@ -87,8 +87,17 @@ function keysInTree() {
   return [...keys].sort();
 }
 
+function castOf(doc) {
+  const cast = doc.cast && typeof doc.cast === "object" ? doc.cast : {};
+  const agents = Array.isArray(cast.agents) ? cast.agents : [];
+  return { cast, agents, roles: agents.map((a) => a.role).filter(Boolean),
+           channels: [...new Set(agents.flatMap((a) => Object.keys(a.services || {})))] };
+}
+
 function suggestionsFor(paramName) {
   const vars = Object.keys(ed.doc.variables || {}).map((v) => `\${${v}}`);
+  if (paramName === "default_role" || paramName === "roles") return datalist("dl-roles", [...castOf(ed.doc).roles, ...vars]);
+  if (paramName === "channel") return datalist("dl-channels", [...new Set(["speech", "led", "gesture", ...castOf(ed.doc).channels])]);
   if (paramName === "service") return datalist("dl-services", [...knownServices(), ...vars]);
   if (/key|source|target/.test(paramName)) return datalist("dl-keys", [...keysInTree(), ...vars]);
   return datalist("dl-vars", vars);
@@ -124,7 +133,9 @@ function summary(node) {
     const cond = ["equals", "not_equals", "one_of", "truthy"].find((k) => p[k] !== undefined);
     return `${p.key || "?"} ${cond ? cond.replace("_", " ") + " " + JSON.stringify(p[cond]) : ""}`;
   }
-  if (node.type === "GroupScript") return `${p.session || ""} ${p.script || ""}`;
+  if (node.type === "GroupScript" || node.type === "DialogueScript") return `${p.script || ""}${p.session && p.session !== "auto" ? " · " + p.session : ""}`;
+  if (node.type === "AgentSpeak") return `agent in ${p.agent_key || "bot/agent"} speaks (${p.channel || "speech"})`;
+  if (node.type === "AgentsAction") return `${p.action || "DO"} ${display(p.input_value ?? p.input_key ?? "")} → ${p.roles ? p.roles.join(", ") : "all agents"} (${p.channel || "?"})`;
   return Object.entries(p).slice(0, 2).map(([k, v]) => `${k}=${display(v)}`).join(" ");
 }
 
@@ -145,7 +156,7 @@ function renderPalette(container) {
   container.append(h("input", { placeholder: "Search nodes…", value: ed.filter,
     oninput: (e) => { ed.filter = e.target.value.toLowerCase(); renderPalette(container); container.querySelector("input").focus(); } }));
   const groups = {};
-  state.paletteList.filter((n) => !n.type.startsWith("Test"))
+  state.paletteList.filter((n) => !n.type.startsWith("Test") && !String(n.doc).startsWith("Deprecated"))
     .filter((n) => !ed.filter || (n.type + " " + n.doc + " " + n.category).toLowerCase().includes(ed.filter))
     .forEach((n) => (groups[n.category] ||= []).push(n));
   for (const [category, nodes] of Object.entries(groups)) {
@@ -296,6 +307,50 @@ function kvEditor(title, obj, onChange, hint) {
   return box;
 }
 
+// The cast: any number of humans and of agents (robots). Agents are addressed by role in the tree;
+// their services per channel say which robot realizes them, so conditions only change the cast.
+function castEditor(doc) {
+  const box = h("div", { class: "section" }, h("h3", {}, "Cast"));
+  const hasCast = doc.cast && typeof doc.cast === "object";
+  if (!hasCast) {
+    box.append(h("div", { class: "hint", style: { marginBottom: "6px" } }, "Who takes part: humans and agents (robots, virtual agents)."),
+      h("button", { class: "btn small", onclick: () => { doc.cast = { humans: [], agents: [] }; changed(true); } }, "+ Add a cast"));
+    return box;
+  }
+  const cast = doc.cast;
+  const humansText = typeof cast.humans === "string" ? cast.humans : (cast.humans || []).join(", ");
+  box.append(h("label", { class: "field" }, h("span", {}, "Humans", h("small", {}, "comma separated, or ${variable}")),
+    h("input", { value: humansText, list: datalist("dl-vars", Object.keys(doc.variables || {}).map((v) => `\${${v}}`)),
+      oninput: (e) => { const v = e.target.value; cast.humans = v.trim().startsWith("${") ? v.trim() : v.split(",").map((x) => x.trim()).filter(Boolean); changed(false); } }),
+    h("div", { class: "field-doc" }, "The script session and $USERNAME1, $USERNAME2… follow these names.")));
+  cast.agents ||= [];
+  box.append(h("div", { class: "row", style: { justifyContent: "space-between", margin: "4px 0" } },
+    h("b", { style: { fontSize: "12.5px" } }, `Agents (${cast.agents.length})`),
+    h("button", { class: "btn small", onclick: () => { cast.agents.push({ role: `Agent${cast.agents.length + 1}`, name: "", robot: "", services: { speech: "" } }); changed(true); } }, "+ Agent")));
+  const services = datalist("dl-services", knownServices());
+  cast.agents.forEach((agent, i) => {
+    agent.services ||= {};
+    const card = h("div", { class: "card", style: { padding: "8px", marginBottom: "8px" } },
+      h("div", { class: "grid-2" },
+        h("label", { class: "field" }, h("span", {}, "Role *"), h("input", { value: agent.role || "", oninput: (e) => { agent.role = e.target.value; changed(false); } })),
+        h("label", { class: "field" }, h("span", {}, "Name"), h("input", { value: agent.name || "", oninput: (e) => { agent.name = e.target.value; changed(false); } }))),
+      h("label", { class: "field" }, h("span", {}, "Robot"), h("input", { value: agent.robot || "", placeholder: "Furhat, NAO, Pepper, virtual…", oninput: (e) => { agent.robot = e.target.value; changed(false); } })),
+      h("div", { style: { fontSize: "12.5px", fontWeight: 600, margin: "2px 0 4px" } }, "Services by channel"),
+      Object.entries(agent.services).map(([channel, service]) => h("div", { class: "row", style: { marginBottom: "4px" } },
+        h("input", { value: channel, style: { flex: "0 0 32%" }, list: datalist("dl-channel-names", ["speech", "led", "gesture", "gaze", "face"]),
+          onchange: (e) => { const s = agent.services[channel]; delete agent.services[channel]; agent.services[e.target.value] = s; changed(true); } }),
+        h("input", { value: service, list: services, placeholder: "service id", oninput: (e) => { agent.services[channel] = e.target.value; changed(false); } }),
+        h("button", { class: "btn small icon danger", title: "remove", onclick: () => { delete agent.services[channel]; changed(true); } }, "×"))),
+      h("div", { class: "row" },
+        h("button", { class: "btn small", onclick: () => { let c = "channel", n = 1; while (c in agent.services) c = `channel${n++}`; agent.services[c] = ""; changed(true); } }, "+ Channel"),
+        h("span", { class: "spacer" }),
+        h("button", { class: "btn small danger", onclick: () => { cast.agents.splice(i, 1); changed(true); } }, "Remove agent")));
+    box.append(card);
+  });
+  box.append(h("div", { class: "hint" }, "Leaves address agents by role (AgentSpeak, AgentsAction). Configurations and the Run page can override the cast, e.g. to swap which robot plays which role."));
+  return box;
+}
+
 function renderTreeSettings(container) {
   const doc = ed.doc;
   container.append(h("div", { class: "section" }, h("h3", {}, "Tree settings"),
@@ -309,6 +364,7 @@ function renderTreeSettings(container) {
   doc.variables ||= {};
   container.append(kvEditor("Variables", doc.variables, (rerender) => changed(rerender),
     "Use them in parameters as ${name}; they can be overridden by configurations and on the Run page."));
+  container.append(castEditor(doc));
   doc.blackboard ||= {};
   container.append(kvEditor("Initial blackboard", doc.blackboard, (rerender) => changed(rerender)));
   container.append(h("div", { class: "section hint" }, "Select a node to edit it. Shortcuts: Delete, Ctrl+D duplicate, Alt+↑/↓ move, Ctrl+S save."));

@@ -34,6 +34,21 @@ const URL = process.env.STUDIO_URL || 'http://localhost:8800';
   await page.waitForSelector('#compose-toolbar .pill.ok', { timeout: 5000 });
   step('valid again');
 
+  // the cast: humans and any number of agents
+  await page.click('#compose-props button:has-text("Tree settings")').catch(() => {});
+  await page.click('.node-row:has-text("GroupInteraction")');
+  await page.click('#compose-props button:has-text("Tree settings")');
+  await page.waitForSelector('#compose-props h3:has-text("Cast")');
+  const agentsBefore = await page.locator('#compose-props .card').count();
+  await page.click('#compose-props button:has-text("+ Agent")');
+  await page.waitForFunction((n) => document.querySelectorAll('#compose-props .card').length === n + 1, agentsBefore);
+  const third = page.locator('#compose-props .card').last();
+  await third.locator('label.field:has-text("Role") input').fill('Moderator');
+  await third.locator('label.field:has-text("Name") input').fill('Pepper');
+  await page.waitForSelector('#compose-toolbar .pill.ok', { timeout: 5000 });
+  step(`cast editor: ${agentsBefore} agents + Moderator, tree still valid`);
+  await page.screenshot({ path: `${SHOTS}/1b-cast.png` });
+
   // new tree: add nodes from the palette by click
   await page.click('#compose-trees button:has-text("New")');
   await page.waitForSelector('.node-row:has-text("Main")');
@@ -57,13 +72,16 @@ const URL = process.env.STUDIO_URL || 'http://localhost:8800';
   await page.click('.tabs button[data-page=run]');
   await page.locator('#run-controls select').first().selectOption('group_interaction.json');
   await page.waitForTimeout(300);
-  await page.locator('#run-controls .row:has(code:text-is("max_scenes")) input').fill('6');
+  await page.locator('#run-controls [data-var="max_scenes"]').fill('6');
+  await page.locator('#run-controls [data-cast="humans"]').fill('Micol, Jane');
   await page.locator('#run-controls label.field:has-text("Tick period") input').fill('0.05');
   await page.click('#run-controls button:has-text("Start")');
   await page.waitForSelector('#run-status .pill.run', { timeout: 20000 });
   await page.waitForSelector('#run-status .pill.ok:text("finished")', { timeout: 60000 });
   const bubbles = await page.locator('#run-transcript .bubble').count();
-  step(`simulation finished, ${bubbles} transcript lines`);
+  const participants = await page.locator('#run-participation .part-row').evaluateAll((rows) => rows.map((r) => r.dataset.participant));
+  step(`simulation finished, ${bubbles} conversation turns, participation of: ${participants.join(', ')}`);
+  if (!participants.includes('Jane') || !participants.includes('Manny') || bubbles < 4) throw new Error('participation or conversation missing');
   await page.screenshot({ path: `${SHOTS}/3-run.png` });
 
   // services: open the mock config and add a service

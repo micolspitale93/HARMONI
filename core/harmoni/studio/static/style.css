@@ -178,7 +178,7 @@ label.field > span small { font-weight: 400; color: var(--muted); }
 .glyph.composite { background: var(--composite); }
 .glyph.service { background: var(--service); }
 .glyph.condition { background: var(--condition); }
-.glyph.group-interaction { background: var(--group); }
+.glyph.group-interaction, .glyph.multi-party { background: var(--group); }
 .glyph.blackboard, .glyph.timing, .glyph.general { background: #64748b; }
 
 /* ------------------------------------------------------------------ outline (tree editor) */
@@ -284,8 +284,17 @@ pre.output { background: var(--panel-2); padding: 10px; border-radius: 6px; over
   .kind-cards { grid-template-columns: 1fr 1fr; }
 }
 .btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-soft); }
-.run-panels { flex: 0 0 40%; min-height: 200px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px 14px; border-top: 1px solid var(--border); background: var(--bg); }
+.run-panels { flex: 0 0 42%; min-height: 220px; display: grid; grid-template-columns: 1.3fr 0.8fr 1fr; gap: 12px; padding: 12px 14px; border-top: 1px solid var(--border); background: var(--bg); }
 .run-panels .card { display: flex; flex-direction: column; min-height: 0; margin: 0; }
 .run-panels .card + .card { margin-top: 0; }
 .run-panels .body { flex: 1; overflow: auto; min-height: 0; max-height: none; }
 @media (max-width: 800px) { .run-panels { grid-template-columns: 1fr; } }
+.bubble.event { align-self: center; background: none; color: var(--muted); font-style: italic; font-size: 12.5px; }
+.part-row { display: grid; grid-template-columns: minmax(70px, 40%) 1fr 28px; gap: 8px; align-items: center; margin-bottom: 7px; font-size: 13px; }
+.part-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.part-bar { height: 10px; background: var(--panel-2); border-radius: 5px; overflow: hidden; }
+.part-fill { display: block; height: 100%; border-radius: 5px; background: var(--muted); transition: width .3s; }
+.part-fill.human { background: var(--service); }
+.part-fill.agent { background: var(--accent); }
+.part-n { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+@media (max-width: 1100px) { .run-panels { grid-template-columns: 1fr 1fr; } }

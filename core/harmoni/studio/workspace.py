@@ -13,7 +13,9 @@ from pathlib import Path
 
 import yaml
 
+from harmoni.config import parse_config
 from harmoni.services import available_backends
+from harmoni.tree.cast import Cast, merge_cast
 from harmoni.tree.spec import has_errors, load_spec, resolve_spec, services_used, validate
 
 NAME_RE = re.compile(r"^[A-Za-z0-9_][A-Za-z0-9_.\-]{0,80}$")
@@ -46,8 +48,10 @@ class Workspace:
                 spec = json.loads(path.read_text(encoding="utf-8"))
             except ValueError:
                 spec = {}
+            cast = spec.get("cast") if isinstance(spec.get("cast"), dict) else {}
             trees.append({"name": path.name, "title": spec.get("name", path.stem),
-                          "description": spec.get("description", "")})
+                          "description": spec.get("description", ""),
+                          "roles": [a.get("role") for a in cast.get("agents") or [] if isinstance(a, dict)]})
         return trees
 
     def tree_path(self, name):
@@ -123,10 +127,10 @@ class Workspace:
         if not path.is_file():
             raise FileNotFoundError(config_id)
         text = path.read_text(encoding="utf-8")
-        return {"id": config_id, "text": text, **self.check_config_text(text)}
+        return {"id": config_id, "text": text, **self.check_config_text(text, config_id)}
 
     def write_config(self, config_id, text):
-        result = self.check_config_text(text)
+        result = self.check_config_text(text, config_id)
         if result["parsed"] is None:
             raise WorkspaceError("; ".join(i["message"] for i in result["issues"]))
         path = self._config_path(config_id)
@@ -134,15 +138,14 @@ class Workspace:
         path.write_text(text, encoding="utf-8")
         return result
 
-    def check_config_text(self, text):
-        """Parse a service configuration and check backends, parameters and tree"""
+    def check_config_text(self, text, config_id=None):
+        """Parse a service configuration (resolving ``extends``) and check backends, parameters and tree"""
         issues = []
+        path = str(self._config_path(config_id)) if config_id else None
         try:
-            parsed = yaml.safe_load(text) or {}
-        except yaml.YAMLError as e:
+            parsed = parse_config(text, path)
+        except (yaml.YAMLError, ValueError, OSError) as e:
             return {"parsed": None, "issues": [{"level": "error", "path": "yaml", "message": str(e)}]}
-        if not isinstance(parsed, dict):
-            return {"parsed": None, "issues": [{"level": "error", "path": "yaml", "message": "must be a mapping"}]}
         backends = available_backends()
         services = parsed.get("services") or {}
         for service_id, params in services.items():
@@ -163,15 +166,33 @@ class Workspace:
                                    "message": "required parameter is empty"})
         tree_file = (parsed.get("tree") or {}).get("file")
         if tree_file:
-            path = self.root / tree_file
-            if not path.is_file():
+            tree_path = self.root / tree_file
+            if not tree_path.is_file():
                 issues.append({"level": "error", "path": "tree.file", "message": f"{tree_file} not found"})
             else:
                 try:
-                    for service_id in services_used(load_spec(str(path))):
+                    for service_id in services_used(load_spec(str(tree_path)), (parsed.get("tree") or {}).get("cast")):
                         if service_id not in services:
                             issues.append({"level": "warning", "path": "services",
                                            "message": f"the tree calls '{service_id}', which is not configured"})
                 except Exception as e:  # noqa: BLE001
                     issues.append({"level": "error", "path": "tree.file", "message": str(e)})
+        parsed.pop("_extends", None)
         return {"parsed": parsed, "issues": issues}
+
+    def run_defaults(self, tree, config_id=None, cast=None, variables=None):
+        """Effective variables and cast of a tree run with a configuration (and run-time overrides)"""
+        spec = load_spec(str(self.tree_path(tree)))
+        config_tree = {}
+        if config_id:
+            config_tree = (self.read_config(config_id)["parsed"] or {}).get("tree") or {}
+        merged_variables = dict(config_tree.get("variables") or {})
+        merged_variables.update(variables or {})
+        merged_cast = merge_cast(config_tree.get("cast"), cast) if config_tree.get("cast") else cast
+        resolved, _ = resolve_spec(spec, merged_variables, merged_cast)
+        return {
+            "variables": resolved.get("variables") or {},
+            "cast": Cast.from_spec(resolved.get("cast")).to_dict(),
+            "config_variables": merged_variables,
+            "config_cast": merged_cast,
+        }

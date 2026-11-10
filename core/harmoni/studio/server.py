@@ -60,6 +60,7 @@ class Studio:
         r("POST", r"/api/configs-check", lambda req: self.workspace.check_config_text(req.json().get("text", "")))
         r("POST", r"/api/service-snippet", self.service_snippet)
         r("GET", r"/api/run", lambda req: self.runs.state())
+        r("POST", r"/api/run/defaults", self.run_defaults)
         r("POST", r"/api/run", self.start_run)
         r("POST", r"/api/run/command", self.run_command)
         r("POST", r"/api/run/stop", self.stop_run)
@@ -109,10 +110,15 @@ class Studio:
         text = yaml.safe_dump({service_id: entry}, sort_keys=False, allow_unicode=True)
         return {"snippet": "".join("  " + line + "\n" for line in text.splitlines())}
 
+    def run_defaults(self, req):
+        body = req.json()
+        return self.workspace.run_defaults(body.get("tree"), body.get("config") or None, body.get("cast"),
+                                           body.get("variables"))
+
     def start_run(self, req):
         body = req.json()
         return self.runs.start_simulation(body.get("tree"), body.get("config"), body.get("variables") or {},
-                                          body.get("period_s", 0.2))
+                                          body.get("period_s", 0.2), body.get("cast"))
 
     def run_command(self, req):
         self.runs.command(req.json().get("command", ""))

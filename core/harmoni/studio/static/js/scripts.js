@@ -1,6 +1,6 @@
 // Scripts: the scenes of scripted dialogues (used by the GroupScript leaf).
 
-import { api, clear, datalist, guard, h, toast } from "./lib.js";
+import { api, clear, datalist, guard, h, state, toast } from "./lib.js";
 
 const sc = { name: null, script: null, session: null, dirty: false };
 let root;
@@ -32,9 +32,12 @@ function render() {
     h("button", { class: "btn", onclick: () => addScene(sc.script[sc.session].length) }, "+ Scene"),
     h("button", { class: "btn primary", onclick: save }, "Save")));
   const scenes = sc.script[sc.session] || [];
-  const agents = datalist("dl-agents", ["Mover", "Opposer"]);
+  // roles: those of the trees' casts and those already used in the script
+  const roles = new Set(state.trees.flatMap((t) => t.roles || []));
+  Object.values(sc.script).flat().forEach((scene) => scene.agent && roles.add(scene.agent));
+  const agents = datalist("dl-agents", [...roles].sort());
   const table = h("table", { class: "grid" }, h("thead", {}, h("tr", {},
-    h("th", { style: { width: "40px" } }, "#"), h("th", { style: { width: "140px" } }, "Robot"),
+    h("th", { style: { width: "40px" } }, "#"), h("th", { style: { width: "140px" } }, "Agent (role)"),
     h("th", { style: { width: "130px" } }, "Who decides"), h("th", {}, "Utterance"), h("th", { style: { width: "120px" } }, ""))));
   const body = h("tbody");
   scenes.forEach((scene, i) => {

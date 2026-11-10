@@ -185,3 +185,36 @@ def test_modules_lifecycle(studio):
     _, result = call(url + "/api/modules/wave_detector/visibility", "POST", {"visibility": "public"})
     assert result["ok"], result["checks"]
     assert (root / "modules" / "public" / "wave_detector" / "backend.py").is_file()
+
+
+def test_run_defaults_follow_the_configuration(studio):
+    url, _ = studio
+    _, het = call(url + "/api/run/defaults", "POST", {"tree": "group_interaction.json",
+                                                       "config": "ros2:group_interaction.yaml"})
+    assert het["cast"]["humans"] == ["Micol", "Emmanuel", "Yukun"]
+    assert [(a["role"], a["robot"]) for a in het["cast"]["agents"]] == [("Mover", "Furhat"), ("Opposer", "NAO")]
+    _, homog = call(url + "/api/run/defaults", "POST", {"tree": "group_interaction.json",
+                                                         "config": "ros2:group_interaction_homog_inversed.yaml"})
+    assert [(a["role"], a["robot"]) for a in homog["cast"]["agents"]] == [("Mover1", "NAO"), ("Mover2", "Furhat")]
+    assert homog["variables"]["script"] == "scripts/group_interaction_homog.json"
+
+
+def test_run_with_a_cast_override(studio):
+    url, _ = studio
+    cast = {"humans": ["Ann", "Bob"], "agents": [
+        {"role": "Mover", "name": "Manny", "services": {"speech": "speaker_nao", "led": "led_nao"}},
+        {"role": "Opposer", "name": "Sam", "services": {"speech": "speaker_furhat", "led": "led_furhat"}}]}
+    status, _ = call(url + "/api/run", "POST", {"tree": "group_interaction.json", "config": "core:group_interaction.mock.yaml",
+                                                "variables": {"max_scenes": 4}, "cast": cast, "period_s": 0.01})
+    assert status == 200
+    for _ in range(500):
+        _, state = call(url + "/api/run")
+        snapshot = state.get("snapshot") or {}
+        if snapshot.get("state") == "finished":
+            break
+        time.sleep(0.02)
+    assert snapshot["cast"]["humans"] == ["Ann", "Bob"]
+    conversation = snapshot["blackboard"]["/conversation"]
+    assert any("Ann and Bob" in t["text"] for t in conversation if t["kind"] == "agent")  # 2session, names
+    # the Mover was moved to the NAO for this run
+    assert any(e["source"] == "speaker_nao" and "Manny" in e["message"] for e in state["log"])

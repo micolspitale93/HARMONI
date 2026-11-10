@@ -96,6 +96,7 @@ export function knownServices() {
 export const GLYPHS = {
   Sequence: "→", Selector: "?", Parallel: "⇉", ServiceAction: "◆", CheckValue: "◇", SetValue: "=",
   CopyValue: "⧉", Wait: "⏱", GroupScript: "S", ScriptedTurn: "T", OrchestratorDecision: "D",
+  DialogueScript: "S", AgentSpeak: "◉", AgentsAction: "⁂", LogUtterance: "✎",
 };
 
 export function glyph(type) {
