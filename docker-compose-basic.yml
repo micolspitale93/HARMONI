@@ -1,163 +1,125 @@
-version: "3.7"
+# HARMONI basic setup: central (full), hardware, facial expression recognition and detectors containers.
+#
+# Start with:   ./harmoni.sh up basic      (or: docker compose -f docker-compose-basic.yml up -d)
+# Open a shell: ./harmoni.sh shell harmoni_full
+#
+# Your local clone of HARMONI is mounted inside every container at
+# /root/harmoni_catkin_ws/src/HARMONI, so edits on the host are immediately visible
+# in the containers. Credentials are read from ./.env (see .env.example), ~/.aws and ~/.gcp.
+
+x-harmoni-common: &harmoni-common
+  init: true
+  privileged: true
+  working_dir: /root/harmoni_catkin_ws/src/HARMONI
+  command: tail -f /dev/null
+  volumes: &harmoni-volumes
+    - ./:/root/harmoni_catkin_ws/src/HARMONI/
+    # Configuration / credentials
+    - ${HOME}/.aws:/root/.aws/
+    - ${HOME}/.gcp/private-keys.json:/root/.gcp/private-keys.json
+    # Display and time
+    - /tmp/.X11-unix:/tmp/.X11-unix
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+
+x-harmoni-env: &harmoni-env
+  DISPLAY: ${DISPLAY:-:0}
+  QT_GRAPHICSSYSTEM: native
+  ROS_DISTRO: noetic
+  IS_DOCKER_ENV: "true"
+  CATKIN_WS: harmoni_catkin_ws
+  ROS_MASTER_URI: http://172.18.3.4:11311
 
 services:
   harmoni_full:
+    <<: *harmoni-common
     container_name: harmoni_full
+    hostname: harmoni_full
+    image: harmoni02/harmoni2.0:full
     build:
       context: .
       dockerfile: dockerfiles/harmoni/noetic/full/dockerfile
       network: host
-    image: harmoni02/harmoni2.0:full
-    init: true
     environment:
-      DISPLAY: $DISPLAY
-      QT_GRAPHICSSYSTEM: native
-      ROS_DISTRO: noetic
-      ROS_MASTER_URI: http://172.18.3.4:11311
-      IS_DOCKER_ENV: "true"
+      <<: *harmoni-env
       ROS_HOSTNAME: harmoni_full
-      CATKIN_WS: harmoni_catkin_ws
-    privileged: true
     networks:
       ros_net:
         ipv4_address: 172.18.3.4
-    hostname: harmoni_full
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/snd:/dev/snd
+      - /dev/video0:/dev/video0
     ports:
       - "11312:11312"
       - "33691:33691"
       - "8081:8081"
-    devices:
-      - /dev/dri:/dev/dri
-      - /dev/snd:/dev/snd
-      - /dev/video0:/dev/video0
-    volumes:
-      - ../HARMONI/:/root/local_mount/HARMONI/
-      # Configuration
-      - ~/.aws:/root/.aws/
-      - ~/.gcp/private-keys.json:/root/.gcp/private-keys.json
-      # Other
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    working_dir: /root/harmoni_catkin_ws/src/HARMONI
-    command: tail  -f /dev/null
-
-  harmoni_fer:
-    container_name: harmoni_fer
-    build:
-      context: .
-      dockerfile: dockerfiles/harmoni/noetic/fer/dockerfile
-      network: host
-    image: harmoni02/harmoni2.0:fer
-    init: true
-    environment:
-      DISPLAY: $DISPLAY
-      QT_GRAPHICSSYSTEM: native
-      ROS_DISTRO: noetic
-      IS_DOCKER_ENV: "true"
-      CATKIN_WS: harmoni_catkin_ws
-      ROS_HOSTNAME: harmoni_fer
-      ROS_MASTER_URI: http://172.18.3.4:11311
-    privileged: true
-    networks:
-      ros_net:
-        ipv4_address: 172.18.3.6
-    hostname: harmoni_fer
-    depends_on:
-      - "harmoni_full"
-      - "harmoni_hardware"
-    devices:
-      - /dev/dri:/dev/dri
-      - /dev/video0:/dev/video0
-    volumes:
-      - ../HARMONI/:/root/local_mount/HARMONI/
-      # Configuration
-      - ~/.aws:/root/.aws/
-      - ~/.gcp/private-keys.json:/root/.gcp/private-keys.json
-      # Other
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    working_dir: /root/harmoni_catkin_ws/src/HARMONI
-    command: tail  -f /dev/null
-
-  harmoni_detectors:
-    container_name: harmoni_detectors
-    build:
-      context: .
-      dockerfile: dockerfiles/harmoni/noetic/detectors/dockerfile
-      network: host
-    image: harmoni02/harmoni2.0:detectors
-    init: true
-    environment:
-      DISPLAY: $DISPLAY
-      QT_GRAPHICSSYSTEM: native
-      ROS_DISTRO: noetic
-      IS_DOCKER_ENV: "true"
-      CATKIN_WS: harmoni_catkin_ws
-      ROS_HOSTNAME: harmoni_detectors
-      ROS_MASTER_URI: http://172.18.3.4:11311
-    privileged: true
-    networks:
-      ros_net:
-        ipv4_address: 172.18.3.7
-    hostname: harmoni_detectors
-    depends_on:
-      - "harmoni_full"
-      - "harmoni_hardware"
-    devices:
-      - /dev/dri:/dev/dri
-      - /dev/video0:/dev/video0
-    volumes:
-      - ../HARMONI/:/root/local_mount/HARMONI/
-      # Configuration
-      - ~/.aws:/root/.aws/
-      - ~/.gcp/private-keys.json:/root/.gcp/private-keys.json
-      # Other
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    working_dir: /root/harmoni_catkin_ws/src/HARMONI
-    command: tail  -f /dev/null
 
   harmoni_hardware:
+    <<: *harmoni-common
     container_name: harmoni_hardware
+    hostname: ros_hardware
+    image: harmoni02/harmoni2.0:full
     build:
       context: .
       dockerfile: dockerfiles/harmoni/noetic/full/dockerfile
       network: host
-    image: harmoni02/harmoni2.0:full
-    init: true
     environment:
-      DISPLAY: $DISPLAY
-      QT_GRAPHICSSYSTEM: native
-      ROS_DISTRO: noetic
-      IS_DOCKER_ENV: "true"
-      CATKIN_WS: harmoni_catkin_ws
+      <<: *harmoni-env
       ROS_HOSTNAME: harmoni_hardware
-      ROS_MASTER_URI: http://172.18.3.4:11311
-    privileged: true
     networks:
       ros_net:
         ipv4_address: 172.18.3.5
-    hostname: ros_hardware
     depends_on:
-      - "harmoni_full"
+      - harmoni_full
     devices:
       - /dev/dri:/dev/dri
       - /dev/snd:/dev/snd
       - /dev/video0:/dev/video0
-    volumes:
-      - ../HARMONI/:/root/local_mount/HARMONI/
-      # Configuration
-      - ~/.aws:/root/.aws/
-      - ~/.gcp/private-keys.json:/root/.gcp/private-keys.json
-      # Other
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    working_dir: /root/harmoni_catkin_ws/src/HARMONI
-    command: tail  -f /dev/null
+
+  harmoni_fer:
+    <<: *harmoni-common
+    container_name: harmoni_fer
+    hostname: harmoni_fer
+    image: harmoni02/harmoni2.0:fer
+    build:
+      context: .
+      dockerfile: dockerfiles/harmoni/noetic/fer/dockerfile
+      network: host
+    environment:
+      <<: *harmoni-env
+      ROS_HOSTNAME: harmoni_fer
+    networks:
+      ros_net:
+        ipv4_address: 172.18.3.6
+    depends_on:
+      - harmoni_full
+      - harmoni_hardware
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/video0:/dev/video0
+
+  harmoni_detectors:
+    <<: *harmoni-common
+    container_name: harmoni_detectors
+    hostname: harmoni_detectors
+    image: harmoni02/harmoni2.0:detectors
+    build:
+      context: .
+      dockerfile: dockerfiles/harmoni/noetic/detectors/dockerfile
+      network: host
+    environment:
+      <<: *harmoni-env
+      ROS_HOSTNAME: harmoni_detectors
+    networks:
+      ros_net:
+        ipv4_address: 172.18.3.7
+    depends_on:
+      - harmoni_full
+      - harmoni_hardware
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/video0:/dev/video0
 
 networks:
   ros_net:
@@ -166,6 +128,3 @@ networks:
       driver: default
       config:
         - subnet: 172.18.3.0/24
-
-volumes:
-  wav2letter:

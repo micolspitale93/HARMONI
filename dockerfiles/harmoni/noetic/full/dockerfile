@@ -44,13 +44,18 @@ RUN \
     python-dotenv \
     openai \
     azure-cognitiveservices-speech \
+    furhat-remote-api \
     protobuf==3.20.1
 
 #caching protection for Harmoni, per https://stackoverflow.com/a/39278224/5715374
 #ADD https://api.github.com/repos/micolspitale93/git/refs/heads/develop /root/version.json
+# The branch baked into the image. With docker compose your local clone is mounted on top of
+# it, so this only matters for running the image standalone.
+ARG HARMONI_BRANCH=dev/harmoni2.0
 RUN git -C src clone \
-    -b develop \
-    https://github.com/micolspitale93/HARMONI.git 
+    -b ${HARMONI_BRANCH} \
+    https://github.com/micolspitale93/HARMONI.git \
+    && git config --global --add safe.directory /root/harmoni_catkin_ws/src/HARMONI
 
 
 # ==================================================================

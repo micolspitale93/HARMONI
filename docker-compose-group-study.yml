@@ -1,68 +1,68 @@
+# HARMONI group interaction study: two robots (Furhat "Mover" and NAO "Opposer") moderated
+# by an LLM orchestrator, with Azure speaker diarization.
+#
+# Start with:  ./harmoni.sh up group
+# Run study:   ./harmoni.sh run group
+#
+# Both containers use the host network so that they can reach the robots on the LAN
+# (robot IPs are set in harmoni_actuators/harmoni_speaker/config/configuration.yaml).
+# The NAO SDK (naoqi) only supports python 2.7, hence the separate ROS kinetic container.
+
 services:
   harmoni_full:
     container_name: harmoni_full_group
+    image: harmoni02/harmoni2.0:full
     build:
       context: .
       dockerfile: dockerfiles/harmoni/noetic/full/dockerfile
       network: host
-    image: harmoni02/harmoni2.0:full
     init: true
+    privileged: true
+    network_mode: host
     environment:
-      DISPLAY: $DISPLAY
+      DISPLAY: ${DISPLAY:-:0}
       QT_GRAPHICSSYSTEM: native
       ROS_DISTRO: noetic
       IS_DOCKER_ENV: "true"
       CATKIN_WS: harmoni_catkin_ws
-    privileged: true
-    network_mode: "host"
-    ports:
-      - "11312:11312"
-      - "33691:33691"
-      - "8081:8081"
     devices:
       - /dev/dri:/dev/dri
       - /dev/snd:/dev/snd
       - /dev/video0:/dev/video0
     volumes:
-      - ../HARMONI/:/root/local_mount/HARMONI/
-      # Configuration
-      - ~/.aws:/root/.aws/
-      - ~/.gcp/private-keys.json:/root/.gcp/private-keys.json
-      # Other
+      - ./:/root/harmoni_catkin_ws/src/HARMONI/
+      # Configuration / credentials
+      - ${HOME}/.aws:/root/.aws/
+      - ${HOME}/.gcp/private-keys.json:/root/.gcp/private-keys.json
+      # Display and time
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     working_dir: /root/harmoni_catkin_ws/src/HARMONI
-    command: tail  -f /dev/null
+    command: tail -f /dev/null
 
   harmoni_nao:
     container_name: harmoni_nao
+    image: harmoni02/harmoni2.0:nao
     build:
       context: .
       dockerfile: dockerfiles/harmoni/kinetic/nao/dockerfile
       network: host
     init: true
+    privileged: true
+    network_mode: host
     environment:
-      DISPLAY: $DISPLAY
+      DISPLAY: ${DISPLAY:-:0}
       QT_GRAPHICSSYSTEM: native
       ROS_DISTRO: kinetic
       IS_DOCKER_ENV: "true"
       CATKIN_WS: harmoni_catkin_ws
-    privileged: true
-    network_mode: "host"
     depends_on:
-      - "harmoni_full"
+      - harmoni_full
     volumes:
-      - ../HARMONI/:/nao/local_mount/HARMONI/
-      # Other
+      - ./:/nao/harmoni_catkin_ws/src/HARMONI/
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     working_dir: /nao/harmoni_catkin_ws/src/HARMONI
-    command: tail  -f /dev/null
-
-
-networks:
-  host:
-    driver: bridge
-    
+    command: tail -f /dev/null

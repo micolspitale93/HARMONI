@@ -1,26 +1,20 @@
 # Docker Details
 
-**Important** Please note that the kinetic build is not currently functional and the noetic build uses a kinetic w2l image because the w2l is not supported on 20.04. 
+The easiest way to use the HARMONI containers is the `harmoni.sh` script in the repository root:
 
-To launch the complete harmoni dev setup in docker:
-1. In order to run on linux use:
 ```bash
-    sh run_compose.sh
+./harmoni.sh setup        # check docker, create .env and credential folders
+./harmoni.sh pull         # or ./harmoni.sh build
+./harmoni.sh up           # basic | full | group
+./harmoni.sh shell        # terminal in harmoni_full
 ```
 
-2. Launch the desired packages and run the desired scripts in the respective docker containers
+See the [Docker quickstart](../doc/quickstart/Docker-Quickstart.md) for the details. Your local clone of the
+repository is mounted in all the containers at `/root/harmoni_catkin_ws/src/HARMONI`
+(`/nao/harmoni_catkin_ws/src/HARMONI` in the NAO container).
 
-    For example, to use Wave2Letter:
-    - From harmoni_full, open a terminal and:
-        - ```roscore```
-
-    - From harmoni_hardware:
-        - ``` roslaunch harmoni_microphone microphone_service.launch```
-        - _Note: you can also use the alias ```rlhardwareservices``` we have provided, which will launch the hardware you have set in the configuration_
-
-    - From harmoni_w2l:
-        - ```roslaunch harmoni_stt stt_example.launch```
-         - _Note: you can also use the alias ```rlspeech``` we have provided_
+**Important** Please note that the kinetic build is not currently functional (except for the NAO bridge image
+`kinetic/nao`, used by the group study) and the noetic build uses a kinetic w2l image because the w2l is not supported on 20.04.
 
 ## Why Docker?
 Although Harmoni will work without Docker, Harmoni is intended to be used with Docker to maximize portability and scalability. By using Docker Harmoni is quick and easy to set up on any OS or Hardware which currently supports docker.  We provide pre-built images for development, lightweight images for deployment, and even support for deploying to ARM chipsets.
@@ -63,6 +57,12 @@ docker build -f dockerfiles/harmoni/noetic/full/dockerfile --tag harmoniteam/har
 # docker build -f dockerfiles/harmoni/noetic/w2l/dockerfile --tag harmoniteam/harmoni:noetic-w2l .
 
 docker build -f dockerfiles/harmoni/noetic/facedetect/dockerfile --tag harmoniteam/harmoni:noetic-facedetect .
+```
+
+## NAO bridge (kinetic, group study)
+Requires the NAOqi python SDK archive, see [kinetic/nao/README.md](harmoni/kinetic/nao/README.md).
+```bash
+docker compose -f docker-compose-group-study.yml build harmoni_nao
 ```
 
 ## Kinetic

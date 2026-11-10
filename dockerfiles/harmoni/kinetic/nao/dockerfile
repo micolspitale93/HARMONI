@@ -1,0 +1,63 @@
+# HARMONI NAO bridge image (ROS kinetic, python 2.7)
+#
+# The NAOqi python SDK only supports python 2.7, so the node that talks to the NAO robot
+# (harmoni_speaker/apis_nao_node.py) runs in this separate container and communicates with
+# the noetic containers over ROS (service /nao/speak, topics /speaker_nao/*).
+#
+# The NAOqi SDK cannot be redistributed. Either:
+#   a) download "pynaoqi-python2.7-<version>-linux64.tar.gz" from the Aldebaran/SoftBank
+#      website and place it in this folder (dockerfiles/harmoni/kinetic/nao/), or
+#   b) pass a download link:  --build-arg NAOQI_SDK_URL=<url of the tar.gz>
+#
+# Build:  docker compose -f docker-compose-group-study.yml build harmoni_nao
+FROM ros:kinetic-ros-base
+
+ENV ROS_DISTRO=kinetic
+SHELL ["/bin/bash", "-c"]
+
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    python-catkin-tools \
+    python-pip \
+    python-numpy \
+    ros-kinetic-audio-common-msgs \
+    iputils-ping \
+    nano \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+# ------------------------------------------------------------------
+# NAOqi python SDK
+# ------------------------------------------------------------------
+ARG NAOQI_SDK_URL=""
+COPY dockerfiles/harmoni/kinetic/nao/ /tmp/naoqi/
+RUN set -e; cd /tmp/naoqi; \
+    TARBALL=$(ls pynaoqi-python2.7-*.tar.gz 2>/dev/null | head -n 1 || true); \
+    if [ -z "$TARBALL" ]; then \
+        if [ -z "$NAOQI_SDK_URL" ]; then \
+            echo "ERROR: NAOqi SDK not found. Put pynaoqi-python2.7-*-linux64.tar.gz in dockerfiles/harmoni/kinetic/nao/ or use --build-arg NAOQI_SDK_URL=<url>"; \
+            exit 1; \
+        fi; \
+        wget -q -O pynaoqi.tar.gz "$NAOQI_SDK_URL"; TARBALL=pynaoqi.tar.gz; \
+    fi; \
+    mkdir -p /opt/naoqi && tar -xzf "$TARBALL" -C /opt/naoqi --strip-components=1; \
+    rm -rf /tmp/naoqi
+ENV PYTHONPATH=/opt/naoqi/lib/python2.7/site-packages:${PYTHONPATH}
+ENV LD_LIBRARY_PATH=/opt/naoqi/lib:${LD_LIBRARY_PATH}
+RUN python -c "from naoqi import ALProxy; print('naoqi SDK OK')"
+
+# ------------------------------------------------------------------
+# Build only the package needed by the NAO bridge (generates the nao_speak service)
+# ------------------------------------------------------------------
+ENV ROS_WS=/nao/harmoni_catkin_ws
+WORKDIR $ROS_WS
+COPY harmoni_actuators/harmoni_speaker src/HARMONI/harmoni_actuators/harmoni_speaker
+RUN source /opt/ros/kinetic/setup.bash \
+    && catkin config --extend /opt/ros/kinetic \
+    && catkin build harmoni_speaker --no-status
+
+RUN echo 'source /opt/ros/kinetic/setup.bash' >> /root/.bashrc \
+    && echo 'source /nao/harmoni_catkin_ws/devel/setup.bash' >> /root/.bashrc \
+    && echo 'echo "HARMONI NAO bridge. Start it with: rosrun harmoni_speaker apis_nao_node.py"' >> /root/.bashrc
+
+WORKDIR $ROS_WS/src/HARMONI
+CMD ["bash"]
