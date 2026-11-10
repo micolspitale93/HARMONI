@@ -1,0 +1,12 @@
+# Action served by every HARMONI service (same fields as the ROS1 harmoni_common_msgs/harmoni.action)
+
+# Goal
+uint8 action_type      # OFF=0 ON=1 PAUSE=2 REQUEST=3 DO=4 (harmoni.constants.ActionType)
+string optional_data   # payload: text or JSON
+---
+# Result
+bool do_action         # true if the service succeeded
+string message         # answer of the service
+---
+# Feedback
+int8 state             # INIT=0 START=1 REQUEST=2 SUCCESS=3 FAILED=4 PAUSE=5 (harmoni.constants.State)

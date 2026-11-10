@@ -1,0 +1,34 @@
+# HARMONI ROS2 - group interaction without robots, microphone or cloud credentials.
+# Every service is a real ROS2 node, but answers with canned responses.
+#   ./harmoni.sh ros2 run group-mock
+participants: &participants "Micol"
+
+tree:
+  file: core/trees/group_interaction.json
+  period_s: 0.2
+  variables:
+    session: "1session"
+    user_names: *participants
+    max_scenes: 8
+
+services:
+  bot_default:
+    backend: mock
+    delay_s: 1.0
+    responses:
+      - '{"intervene": true, "agent": "Opposer", "response": "Are you sure AI helps every teacher?", "addressee": "Micol"}'
+      - '{"intervene": false, "agent": "Mover", "response": "", "addressee": ""}'
+      - '{"intervene": true, "agent": "Mover", "response": "Privacy matters: who should set the rules?", "addressee": "Micol"}'
+  stt_default:
+    backend: mock
+    delay_s: 2.0
+    responses:
+      - "Micol: Hi, I am Micol, nice to meet you"
+      - "Micol: I think AI can help teachers a lot"
+      - "Micol: But I am worried about privacy"
+  speaker_furhat:
+    backend: furhat
+    mockup: true
+  speaker_nao:
+    backend: nao_http
+    mockup: true

@@ -1,0 +1,11 @@
+# Build context of the ROS 2 image is the repository root: it only needs core/ and ros2/
+.git
+.github
+.vs
+ros1
+doc
+**/__pycache__
+**/.pytest_cache
+**/.harmoni
+.env
+ros2/nao_bridge

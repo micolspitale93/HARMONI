@@ -1,6 +1,6 @@
 name: unit-tests
 
-# ROS-free unit tests (see conftest.py and run_tests.sh). Fast: no docker image is built.
+# Unit tests of core/, ros2/ and ros1/: no ROS and no docker image needed.
 on:
   push:
     branches: [develop, dev/harmoni2.0]
@@ -10,12 +10,19 @@ on:
 jobs:
   pytest:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # 3.12: ROS 2 Jazzy (Ubuntu 24.04); 3.8: ROS 1 Noetic (Ubuntu 20.04)
+        python-version: ["3.8", "3.12"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: ${{ matrix.python-version }}
       - name: Install test requirements
-        run: python -m pip install pytest py_trees python-dotenv
+        run: python -m pip install pytest "py_trees>=2.2,<2.4" pyyaml python-dotenv
+      - name: Validate the tree files
+        run: |
+          for tree in core/trees/*.json; do PYTHONPATH=core python -m harmoni.tree validate "$tree"; done
       - name: Run unit tests
-        run: ./run_tests.sh unit
+        run: ./harmoni.sh test

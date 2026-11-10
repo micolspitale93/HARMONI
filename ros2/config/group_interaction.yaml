@@ -1,0 +1,36 @@
+# HARMONI ROS2 - group interaction with the real robots and cloud services.
+#   ./harmoni.sh ros2 run group
+# The participants are defined once and reused everywhere (YAML anchor).
+participants: &participants "Micol"   # comma separated, in the order Azure detects the speakers
+
+tree:
+  file: core/trees/group_interaction.json   # relative to the repository root
+  period_s: 0.2
+  variables:
+    session: "1session"          # 1session, 2session or 3session = number of participants
+    user_names: *participants
+    max_scenes: 30
+
+services:
+  bot_default:                   # LLM orchestrator (Azure OpenAI Assistant)
+    backend: assistant
+    assistant_id: ""             # asst_... (see doc/configuration/Cloud-Services.md)
+    participants: *participants
+    scenario: "The topic of this group conversation is AI in society."
+
+  stt_default:                   # speaker diarization (Azure Speech)
+    backend: azure_diarization
+    language_id: en-US
+    names: *participants
+    max_silence: 10
+
+  speaker_furhat:                # Mover
+    backend: furhat
+    robot_ip: 192.168.1.101
+    voice: Matthew
+    mockup: false
+
+  speaker_nao:                   # Opposer, through the NAO bridge (./harmoni.sh ros2 up --nao)
+    backend: nao_http
+    bridge_url: http://localhost:8765
+    mockup: false

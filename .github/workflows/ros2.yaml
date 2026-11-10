@@ -1,0 +1,37 @@
+name: ros2
+
+# Builds the ROS 2 image and runs the mock group interaction on real ROS 2 (smoke test),
+# plus the NAO bridge image in mock mode.
+on:
+  push:
+    branches: [develop, dev/harmoni2.0]
+    paths: ["core/**", "ros2/**", ".github/workflows/ros2.yaml"]
+  pull_request:
+    paths: ["core/**", "ros2/**", ".github/workflows/ros2.yaml"]
+  workflow_dispatch:
+
+jobs:
+  ros2-smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the ROS 2 image
+        run: docker build -f ros2/docker/Dockerfile -t harmoni-ros2:ci .
+      - name: Run the mock group interaction on ROS 2
+        run: |
+          docker run --rm -v "$PWD":/root/HARMONI -w /root/HARMONI/ros2 harmoni-ros2:ci \
+            bash -c "python3 -m pytest -q tests && python3 tests/ros_smoke_test.py"
+
+  nao-bridge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the NAO bridge without SDK
+        run: docker build --build-arg NAOQI_SDK=none -t nao-bridge:ci ros2/nao_bridge
+      - name: Say something in mock mode
+        run: |
+          docker run -d --name bridge -e NAO_MOCK=1 -p 8765:8765 nao-bridge:ci
+          for i in $(seq 1 20); do curl -sf http://localhost:8765/health && break; sleep 1; done
+          curl -sf -X POST -d '{"text": "Hello from CI"}' http://localhost:8765/say | grep '"ok": true'
+          docker logs bridge

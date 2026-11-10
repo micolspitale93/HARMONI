@@ -1,0 +1,49 @@
+# HARMONI on ROS 2 (Jazzy by default).
+#
+# Start with:  ./harmoni.sh ros2 up            (add --nao to also start the NAO bridge)
+# Run:         ./harmoni.sh ros2 run group-mock   (no robots/credentials) or run group
+#
+# The whole repository is mounted at /root/HARMONI: the nodes use your local core/ and ros2/
+# code. Credentials come from the .env file in the repository root (see .env.example).
+
+services:
+  harmoni_ros2:
+    container_name: harmoni_ros2
+    image: harmoni02/harmoni2.0:ros2-${ROS_DISTRO:-jazzy}
+    build:
+      context: ..
+      dockerfile: ros2/docker/Dockerfile
+      args:
+        ROS_DISTRO: ${ROS_DISTRO:-jazzy}
+    init: true
+    # host network: reach the robots on the LAN and let ROS 2 tools on the host
+    # (ros2 topic echo, Foxglove, a dashboard) discover the nodes
+    network_mode: host
+    ipc: host
+    env_file:
+      - path: ../.env
+        required: false
+    environment:
+      ROS_DOMAIN_ID: ${ROS_DOMAIN_ID:-0}
+      DISPLAY: ${DISPLAY:-:0}
+    devices:
+      - /dev/snd:/dev/snd
+    volumes:
+      - ..:/root/HARMONI
+      - /etc/localtime:/etc/localtime:ro
+    working_dir: /root/HARMONI/ros2
+    command: tail -f /dev/null
+
+  harmoni_nao_bridge:
+    container_name: harmoni_nao_bridge
+    image: harmoni02/harmoni2.0:nao-bridge
+    profiles: ["nao"]
+    build:
+      context: ./nao_bridge
+    init: true
+    env_file:
+      - path: ../.env
+        required: false
+    ports:
+      - "8765:8765"
+    restart: unless-stopped
