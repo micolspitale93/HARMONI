@@ -7,6 +7,7 @@ from harmoni.tree.registry import Param
 from harmoni.services.base import Result, ServiceBackend, load_env, register_backend
 
 FALLBACK_MESSAGE = "Can you please repeat what you said?"
+DEFAULT_INSTRUCTIONS = "The names of the {num_speaker} participants are: {participants}. The scenario is the following: {scenario}"
 
 ORCHESTRATOR_RESPONSE_FORMAT = {
     "type": "json_schema",
@@ -59,7 +60,11 @@ def parse_input(input_text):
         "create_thread": Param(bool, doc="create the conversation thread (default: true for *_default)"),
         "participants": Param(str, default="", doc="comma separated names of the participants"),
         "num_speaker": Param(int, doc="number of participants (default: number of names)"),
-        "scenario": Param(str, default="", doc="topic of the conversation"),
+        "scenario": Param(str, default="", doc="topic or task of the conversation"),
+        "instructions": Param(str, default=None, doc="additional instructions; {participants}, {num_speaker} "
+                                                      "and {scenario} are replaced (default: a description of them)"),
+        "extra_instructions": Param(str, default="", doc="appended to the instructions, "
+                                                         "e.g. how to balance the participation"),
         "api_version": Param(str, default="2025-01-01-preview", doc="Azure OpenAI API version"),
     },
     requirements=["openai>=1.0", "python-dotenv"],
@@ -87,10 +92,11 @@ class AssistantBackend(ServiceBackend):
         self.create_thread = bool(p.get("create_thread", service_id.endswith("_default")))
         participants = str(p.get("participants", ""))
         num_speaker = p.get("num_speaker") or len([n for n in participants.split(",") if n.strip()]) or 1
-        self.instructions = (
-            f"The name of the {num_speaker} university students are: {participants}. "
-            f"The scenarios is the following:{p.get('scenario', '')}"
-        )
+        template = p.get("instructions") or DEFAULT_INSTRUCTIONS
+        self.instructions = template.format(participants=participants, num_speaker=num_speaker,
+                                            scenario=p.get("scenario", ""))
+        if p.get("extra_instructions"):
+            self.instructions += " " + str(p["extra_instructions"]).strip()
         self.response_format = ORCHESTRATOR_RESPONSE_FORMAT if self.create_thread else {"type": "text"}
         self.thread_id = ""
         self.client = None

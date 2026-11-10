@@ -33,12 +33,13 @@ class TreeRunnerNode(Node):
         config_path = self.declare_parameter("config", "").value
         tree_override = self.declare_parameter("tree", "").value
         self.startup_timeout_s = float(self.declare_parameter("startup_timeout_s", 30.0).value)
-        tree_file, variables, period_s = tree_settings(load_config(config_path) if config_path else {}, tree_override)
+        tree_file, variables, period_s, cast = tree_settings(load_config(config_path) if config_path else {},
+                                                             tree_override)
 
         self.clients = ClientRegistry(factory=lambda service_id: RosServiceClient(self, service_id))
         context = BuildContext(client_for=self.clients, logger=_RosLogger(self.get_logger()))
-        self.runner = TreeRunner(tree_file, context, variables, period_s=period_s)
-        self.required = services_used(load_spec(tree_file))
+        self.runner = TreeRunner(tree_file, context, variables, period_s=period_s, cast=cast)
+        self.required = services_used(load_spec(tree_file), cast)
         for service_id in self.required:
             self.clients(service_id)  # create the action clients now, so discovery starts
 

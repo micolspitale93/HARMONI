@@ -31,19 +31,23 @@ def parse_speech_request(data):
     params={
         "robot_ip": Param(str, doc="IP of the robot (required unless mockup)"),
         "voice": Param(str, default="Matthew"),
+        "attend": Param(str, default="random", choices=["random", "addressee", "none"],
+                        doc="before speaking, look at a random detected user (nod if nobody is detected), "
+                            "at the user whose Furhat id is the addressee, or do nothing"),
         "mockup": Param(bool, default=False, doc="log only, no robot"),
     },
     requirements=["furhat-remote-api"],
 )
 class FurhatBackend(ServiceBackend):
-    """DO: the Furhat robot says the text and attends the addressee.
+    """DO: the Furhat robot says the text.
 
-    Params: robot_ip, voice (default Matthew), mockup (log only, no robot)
+    Params: robot_ip, voice (default Matthew), attend (random | addressee | none), mockup (log only)
     """
 
     def __init__(self, service_id, params=None, emit=None):
         super().__init__(service_id, params, emit)
         self.mockup = bool(self.params.get("mockup", False))
+        self.attend = self.params.get("attend", "random")
         self.api = None
 
     def setup(self):
@@ -61,9 +65,69 @@ class FurhatBackend(ServiceBackend):
             return Result(True)
         if self.api is None:
             self.setup()
-        self.api.say(text=text, blocking=True)
-        if len(addressees) == 1:
+        if self.attend == "random":
+            if self.api.get_users():
+                self.api.attend(user="RANDOM")
+            else:
+                self.api.gesture(name="Nod")  # nobody detected: acknowledge with a nod
+        elif self.attend == "addressee" and len(addressees) == 1:
             self.api.attend(userid=addressees[0])
+        self.api.say(text=text, blocking=True)
+        return Result(True)
+
+
+COLORS = {"red": (255, 0, 0), "green": (0, 255, 0), "blue": (0, 0, 255), "yellow": (255, 200, 0),
+          "white": (255, 255, 255), "off": (0, 0, 0), "black": (0, 0, 0)}
+
+
+def parse_color(data):
+    """'red' | '#ff0000' | '{"color": "red"}' -> (name, (r, g, b))"""
+    try:
+        value = json.loads(data)
+        value = value.get("color", "") if isinstance(value, dict) else value
+    except (TypeError, ValueError):
+        value = data
+    value = str(value or "").strip().lower()
+    if value in COLORS:
+        return value, COLORS[value]
+    if len(value) == 7 and value.startswith("#"):
+        try:
+            return value, tuple(int(value[i:i + 2], 16) for i in (1, 3, 5))
+        except ValueError:
+            pass
+    raise ValueError(f"unknown color '{data}' (use {', '.join(COLORS)} or #rrggbb)")
+
+
+@register_backend(
+    "furhat_led",
+    kind="actuator",
+    actions=["DO"],
+    doc="Furhat LED: shows a color (e.g. red while processing, green while listening)",
+    params={"robot_ip": Param(str, doc="IP of the robot (required unless mockup)"),
+            "mockup": Param(bool, default=False, doc="log only, no robot")},
+    requirements=["furhat-remote-api"],
+)
+class FurhatLedBackend(ServiceBackend):
+    def __init__(self, service_id, params=None, emit=None):
+        super().__init__(service_id, params, emit)
+        self.mockup = bool(self.params.get("mockup", False))
+        self.api = None
+
+    def setup(self):
+        if self.mockup or self.api is not None:
+            return
+        from furhat_remote_api import FurhatRemoteAPI
+
+        self.api = FurhatRemoteAPI(self.params["robot_ip"])
+
+    def do(self, data):
+        name, (red, green, blue) = parse_color(data)
+        if self.mockup:
+            self.log.info("[mockup] Furhat LED: %s", name)
+            return Result(True)
+        if self.api is None:
+            self.setup()
+        self.api.set_led(red=red, green=green, blue=blue)
         return Result(True)
 
 
@@ -110,3 +174,23 @@ class NaoHttpBackend(ServiceBackend):
             self.log.info("[mockup] NAO says: %s (to %s)", text, addressees or "everyone")
             return Result(True)
         return self._post("/say", {"text": text, "addressee": addressees[0] if len(addressees) == 1 else ""})
+
+
+@register_backend(
+    "nao_led_http",
+    kind="actuator",
+    actions=["DO"],
+    doc="NAO chest LEDs, through the NAO bridge (HTTP)",
+    params={
+        "bridge_url": Param(str, default="http://localhost:8765"),
+        "timeout_s": Param(float, default=10.0),
+        "mockup": Param(bool, default=False, doc="log only, no robot"),
+    },
+)
+class NaoLedHttpBackend(NaoHttpBackend):
+    def do(self, data):
+        name, rgb = parse_color(data)
+        if self.mockup:
+            self.log.info("[mockup] NAO LED: %s", name)
+            return Result(True)
+        return self._post("/led", {"color": name, "rgb": list(rgb)})

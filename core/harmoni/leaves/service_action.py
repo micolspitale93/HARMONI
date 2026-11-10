@@ -19,6 +19,34 @@ Status = py_trees.common.Status
 _OUTCOMES = ["failure", "success"]
 
 
+class PendingCall:
+    """A call in progress, with its own deadline (shared by the service leaves)"""
+
+    def __init__(self, client, service, action, data, now, timeout_s=None):
+        self.service = service
+        self.started = now
+        self.timeout_s = timeout_s
+        self.call = client.send(action, data)
+
+    def poll(self, now):
+        """'running' | 'ok' | 'failed' | 'timeout' (a timed-out call is cancelled)"""
+        call = self.call
+        if call.status == CallStatus.RUNNING:
+            if self.timeout_s is not None and now - self.started > self.timeout_s:
+                call.cancel()
+                return "timeout"
+            return "running"
+        return "ok" if call.status == CallStatus.SUCCEEDED and call.ok else "failed"
+
+    @property
+    def message(self):
+        return self.call.message
+
+    def cancel(self):
+        if self.call.status == CallStatus.RUNNING:
+            self.call.cancel()
+
+
 @register_leaf(
     "ServiceAction",
     params={

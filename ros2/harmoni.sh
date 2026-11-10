@@ -11,7 +11,8 @@
 #   build-ws               colcon build the ROS2 workspace (after adding packages or interfaces)
 #   run group              start the group interaction (real robots and cloud services)
 #   run group-mock         start the group interaction with mock services (no robots, no keys)
-#   run <config.yaml>      start the services and tree of any configuration file in ros2/config
+#   run <name>             start any configuration of ros2/config, e.g. run group_interaction_homog
+#                          (the study conditions: group_interaction[_het_inversed|_homog|_homog_inversed])
 #   tree <command>         send pause | resume | stop | reload to the running tree
 #   monitor                show the running tree, live, in the terminal
 #   validate [tree.json]   check a tree file (default: the group interaction)
@@ -113,7 +114,8 @@ cmd_run() {
         group) config="config/group_interaction.yaml" ;;
         group-mock) config="config/group_interaction_mock.yaml" ;;
         *.yaml|*.yml) config="$target" ;;
-        *) die "Usage: ./harmoni.sh ros2 run group | group-mock | <config.yaml>" ;;
+        ?*) config="config/$target.yaml" ;;   # e.g. run group_interaction_homog
+        *) die "Usage: ./harmoni.sh ros2 run group | group-mock | <configuration name>" ;;
     esac
     [ -f "$ROOT/$config" ] || [ -f "$config" ] || die "configuration not found: $config"
     require_docker; require_running

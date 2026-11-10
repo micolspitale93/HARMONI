@@ -36,13 +36,15 @@ class TreeRunner:
         variables: overrides of the tree variables
         period_s: time between ticks used by :meth:`run`
         blackboard_prefixes: blackboard keys included in snapshots (None = all)
+        cast: override of the cast of the tree (humans, agents), e.g. the participants of a session
     """
 
     def __init__(self, source, context: Optional[BuildContext] = None, variables: Optional[Dict[str, Any]] = None,
-                 period_s: float = 0.5, blackboard_prefixes=None):
+                 period_s: float = 0.5, blackboard_prefixes=None, cast: Optional[dict] = None):
         self.source = source
         self.context = context or BuildContext()
         self.variables = dict(variables or {})
+        self.cast = cast
         self.period_s = period_s
         self.blackboard_prefixes = blackboard_prefixes
         self.observers: List[Callable[[dict], None]] = []
@@ -61,7 +63,7 @@ class TreeRunner:
             self.tree.interrupt()
             self.tree.shutdown()
         py_trees.blackboard.Blackboard.clear()
-        root, self.spec, self.warnings = build_tree(self.source, self.context, self.variables)
+        root, self.spec, self.warnings = build_tree(self.source, self.context, self.variables, self.cast)
         for warning in self.warnings:
             log.warning("%s", warning)
         self.stop_key = normalize_key(self.spec["stop_when"]) if self.spec.get("stop_when") else None
@@ -157,6 +159,7 @@ class TreeRunner:
     def snapshot(self) -> dict:
         return {
             "tree": (self.spec or {}).get("name", ""),
+            "cast": self.context.cast.to_dict(),
             "state": self.state,
             "error": self.error,
             "tick": self.tree.count if self.tree else 0,

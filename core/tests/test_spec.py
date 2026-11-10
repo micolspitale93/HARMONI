@@ -32,7 +32,7 @@ def test_group_interaction_tree_is_valid(trees_dir):
 
 def test_services_used(trees_dir):
     assert set(services_used(load_spec(os.path.join(trees_dir, "group_interaction.json")))) == {
-        "bot_default", "stt_default", "speaker_furhat", "speaker_nao"}
+        "bot_default", "stt_default", "speaker_furhat", "speaker_nao", "led_furhat", "led_nao"}
 
 
 def test_unknown_type():

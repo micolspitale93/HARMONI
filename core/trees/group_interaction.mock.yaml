@@ -5,18 +5,16 @@ services:
     backend: mock
     responses:
       - "Micol: Hi, I am Micol, nice to meet you"
-      - "Micol: I think AI can help teachers a lot"
-      - "Micol: But I am worried about privacy"
-      - "Micol: Maybe we need clear rules"
+      - "Micol: I think the large room should cost more"
+      - "Micol: But I cannot afford more than 700"
+      - "Micol: Ok, let us split it 800, 650, 550"
   bot_default:
     backend: mock
     responses:
-      - '{"intervene": true, "agent": "Opposer", "response": "Are you sure AI helps every teacher?", "addressee": "Micol"}'
+      - '{"intervene": true, "agent": "Opposer", "response": "Is that fair for the one without a window?", "addressee": "Micol"}'
       - '{"intervene": false, "agent": "Mover", "response": "", "addressee": ""}'
-      - '{"intervene": true, "agent": "Mover", "response": "Privacy matters: who should set the rules?", "addressee": "Micol"}'
-  speaker_furhat:
-    backend: furhat
-    mockup: true
-  speaker_nao:
-    backend: nao_http
-    mockup: true
+      - '{"intervene": true, "agent": "Mover", "response": "What would a fair split look like to you?", "addressee": "Micol"}'
+  speaker_furhat: {backend: furhat, mockup: true}
+  speaker_nao: {backend: nao_http, mockup: true}
+  led_furhat: {backend: furhat_led, mockup: true}
+  led_nao: {backend: nao_led_http, mockup: true}

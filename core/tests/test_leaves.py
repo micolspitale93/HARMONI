@@ -6,7 +6,8 @@ import json
 import py_trees
 import pytest
 
-from harmoni.leaves.group import GroupScript, OrchestratorDecision, ScriptedTurn, parse_agent_response
+from harmoni.leaves.dialogue import DialogueScript, GroupScript, OrchestratorDecision, ScriptedTurn, parse_agent_response
+from harmoni.tree.cast import Cast
 from harmoni.leaves.generic import CheckValue, CopyValue, SetValue, Wait
 from harmoni.leaves.service_action import ServiceAction
 from harmoni.tree import BuildContext
@@ -175,10 +176,11 @@ def script(tmp_path):
     return str(path)
 
 
-def make_script(script, clock, **kw):
-    params = dict(script=script, session="2session", user_names="Sarah, Jane", max_scenes=30)
+def make_script(script, clock, cast_humans=("Sarah", "Jane"), **kw):
+    params = dict(script=script, max_scenes=30)
     params.update(kw)
-    leaf = GroupScript("script", BuildContext(clock=clock), **params)
+    context = BuildContext(clock=clock, cast=Cast(humans=list(cast_humans)))
+    leaf = DialogueScript("script", context, **params)
     leaf.setup()
     return leaf
 
@@ -198,11 +200,40 @@ def test_group_script_llm_scene_wraps_transcription(script, clock):
     assert ast.literal_eval(bb_get("scene/utterance")) == ["*user* Sarah: I'm sure it's \"fine\""]
 
 
-def test_group_script_start_discussion_prompt(script, clock):
+def test_group_script_start_prompt_after_introductions(script, clock):
     leaf = make_script(script, clock)
-    leaf.scene_number = 3  # 1 + number of participants (2session)
+    leaf.scene_number = 3  # 1 + number of humans
     tick(leaf)
-    assert "MUST START" in bb_get("scene/utterance")
+    assert ast.literal_eval(bb_get("scene/utterance")) == [
+        "*assistant* Now you MUST START the negotiation giving your opinion without telling your name."]
+
+
+def test_group_script_custom_start_prompt(script, clock):
+    leaf = make_script(script, clock, start_after=2, start_prompt="Begin!", start_prompt_role="user")
+    leaf.scene_number = 2
+    tick(leaf)
+    assert ast.literal_eval(bb_get("scene/utterance")) == ["*user* Begin!"]
+
+
+def test_script_session_follows_the_number_of_humans(script, clock):
+    assert make_script(script, clock).session_name == "2session"
+    # no 3session in this script: the first session is used
+    assert make_script(script, clock, cast_humans=("A", "B", "C")).session_name == "2session"
+    with pytest.raises(KeyError):
+        make_script(script, clock, session="9session")
+
+
+def test_user_names_parameter_overrides_the_cast(script, clock):
+    leaf = make_script(script, clock, user_names="Ann, Bob")
+    tick(leaf)
+    assert bb_get("scene/utterance") == "Hi Ann and Bob"
+
+
+def test_group_script_alias_still_works(script, clock):
+    leaf = GroupScript("old", BuildContext(clock=clock, cast=Cast(humans=["Sarah", "Jane"])), script=script)
+    leaf.setup()
+    tick(leaf)
+    assert bb_get("scene/utterance") == "Hi Sarah and Jane"
 
 
 @pytest.mark.parametrize("start, max_scenes", [(5, 30), (2, 2), (50, 30)])
@@ -213,11 +244,6 @@ def test_group_script_closing_scene_finishes(script, clock, start, max_scenes):
     assert bb_get("scene/utterance") == "Goodbye"
     assert bb_get("scene/agent") == "Opposer"
     assert bb_get("scene/finished") is True
-
-
-def test_group_script_unknown_session(script, clock):
-    with pytest.raises(KeyError):
-        make_script(script, clock, session="9session")
 
 
 def test_scripted_turn():
@@ -243,3 +269,14 @@ def test_orchestrator_decision(raw, speak, agent):
 def test_parse_agent_response_defaults():
     assert parse_agent_response("{}") == {"message": "", "agent": "null", "intervene": True, "addressee": "null"}
     assert parse_agent_response(None)["intervene"] is False
+
+
+def test_orchestrator_decision_maps_roles_of_the_cast():
+    cast = Cast.from_spec({"agents": [{"role": "Mover1", "name": "Manny"}, {"role": "Mover2", "name": "Sam"}]})
+    leaf = OrchestratorDecision("d", BuildContext(cast=cast))
+    for raw, expected in [('{"agent": "mover2", "response": "x"}', "Mover2"),
+                          ('{"agent": "Sam", "response": "x"}', "Mover2"),  # by name
+                          ('{"agent": "Opposer", "response": "x"}', "null")]:  # not in the cast
+        bb_set(**{"bot/raw": raw})
+        tick(leaf)
+        assert bb_get("bot/agent") == expected

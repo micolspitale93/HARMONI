@@ -20,6 +20,8 @@ SILENCE_MESSAGE = "No one is talking. Please initiate a question to reignite the
         "names": Param(str, default="", doc="participants in the order Azure detects them (Guest-1, ...)"),
         "max_silence": Param(float, default=10.0, doc="seconds without speech before the silence message"),
         "max_wait_s": Param(float, default=120.0, doc="upper bound of a request"),
+        "device_name": Param(str, doc="ALSA microphone, e.g. hw:1,0 (default: the default microphone)"),
+        "silence_message": Param(str, default=SILENCE_MESSAGE, doc="returned when nobody talks for max_silence"),
     },
     requirements=["azure-cognitiveservices-speech", "python-dotenv"],
     credentials=["MICROSOFT_SPEECH_KEY", "MICROSOFT_SPEECH_REGION"],
@@ -43,6 +45,8 @@ class AzureDiarizationBackend(ServiceBackend):
         self.names = [n.strip() for n in str(p.get("names", "")).split(",")]
         self.max_silence = float(p.get("max_silence", 10))
         self.max_wait_s = float(p.get("max_wait_s", 120))
+        self.device_name = p.get("device_name") or None
+        self.silence_message = p.get("silence_message") or SILENCE_MESSAGE
         self.clock = clock
         self.transcriber = None
         self._done = threading.Event()
@@ -84,7 +88,10 @@ class AzureDiarizationBackend(ServiceBackend):
                                         region=os.getenv("MICROSOFT_SPEECH_REGION"))
         config.speech_recognition_language = self.language
         config.set_property(speechsdk.PropertyId.SpeechServiceResponse_DiarizeIntermediateResults, "true")
-        audio = speechsdk.audio.AudioConfig(use_default_microphone=True)
+        if self.device_name:
+            audio = speechsdk.audio.AudioConfig(device_name=self.device_name)
+        else:
+            audio = speechsdk.audio.AudioConfig(use_default_microphone=True)
         self.transcriber = speechsdk.transcription.ConversationTranscriber(speech_config=config, audio_config=audio)
         self.transcriber.transcribing.connect(self.on_transcribing)
         self.transcriber.transcribed.connect(self.on_transcribed)
@@ -108,7 +115,7 @@ class AzureDiarizationBackend(ServiceBackend):
                     return Result(False, "cancelled")
                 now = self.clock()
                 if now - self._last_speech > self.max_silence or now - start > self.max_wait_s:
-                    self._result = SILENCE_MESSAGE
+                    self._result = self.silence_message
                     break
         finally:
             self._wait(self.transcriber.stop_transcribing_async())

@@ -1,0 +1,14 @@
+# Homogeneous condition: two Movers (Manny on Furhat, Sam on NAO), with the homogeneous script and assistant.
+extends: group_interaction.yaml
+
+tree:
+  variables:
+    script: scripts/group_interaction_homog.json
+  cast:
+    agents:
+      - {role: Mover1, name: Manny, robot: Furhat, services: {speech: speaker_furhat, led: led_furhat}}
+      - {role: Mover2, name: Sam, robot: NAO, services: {speech: speaker_nao, led: led_nao}}
+
+services:
+  bot_default:
+    assistant_id: asst_JvDM8TQEWPrSyk0fB38vuLkw   # homogeneous assistant

@@ -22,22 +22,13 @@ This module has no ROS dependency so that it can be tested anywhere.
 
 import os
 
-import yaml
+from harmoni.config import load_config  # noqa: F401  (extends, merging: shared with HARMONI Studio)
 
 DEFAULT_ROOT = "/root/HARMONI"
 
 
 def harmoni_root():
     return os.environ.get("HARMONI_ROOT", DEFAULT_ROOT)
-
-
-def load_config(path):
-    with open(path, "r", encoding="utf-8") as f:
-        config = yaml.safe_load(f) or {}
-    if not isinstance(config, dict):
-        raise ValueError(f"{path}: the configuration must be a mapping")
-    config["_path"] = os.path.abspath(path)
-    return config
 
 
 def topic_for(service_id, channel):
@@ -61,7 +52,7 @@ def service_config(config, service_id):
 
 
 def tree_settings(config, override_file=""):
-    """Return ``(tree file path, variables, period_s)``"""
+    """Return ``(tree file path, variables, period_s, cast override)``"""
     tree = dict(config.get("tree") or {})
     path = override_file or tree.get("file")
     if not path:
@@ -70,4 +61,4 @@ def tree_settings(config, override_file=""):
         candidates = [os.path.join(harmoni_root(), path),
                       os.path.join(os.path.dirname(config.get("_path", "")), path)]
         path = next((c for c in candidates if os.path.exists(c)), candidates[0])
-    return path, dict(tree.get("variables") or {}), float(tree.get("period_s", 0.2))
+    return path, dict(tree.get("variables") or {}), float(tree.get("period_s", 0.2)), tree.get("cast")

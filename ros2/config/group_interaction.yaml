@@ -1,36 +1,50 @@
-# HARMONI ROS2 - group interaction with the real robots and cloud services.
+# HARMONI ROS 2 - group interaction study, heterogeneous condition (Mover on Furhat, Opposer on NAO).
 #   ./harmoni.sh ros2 run group
-# The participants are defined once and reused everywhere (YAML anchor).
-participants: &participants "Micol"   # comma separated, in the order Azure detects the speakers
+# The other conditions extend this file:
+#   group_interaction_het_inversed.yaml   Mover on NAO, Opposer on Furhat
+#   group_interaction_homog.yaml          two Movers (Furhat, NAO), homogeneous script and assistant
+#   group_interaction_homog_inversed.yaml two Movers (NAO, Furhat)
+# The participants are written once and reused everywhere (YAML anchor).
+participants: &participants "Micol, Emmanuel, Yukun"   # in the order Azure detects the speakers
 
 tree:
   file: core/trees/group_interaction.json   # relative to the repository root
   period_s: 0.2
   variables:
-    session: "1session"          # 1session, 2session or 3session = number of participants
-    user_names: *participants
-    max_scenes: 30
+    participants: *participants
+    script: scripts/group_interaction.json
+    max_scenes: 32                           # about 10 minutes
+  # the cast of the tree (Mover = Manny on Furhat, Opposer = Sam on NAO) is used as it is
 
 services:
   bot_default:                   # LLM orchestrator (Azure OpenAI Assistant)
     backend: assistant
-    assistant_id: ""             # asst_... (see doc/configuration/Cloud-Services.md)
+    assistant_id: asst_7iYWPs6E7obv7Lp5343RGuo7   # heterogeneous assistant
     participants: *participants
-    scenario: "The topic of this group conversation is AI in society."
+    instructions: "The name of the {num_speaker} university students are: {participants}. The scenarios is the following:{scenario}"
+    scenario: "'You are three students moving into a shared apartment for the academic year. The apartment has three bedrooms: one large private room with a private bathroom, and two smaller rooms that will share a bathroom (one with a window and a double bed and the other with no window and a single bed). The total monthly rent for the apartment is 2,000 CHF, and you must decide together how to divide three rooms and the rent in a way that feels fair to everyone. Maintaining good relationships is important, as you’ll be living together for the entire year.' Other instructions for the orchestrator: - Explain your decision based on each person's preferences, needs, and financial situation; - Consensus is required; -  Wrap-up and summarise the decision when everyone agrees on the room allocation; - Balance the intervention of the two robots Manny and Sam; - Students might have hidden agendas;- Say goodbye at the end of the agreement and wrap-up the session."
+    extra_instructions: "Keep the conversation focused and on track by asking relevant follow-up questions that help the group work toward solving the task together. If any participant hasn’t spoken for 3 turns or more, prompt them to contribute by addressing them by name, to ensure everyone participates equally."
 
   stt_default:                   # speaker diarization (Azure Speech)
     backend: azure_diarization
     language_id: en-US
     names: *participants
     max_silence: 10
+    device_name: "hw:1,0"        # the conference microphone; remove to use the default microphone
+    silence_message: "No one is talking. Please initiate a question to reignite the conversation (balance Manny and Sam intervention)."
 
-  speaker_furhat:                # Mover
+  speaker_furhat:
     backend: furhat
-    robot_ip: 192.168.1.101
+    robot_ip: 192.168.1.103
     voice: Matthew
-    mockup: false
+    attend: random               # look at a detected user, nod if nobody is detected
+  led_furhat:
+    backend: furhat_led
+    robot_ip: 192.168.1.103
 
-  speaker_nao:                   # Opposer, through the NAO bridge (./harmoni.sh ros2 up --nao)
+  speaker_nao:                   # through the NAO bridge (./harmoni.sh ros2 up --nao, NAO_IP in .env)
     backend: nao_http
     bridge_url: http://localhost:8765
-    mockup: false
+  led_nao:
+    backend: nao_led_http
+    bridge_url: http://localhost:8765

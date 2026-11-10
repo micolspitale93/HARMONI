@@ -3,4 +3,4 @@
 Importing this package registers every leaf in :mod:`harmoni.tree.registry`.
 """
 
-from harmoni.leaves import generic, group, service_action  # noqa: F401
+from harmoni.leaves import dialogue, generic, multiparty, service_action  # noqa: F401

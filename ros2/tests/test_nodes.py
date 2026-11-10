@@ -204,7 +204,7 @@ def test_tree_node_runs_the_tree_and_publishes_snapshots(monkeypatch):
     import time
 
     node = tree_node(monkeypatch)
-    assert set(node.required) == {"bot_default", "stt_default", "speaker_furhat", "speaker_nao"}
+    assert set(node.required) == {"bot_default", "stt_default", "speaker_furhat", "speaker_nao", "led_furhat", "led_nao"}
     on_timer = node.timers[0]
     errors = []
 

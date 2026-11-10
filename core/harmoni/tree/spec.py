@@ -23,6 +23,8 @@ A tree file is JSON (or YAML) independent of ROS::
   ``"Hello ${name}"`` is string interpolation.
 - ``stop_when`` (optional) is a blackboard key: the runner stops when its value is true.
 - ``blackboard`` (optional) gives initial blackboard values.
+- ``cast`` (optional) lists the humans and the agents (robots) of the interaction, with the services
+  of each agent per channel (see :mod:`harmoni.tree.cast`). It can be overridden at run time.
 """
 
 import copy
@@ -32,6 +34,7 @@ import re
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
+from harmoni.tree.cast import Cast, merge_cast, validate_cast
 from harmoni.tree.registry import NodeType, get_node_type, node_types, normalize_key
 
 FORMAT_VERSION = 1
@@ -108,8 +111,11 @@ def _substitute(value, variables, path, issues):
     return value
 
 
-def resolve_spec(spec, overrides: Optional[Dict[str, Any]] = None):
-    """Return ``(resolved_spec, issues)`` with every ``${variable}`` substituted"""
+def resolve_spec(spec, overrides: Optional[Dict[str, Any]] = None, cast: Optional[dict] = None):
+    """Return ``(resolved_spec, issues)`` with every ``${variable}`` substituted.
+
+    ``cast`` is an optional override of the cast of the tree (see :func:`harmoni.tree.cast.merge_cast`).
+    """
     issues: List[Issue] = []
     resolved = copy.deepcopy(spec)
     variables = dict(spec.get("variables") or {})
@@ -130,6 +136,8 @@ def resolve_spec(spec, overrides: Optional[Dict[str, Any]] = None):
             walk(child, f"{path}.children[{i}]")
 
     walk(resolved.get("root"), "root")
+    if "cast" in resolved or cast:
+        resolved["cast"] = _substitute(merge_cast(resolved.get("cast"), cast), variables, "cast", issues)
     return resolved, issues
 
 
@@ -181,8 +189,13 @@ def validate(spec, resolved: bool = False) -> List[Issue]:
         issues.append(Issue("error", "root", "missing root node"))
         return issues
 
+    for level, path, message in validate_cast(spec.get("cast")):
+        issues.append(Issue(level, path, message))
+
     types = node_types()
+    # the runner writes the cast and the conversation log on the blackboard
     written = {normalize_key(k) for k in (spec.get("blackboard") or {})}
+    written.update({"/cast/humans", "/cast/agents", "/cast/roles", "/conversation"})
     reads = []
     names = {}
     for path, node in iter_nodes(spec):
@@ -234,10 +247,12 @@ def validate(spec, resolved: bool = False) -> List[Issue]:
     return issues
 
 
-def services_used(spec) -> List[str]:
-    """Service ids called by the tree (to know which services must be running)"""
-    resolved, _ = resolve_spec(spec)
+def services_used(spec, cast: Optional[dict] = None) -> List[str]:
+    """Service ids called by the tree and by its cast (to know which services must be running)"""
+    resolved, _ = resolve_spec(spec, cast=cast)
     services = []
+    if isinstance(resolved.get("cast"), dict):
+        services.extend(Cast.from_spec(resolved["cast"]).services())
     for _, node in iter_nodes(resolved):
         service = (node.get("params") or {}).get("service")
         if node.get("type") == "ServiceAction" and service and service not in services:

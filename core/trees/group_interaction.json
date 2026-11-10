@@ -1,18 +1,39 @@
 {
   "harmoni_tree": 1,
   "name": "GroupInteraction",
-  "description": "Two robots (Mover on Furhat, Opposer on NAO) take part in a discussion among 1-3 people. An LLM orchestrator decides at every turn whether a robot intervenes, which one, what it says and to whom. If it decides to stay silent the speaking step is skipped and the microphone is reopened.",
+  "description": "A discussion among humans and robots, moderated by an LLM orchestrator. At every turn the next scene of the script is either said as written by one agent, or decided by the orchestrator: whether an agent intervenes, which one (by role), what it says and to whom. If nobody should intervene the speaking step is skipped and the microphone is reopened. The cast lists the humans and the agents: the same tree works with any number of them, and which robot plays which role is set by the configuration.",
   "variables": {
-    "session": "1session",
-    "user_names": "Micol",
-    "max_scenes": 30,
+    "participants": "Micol",
+    "script": "scripts/group_interaction.json",
+    "max_scenes": 32,
     "orchestrator": "bot_default",
     "stt": "stt_default",
-    "mover_speaker": "speaker_furhat",
-    "opposer_speaker": "speaker_nao",
     "llm_timeout_s": 60,
     "speech_timeout_s": 60,
     "listen_timeout_s": 180
+  },
+  "cast": {
+    "humans": "${participants}",
+    "agents": [
+      {
+        "role": "Mover",
+        "name": "Manny",
+        "robot": "Furhat",
+        "services": {
+          "speech": "speaker_furhat",
+          "led": "led_furhat"
+        }
+      },
+      {
+        "role": "Opposer",
+        "name": "Sam",
+        "robot": "NAO",
+        "services": {
+          "speech": "speaker_nao",
+          "led": "led_nao"
+        }
+      }
+    ]
   },
   "stop_when": "scene/finished",
   "root": {
@@ -20,12 +41,19 @@
     "name": "GroupInteraction",
     "children": [
       {
-        "type": "GroupScript",
+        "type": "AgentsAction",
+        "name": "Processing light",
+        "params": {
+          "channel": "led",
+          "input_value": "red",
+          "wait": false
+        }
+      },
+      {
+        "type": "DialogueScript",
         "name": "Script",
         "params": {
-          "script": "scripts/group_interaction.json",
-          "session": "${session}",
-          "user_names": "${user_names}",
+          "script": "${script}",
           "max_scenes": "${max_scenes}"
         }
       },
@@ -37,13 +65,23 @@
             "type": "Sequence",
             "name": "Scripted scene",
             "children": [
-              {"type": "CheckValue", "name": "Is scripted", "params": {"key": "scene/nlp", "equals": 0}},
-              {"type": "ScriptedTurn", "name": "Use script line"}
+              {
+                "type": "CheckValue",
+                "name": "Is scripted",
+                "params": {
+                  "key": "scene/nlp",
+                  "equals": 0
+                }
+              },
+              {
+                "type": "ScriptedTurn",
+                "name": "Use script line"
+              }
             ]
           },
           {
             "type": "Sequence",
-            "name": "LLM scene",
+            "name": "Orchestrator scene",
             "children": [
               {
                 "type": "ServiceAction",
@@ -59,67 +97,74 @@
                   "on_failure": "success"
                 }
               },
-              {"type": "OrchestratorDecision", "name": "Parse decision"}
+              {
+                "type": "OrchestratorDecision",
+                "name": "Parse decision"
+              }
             ]
           }
         ]
       },
       {
-        "type": "Selector",
-        "name": "Speak",
-        "children": [
-          {"type": "CheckValue", "name": "Stay silent", "params": {"key": "bot/speak", "equals": false}},
-          {
-            "type": "Sequence",
-            "name": "Opposer speaks",
-            "children": [
-              {"type": "CheckValue", "name": "Is Opposer", "params": {"key": "bot/agent", "equals": "Opposer"}},
-              {
-                "type": "ServiceAction",
-                "name": "NAO says",
-                "params": {
-                  "service": "${opposer_speaker}",
-                  "action": "DO",
-                  "input_json": {"input": "@bot/message", "addressee": "@bot/addressee"},
-                  "timeout_s": "${speech_timeout_s}",
-                  "on_timeout": "success",
-                  "on_failure": "success"
-                }
-              }
-            ]
-          },
-          {
-            "type": "ServiceAction",
-            "name": "Furhat says",
-            "params": {
-              "service": "${mover_speaker}",
-              "action": "DO",
-              "input_json": {"input": "@bot/message", "addressee": "@bot/addressee"},
-              "timeout_s": "${speech_timeout_s}",
-              "on_timeout": "success",
-              "on_failure": "success"
-            }
-          }
-        ]
+        "type": "AgentSpeak",
+        "name": "Chosen agent speaks",
+        "params": {
+          "timeout_s": "${speech_timeout_s}"
+        }
       },
       {
         "type": "Selector",
         "name": "Listen",
         "children": [
-          {"type": "CheckValue", "name": "Interaction finished", "params": {"key": "scene/finished", "equals": true}},
           {
-            "type": "ServiceAction",
-            "name": "Diarization STT",
+            "type": "CheckValue",
+            "name": "Interaction finished",
             "params": {
-              "service": "${stt}",
-              "action": "REQUEST",
-              "output_key": "stt/result",
-              "timeout_s": "${listen_timeout_s}",
-              "on_timeout": "success",
-              "timeout_output": "No one is talking. Please initiate a question to reignite the conversation.",
-              "on_failure": "success",
-              "failure_output": ""
+              "key": "scene/finished",
+              "equals": true
             }
+          },
+          {
+            "type": "Sequence",
+            "name": "Listening",
+            "children": [
+              {
+                "type": "Parallel",
+                "name": "Listen with green light",
+                "params": {
+                  "policy": "all"
+                },
+                "children": [
+                  {
+                    "type": "ServiceAction",
+                    "name": "Speech to text",
+                    "params": {
+                      "service": "${stt}",
+                      "action": "REQUEST",
+                      "output_key": "stt/result",
+                      "timeout_s": "${listen_timeout_s}",
+                      "on_timeout": "success",
+                      "timeout_output": "No one is talking. Please initiate a question to reignite the conversation.",
+                      "on_failure": "success",
+                      "failure_output": ""
+                    }
+                  },
+                  {
+                    "type": "AgentsAction",
+                    "name": "Listening light",
+                    "params": {
+                      "channel": "led",
+                      "input_value": "green",
+                      "wait": false
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "LogUtterance",
+                "name": "Log what was said"
+              }
+            ]
           }
         ]
       }

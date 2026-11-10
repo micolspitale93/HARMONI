@@ -49,3 +49,11 @@ def test_bad_request(bridge):
     with pytest.raises(urllib.error.HTTPError) as e:
         urllib.request.urlopen(request)
     assert e.value.code == 400
+
+
+def test_led_through_the_bridge(bridge):
+    from harmoni.services.robots import NaoLedHttpBackend
+
+    robot, url = bridge
+    assert NaoLedHttpBackend("led_nao", {"bridge_url": url}).do("red").ok
+    assert robot.colors == ["red"]

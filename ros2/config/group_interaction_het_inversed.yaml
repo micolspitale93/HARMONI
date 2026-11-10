@@ -1,0 +1,8 @@
+# Heterogeneous condition, inversed: the Mover is on the NAO and the Opposer on the Furhat.
+extends: group_interaction.yaml
+
+tree:
+  cast:
+    agents:
+      Mover: {robot: NAO, services: {speech: speaker_nao, led: led_nao}}
+      Opposer: {robot: Furhat, services: {speech: speaker_furhat, led: led_furhat}}

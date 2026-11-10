@@ -1,0 +1,8 @@
+# Homogeneous condition, inversed: Mover1 on the NAO, Mover2 on the Furhat.
+extends: group_interaction_homog.yaml
+
+tree:
+  cast:
+    agents:
+      Mover1: {robot: NAO, services: {speech: speaker_nao, led: led_nao}}
+      Mover2: {robot: Furhat, services: {speech: speaker_furhat, led: led_furhat}}

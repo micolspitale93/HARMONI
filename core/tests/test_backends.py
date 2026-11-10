@@ -115,7 +115,13 @@ def test_assistant_request():
     assert b.client.messages == [("thread_1", "user", "Jane: hi")]
     assert b.client.runs[0]["assistant_id"] == "asst_1"
     instructions = b.client.runs[0]["additional_instructions"]
-    assert "Sarah, Jane" in instructions and "The name of the 2 university students" in instructions
+    assert instructions.startswith("The names of the 2 participants are: Sarah, Jane.")
+
+
+def test_assistant_instructions_template_and_extra():
+    b, _ = make_assistant(instructions="{num_speaker} students ({participants}) discuss: {scenario}",
+                          scenario="rent", extra_instructions="Balance the participation.")
+    assert b.instructions == "2 students (Sarah, Jane) discuss: rent Balance the participation."
 
 
 @pytest.mark.parametrize("payload, error", [("not a list", None), ("['*user* hi']", RuntimeError("API down"))])
@@ -171,6 +177,14 @@ def test_diarization_silence(diarization):
     assert diarization.request() == Result(True, SILENCE_MESSAGE)
 
 
+def test_diarization_custom_silence_message_and_device():
+    b = AzureDiarizationBackend("stt_default", {"max_silence": 0.1, "silence_message": "Say something!",
+                                                "device_name": "hw:1,0"})
+    b.transcriber = FakeTranscriber()
+    assert b.device_name == "hw:1,0"
+    assert b.request() == Result(True, "Say something!")
+
+
 def test_diarization_ongoing_speech_postpones_silence(diarization):
     def talk():
         for _ in range(4):
@@ -201,22 +215,60 @@ def test_parse_speech_request(payload, expected):
 
 
 class FakeFurhat:
-    def __init__(self):
-        self.said, self.attended = [], []
+    def __init__(self, users=("user-1",)):
+        self.said, self.attended, self.gestures, self.leds = [], [], [], []
+        self.users = list(users)
 
     def say(self, text, blocking):
         self.said.append(text)
 
-    def attend(self, userid):
-        self.attended.append(userid)
+    def attend(self, userid=None, user=None):
+        self.attended.append(userid or user)
+
+    def get_users(self):
+        return self.users
+
+    def gesture(self, name):
+        self.gestures.append(name)
+
+    def set_led(self, red, green, blue):
+        self.leds.append((red, green, blue))
 
 
-def test_furhat():
-    b = FurhatBackend("speaker_furhat", {"robot_ip": "1.2.3.4"})
-    b.api = FakeFurhat()
+@pytest.mark.parametrize("attend, users, attended, gestures", [
+    ("random", ["u1"], ["RANDOM"], []),        # study behaviour
+    ("random", [], [], ["Nod"]),               # nobody detected
+    ("addressee", ["u1"], ["Jane"], []),
+    ("none", ["u1"], [], []),
+])
+def test_furhat_attend_modes(attend, users, attended, gestures):
+    b = FurhatBackend("speaker_furhat", {"robot_ip": "1.2.3.4", "attend": attend})
+    b.api = FakeFurhat(users)
     assert b.do(json.dumps({"input": "Hi", "addressee": "Jane"})).ok
-    assert b.do(json.dumps({"input": "Hi all", "addressee": "Jane, Sarah"})).ok
-    assert b.api.said == ["Hi", "Hi all"] and b.api.attended == ["Jane"]
+    assert b.api.said == ["Hi"] and b.api.attended == attended and b.api.gestures == gestures
+
+
+def test_furhat_addressee_mode_ignores_groups():
+    b = FurhatBackend("speaker_furhat", {"robot_ip": "1.2.3.4", "attend": "addressee"})
+    b.api = FakeFurhat()
+    b.do(json.dumps({"input": "Hi all", "addressee": "Jane, Sarah"}))
+    assert b.api.attended == []
+
+
+@pytest.mark.parametrize("data, rgb", [("red", (255, 0, 0)), ('{"color": "green"}', (0, 255, 0)),
+                                       ("#0000ff", (0, 0, 255)), ("off", (0, 0, 0))])
+def test_furhat_led(data, rgb):
+    from harmoni.services.robots import FurhatLedBackend
+
+    b = FurhatLedBackend("led_furhat", {"robot_ip": "1.2.3.4"})
+    b.api = FakeFurhat()
+    assert b.do(data).ok and b.api.leds == [rgb]
+
+
+def test_led_unknown_color_fails():
+    from harmoni.services.robots import FurhatLedBackend
+
+    assert not FurhatLedBackend("led_furhat", {"mockup": True}).handle(4, "purple-ish").ok
 
 
 def test_furhat_mockup_needs_no_sdk():
@@ -255,6 +307,13 @@ def test_nao_http(bridge):
     assert _Bridge.received == [("/say", {"text": "Hello", "addressee": "Sarah"})]
     _Bridge.ok = False
     assert b.do("Hi") == Result(False, "robot fell")
+
+
+def test_nao_led_http(bridge):
+    from harmoni.services.robots import NaoLedHttpBackend
+
+    assert NaoLedHttpBackend("led_nao", {"bridge_url": bridge}).do("green").ok
+    assert _Bridge.received == [("/led", {"color": "green", "rgb": [0, 255, 0]})]
 
 
 def test_nao_http_unreachable():
