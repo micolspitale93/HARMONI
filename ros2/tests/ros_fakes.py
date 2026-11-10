@@ -81,22 +81,51 @@ class FakeNode:
 
     def __init__(self, name):
         self.name = name
-        self.publishers, self.subscriptions, self.timers = {}, {}, []
+        self._publishers, self._subscriptions, self._timers = {}, {}, []
         self.logger = FakeLogger()
         self.clock = FakeClock()
+
+    # Read-only properties of rclpy.node.Node: a node must not assign them (AttributeError, as in rclpy)
+    @property
+    def publishers(self):
+        return self._publishers
+
+    @property
+    def subscriptions(self):
+        return self._subscriptions
+
+    @property
+    def timers(self):
+        return self._timers
+
+    @property
+    def clients(self):
+        return []
+
+    @property
+    def services(self):
+        return []
+
+    @property
+    def guards(self):
+        return []
+
+    @property
+    def waitables(self):
+        return []
 
     def declare_parameter(self, name, default):
         return types.SimpleNamespace(value=FakeNode.parameters.get(name, default))
 
     def create_publisher(self, msg_type, topic, qos):
-        self.publishers[topic] = FakePublisher(topic, qos)
-        return self.publishers[topic]
+        self._publishers[topic] = FakePublisher(topic, qos)
+        return self._publishers[topic]
 
     def create_subscription(self, msg_type, topic, callback, qos):
-        self.subscriptions[topic] = callback
+        self._subscriptions[topic] = callback
 
     def create_timer(self, period, callback, callback_group=None):
-        self.timers.append(callback)
+        self._timers.append(callback)
 
     def get_logger(self):
         return self.logger

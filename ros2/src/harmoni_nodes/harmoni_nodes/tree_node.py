@@ -36,12 +36,12 @@ class TreeRunnerNode(Node):
         tree_file, variables, period_s, cast = tree_settings(load_config(config_path) if config_path else {},
                                                              tree_override)
 
-        self.clients = ClientRegistry(factory=lambda service_id: RosServiceClient(self, service_id))
-        context = BuildContext(client_for=self.clients, logger=_RosLogger(self.get_logger()))
+        self.service_clients = ClientRegistry(factory=lambda service_id: RosServiceClient(self, service_id))
+        context = BuildContext(client_for=self.service_clients, logger=_RosLogger(self.get_logger()))
         self.runner = TreeRunner(tree_file, context, variables, period_s=period_s, cast=cast)
         self.required = services_used(load_spec(tree_file), cast)
         for service_id in self.required:
-            self.clients(service_id)  # create the action clients now, so discovery starts
+            self.service_clients(service_id)  # create the action clients now, so discovery starts
 
         self.status_pub = self.create_publisher(String, STATUS_TOPIC, LATCHED)
         self.runner.observers.append(lambda snapshot: self.status_pub.publish(String(data=json.dumps(snapshot))))
@@ -59,7 +59,7 @@ class TreeRunnerNode(Node):
             self.get_logger().warning(str(e))
 
     def _services_ready(self):
-        missing = [s for s in self.required if not self.clients(s).is_ready()]
+        missing = [s for s in self.required if not self.service_clients(s).is_ready()]
         waited = (self.get_clock().now() - self._waiting_since).nanoseconds / 1e9
         if missing and waited < self.startup_timeout_s:
             return False
