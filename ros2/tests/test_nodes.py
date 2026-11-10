@@ -206,12 +206,24 @@ def test_tree_node_runs_the_tree_and_publishes_snapshots(monkeypatch):
     node = tree_node(monkeypatch)
     assert set(node.required) == {"bot_default", "stt_default", "speaker_furhat", "speaker_nao"}
     on_timer = node.timers[0]
-    for _ in range(2000):
-        on_timer()
-        if node.runner.state == "finished":
-            break
-        time.sleep(0.001)
-    assert node.runner.state == "finished"
+    errors = []
+
+    def executor_thread():  # ROS 2 timers run in executor threads, not in the main thread
+        try:
+            for _ in range(2000):
+                on_timer()
+                if node.runner.state == "finished":
+                    break
+                time.sleep(0.001)
+        except Exception as e:  # noqa: BLE001
+            errors.append(repr(e))
+
+    import threading
+
+    thread = threading.Thread(target=executor_thread)
+    thread.start()
+    thread.join()
+    assert errors == [] and node.runner.state == "finished"
     status = node.publishers["/harmoni/tree/status"].published
     snapshot = json.loads(status[-1])
     assert snapshot["state"] == "finished" and snapshot["tree"] == "GroupInteraction"

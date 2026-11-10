@@ -66,7 +66,9 @@ class TreeRunner:
             log.warning("%s", warning)
         self.stop_key = normalize_key(self.spec["stop_when"]) if self.spec.get("stop_when") else None
         self.tree = py_trees.trees.BehaviourTree(root)
-        self.tree.setup(timeout=30)
+        # no timeout: py_trees implements it with signals, which only work in the main thread,
+        # and the runner is loaded from worker threads (ROS 2 executor, Studio)
+        self.tree.setup()
         self.state = "running"
         self.error = ""
         return self

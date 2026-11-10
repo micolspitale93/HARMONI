@@ -96,3 +96,21 @@ def test_failing_observer_is_ignored():
     runner.observers += [bad, seen.append]
     runner.step()
     assert len(seen) == 1 and runner.state == "running"
+
+
+def test_load_and_run_from_a_worker_thread():
+    """ROS 2 timers and Studio load trees outside the main thread"""
+    import threading
+
+    result = {}
+
+    def worker():
+        try:
+            result["state"] = TreeRunner(counter_tree(stop_at="t/done")).run(max_ticks=5, sleep=lambda s: None)
+        except Exception as e:  # noqa: BLE001
+            result["error"] = repr(e)
+
+    thread = threading.Thread(target=worker)
+    thread.start()
+    thread.join()
+    assert result == {"state": "finished"}
