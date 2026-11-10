@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HARMONI Studio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%234f46e5'/%3E%3Cpath d='M9 8v16M23 8v16M9 16h14' stroke='white' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo">H</span> HARMONI <b>Studio</b></div>
+    <nav class="tabs" role="tablist">
+      <button data-page="compose" class="active">Compose</button>
+      <button data-page="scripts">Scripts</button>
+      <button data-page="services">Services</button>
+      <button data-page="run">Run</button>
+      <button data-page="modules">Modules</button>
+    </nav>
+    <div class="topbar-right">
+      <span id="run-pill" class="pill" title="State of the running tree">idle</span>
+      <span id="ros-pill" class="pill muted" title="ROS 2 availability">ROS 2: …</span>
+    </div>
+  </header>
+  <main>
+    <section id="page-compose" class="page active"></section>
+    <section id="page-scripts" class="page"></section>
+    <section id="page-services" class="page"></section>
+    <section id="page-run" class="page"></section>
+    <section id="page-modules" class="page"></section>
+  </main>
+  <div id="toasts"></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
