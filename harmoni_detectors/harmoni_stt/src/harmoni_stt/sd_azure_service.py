@@ -21,10 +21,17 @@ from six.moves import queue
 import azure.cognitiveservices.speech as speechsdk
 from dotenv import load_dotenv
 
+# Credentials (MICROSOFT_SPEECH_KEY, MICROSOFT_SPEECH_REGION) are read from the HARMONI .env file.
+ENV_PATH = os.getenv("HARMONI_ENV_FILE", "/root/harmoni_catkin_ws/src/HARMONI/.env")
+SILENCE_MESSAGE = "No one is talking. Please initiate a question to reignite the conversation."
+
 
 class SDAzureService(HarmoniServiceManager):
     """
-    Google service
+    Speech-to-text with speaker diarization based on the Azure ConversationTranscriber.
+
+    Each transcription is returned as ``"<speaker name>: <text>"``, where the speaker name
+    is taken from the ``names`` parameter (Guest-1 -> first name, Guest-2 -> second name, ...).
     """
 
     def __init__(self, name, param):
@@ -37,7 +44,8 @@ class SDAzureService(HarmoniServiceManager):
         self.wait_duration = param["wait_duration"]
         self.max_silence = param["max_silence"]
         self.num_speakers = param["num_speakers"]
-        self.names = param["names"].split(",")
+        self.names = [n.strip() for n in param["names"].split(",")]
+
         self.time_start_request = None
         self.start_time = None
         self.service_id = hf.get_child_id(self.name)
@@ -93,7 +101,7 @@ class SDAzureService(HarmoniServiceManager):
     def callback(self, data):
         """ Callback function subscribing to the microphone topic"""
         #rospy.loginfo("Add data to buffer")
-        if (self.state == State.REQUEST | self.state == State.START):
+        if self.state in (State.REQUEST, State.START):
             self._buff.put(data.data)
             
 
@@ -103,56 +111,57 @@ class SDAzureService(HarmoniServiceManager):
         self.response_received = True
 
 
+    def speaker_name(self, speaker_id):
+        """Map an Azure speaker id (e.g. ``Guest-1``) to the participant name.
+
+        Unknown ids, or ids that exceed the number of configured names, are returned unchanged.
+        """
+        if not speaker_id:
+            return "Unknown"
+        num_id = str(speaker_id).split("-")[-1]
+        try:
+            index = int(num_id) - 1
+        except ValueError:
+            return speaker_id
+        if 0 <= index < len(self.names) and self.names[index]:
+            return self.names[index]
+        return speaker_id
+
     def conversation_transcriber_recognition_canceled_cb(self, evt: speechsdk.SessionEventArgs):
         print('Canceled event')
 
     def conversation_transcriber_session_stopped_cb(self,evt: speechsdk.SessionEventArgs):
         print('SessionStopped event')
 
+    def _finish_transcription(self, text):
+        """Store the final result and stop the transcriber until the next request"""
+        self.stt_response = text
+        self.state = State.SUCCESS
+        self.result_msg = self.stt_response
+        self.response_received = True
+        if self.conversation_transcriber is not None:
+            self.conversation_transcriber.stop_transcribing_async()
+
     def conversation_transcriber_transcribed_cb(self, evt: speechsdk.SpeechRecognitionEventArgs):
-        self.elapsed_time = time.time() - self.start_time
-        if self.elapsed_time > 10:
-            self.stt_response = "No one is talking. Please initiate a question to reignite the conversation."
-            self.state = State.SUCCESS
-            self.response_received = True
-            self.result_msg = self.stt_response
-            self.conversation_transcriber.stop_transcribing_async() 
-        print(self.elapsed_time)
-        print('\nTRANSCRIBED:')
-        if evt.result.reason == speechsdk.ResultReason.RecognizedSpeech:            
-            self.speaker_talking = evt.result.speaker_id
-            print(evt.result.speaker_id)
-            _num_id = self.speaker_talking.split("-")[-1]
-            if _num_id != "Unknown":
-                _num_id = int(_num_id)
-                self.speaker_talking = self.names[_num_id-1]
-            print('\tText={}'.format(evt.result.text))
-            print('\tSpeaker ID={}\n'.format(self.speaker_talking))
-            
-            if len(evt.result.text)!=0:
-                self.stt_response = self.speaker_talking + ": " + evt.result.text
-                self.stt_response = self.stt_response.replace("'"," ")
-                self.state = State.SUCCESS
-                self.response_received = True
-                self.result_msg = self.stt_response
-                self.conversation_transcriber.stop_transcribing_async()  
+        self.elapsed_time = time.time() - self.start_time if self.start_time else 0
+        rospy.logdebug(f"Elapsed time since last speech: {self.elapsed_time}")
+        if self.elapsed_time > self.max_silence:
+            self._finish_transcription(SILENCE_MESSAGE)
+            return
+        if evt.result.reason == speechsdk.ResultReason.RecognizedSpeech:
+            self.speaker_talking = self.speaker_name(evt.result.speaker_id)
+            rospy.loginfo(f"TRANSCRIBED: {self.speaker_talking}: {evt.result.text}")
+            if len(evt.result.text) != 0:
+                # single quotes are removed because the text is embedded in a python literal downstream
+                self._finish_transcription((self.speaker_talking + ": " + evt.result.text).replace("'", " "))
         elif evt.result.reason == speechsdk.ResultReason.NoMatch:
-            print('\tNOMATCH: Speech could not be TRANSCRIBED: {}'.format(evt.result.no_match_details))
+            rospy.logdebug('NOMATCH: Speech could not be TRANSCRIBED: {}'.format(evt.result.no_match_details))
 
     def conversation_transcriber_transcribing_cb(self, evt: speechsdk.SpeechRecognitionEventArgs):
-        print('TRANSCRIBING:')
         self.start_time = time.time()
-        self._current_speaker_talking = evt.result.speaker_id
-        print(self._current_speaker_talking)
-        _num_id = int(self._current_speaker_talking.split("-")[-1])
-        if _num_id != "Unknown":
-                _num_id = int(_num_id)
-                self._current_speaker_talking = self.names[_num_id-1]
+        self._current_speaker_talking = self.speaker_name(evt.result.speaker_id)
         self._transcription = evt.result.text
-        print('\tText={}'.format(self._transcription))
-        print('\tSpeaker ID={}'.format(self._current_speaker_talking))
-        
-        
+        rospy.logdebug(f"TRANSCRIBING: {self._current_speaker_talking}: {self._transcription}")
 
     def conversation_transcriber_session_started_cb(self, evt: speechsdk.SessionEventArgs):
         print('SessionStarted event')
@@ -161,9 +170,9 @@ class SDAzureService(HarmoniServiceManager):
 
 
     def recognize_from_mic(self):
-        load_dotenv("/root/harmoni_catkin_ws/src/HARMONI/.env")
+        load_dotenv(ENV_PATH)
         speech_config = speechsdk.SpeechConfig(subscription=os.getenv('MICROSOFT_SPEECH_KEY'), region=os.getenv('MICROSOFT_SPEECH_REGION'))
-        speech_config.speech_recognition_language="en-US"
+        speech_config.speech_recognition_language = self.language
         speech_config.set_property(property_id=speechsdk.PropertyId.SpeechServiceResponse_DiarizeIntermediateResults, value='true')
         #audio_format = speechsdk.audio.AudioStreamFormat(samples_per_second=sample_rate, bits_per_sample=16, channels=1)
         #stream_callback = MyAudioStream(buff)
@@ -222,11 +231,8 @@ class SDAzureService(HarmoniServiceManager):
         try:
             # Transcribes data coming from microphone
             r = rospy.Rate(1)
-            print("HEREEEEEE")
             while not self.response_received:
                 r.sleep()
-            print("AFTER WHILE")
-            print("FINAL STT response text: "+ self.stt_response)
             self._first_request = False
             self.state = State.SUCCESS
             self.response_received = True        

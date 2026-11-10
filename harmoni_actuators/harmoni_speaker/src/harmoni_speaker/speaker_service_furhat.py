@@ -13,7 +13,32 @@ import harmoni_common_lib.helper_functions as hf
 from furhat_remote_api import FurhatRemoteAPI
 from std_msgs.msg import String
 import json
-import ast 
+import ast
+
+
+def parse_speech_request(data):
+    """Parse the payload of a robot speaker DO request.
+
+    Args:
+        data (str): JSON string ``{"input": <text>, "addressee": <name(s)>}``.
+            A plain (non JSON) string is interpreted as the text to say.
+
+    Returns:
+        tuple: (text to say, list of addressees). The list is empty when the speech is
+        not addressed to anyone in particular (missing, empty or "null" addressee).
+    """
+    try:
+        payload = json.loads(data)
+    except (TypeError, ValueError):
+        payload = {"input": data}
+    if not isinstance(payload, dict):
+        payload = {"input": str(payload)}
+    text = str(payload.get("input", ""))
+    addressee = payload.get("addressee") or ""
+    names = [a.strip() for a in str(addressee).split(",")]
+    names = [a for a in names if a and a.lower() != "null"]
+    return text, names
+
 
 
 class SpeakerServiceFurhat(HarmoniServiceManager):
@@ -54,39 +79,30 @@ class SpeakerServiceFurhat(HarmoniServiceManager):
         return
 
     def do(self, data):
-        # TODO: include the addressee of the conversation!
-        """Publishes the string with either an audio file location or text to synthetise
-
-        Converts input audio from bytes or a local/network path to an audio msg.
+        """Makes the Furhat robot say a sentence and gaze at the addressee.
 
         Args:
-            data (str): This could be a string of:
-                            - string to say
-                            - path of local wav file
+            data (str): JSON string ``{"input": <text>, "addressee": <name>}``
         """
         self.state = State.REQUEST
         self.actuation_completed = False
-        data =   json.loads(data)
+        text, addressees = parse_speech_request(data)
         try:
             if self.mock:
-                print("The robot will say:" , data["input"])
+                rospy.loginfo(f"[mockup] Furhat is supposed to say: {text} (addressee: {addressees})")
             else:
-                self.furhat.say(text=data["input"], blocking = True)
-                # Attend a user with a specific id
-                if "," in data["addressee"]:
+                self.furhat.say(text=text, blocking=True)
+                if len(addressees) > 1:
                     rospy.loginfo("The speech is addressed to multiple people")
-                else:
-                    rospy.loginfo(f'The speech is addressed to {data["addressee"]}')
-                    self.furhat.attend(userid=data["addressee"]) #addressee of the conversation
-                #r = rospy.Rate(10)
-                #print(self.furhat)
-                #while self.furhat.isSpeaking():
-                #    r.sleep()
+                elif len(addressees) == 1:
+                    rospy.loginfo(f"The speech is addressed to {addressees[0]}")
+                    self.furhat.attend(userid=addressees[0])  # addressee of the conversation
             rospy.loginfo("End writing data for speaker")
             self.state = State.SUCCESS
             self.actuation_completed = True
-        except IOError:
-            rospy.logwarn("Speaker failed: Audio appears too busy")
+        except Exception as e:
+            # IOError (audio busy) or any error raised by the Furhat remote API
+            rospy.logwarn(f"Speaker failed: {e}")
             self.state = State.FAILED
             self.actuation_completed = True
         return {"response": self.state}

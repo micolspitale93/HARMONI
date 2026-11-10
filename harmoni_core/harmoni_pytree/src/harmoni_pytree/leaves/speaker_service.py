@@ -9,6 +9,7 @@ from harmoni_common_lib.action_client import HarmoniActionClient
 from actionlib_msgs.msg import GoalStatus
 
 import time
+import json
 import py_trees
 
 class SpeakerServicePytree(py_trees.behaviour.Behaviour):
@@ -51,7 +52,8 @@ class SpeakerServicePytree(py_trees.behaviour.Behaviour):
         print("BotAgent", "Name", "SceneAgent")
         print(self.blackboard_bot.agent, self.name, self.blackboard_scene.agent)
         
-        _data = '{"input":"' + self.blackboard_input.result + '", "addressee": "'+self.blackboard_bot.addressee+'"}'
+        # json.dumps escapes quotes/newlines contained in the LLM response
+        _data = json.dumps({"input": str(self.blackboard_input.result), "addressee": str(self.blackboard_bot.addressee)})
         #
         if self.instance_id == "default":
             _data = self.blackboard_input.result
@@ -78,7 +80,7 @@ class SpeakerServicePytree(py_trees.behaviour.Behaviour):
                     else:
                         new_status = py_trees.common.Status.FAILURE
                         raise
-        elif self.blackboard_scene.nlp == 2 |  self.blackboard_bot.speak == 0:
+        elif self.blackboard_scene.nlp == 2 or self.blackboard_bot.speak == 0:
             new_status = py_trees.common.Status.SUCCESS
         elif (self.blackboard_bot.agent== "null"):
             if self.send_request:

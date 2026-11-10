@@ -14,6 +14,47 @@ import py_trees
 import time
 import py_trees.console
 import json
+import ast
+
+
+def parse_agent_response(text):
+    """Parse the orchestrator (LLM) response into a dictionary.
+
+    The assistant is asked to return a JSON object with the keys ``intervene``, ``agent``,
+    ``response`` and ``addressee``. LLMs sometimes return a python-like dict (single quotes)
+    or plain text, so this function never raises:
+
+    - valid JSON / python dict -> the parsed values (missing keys get safe defaults)
+    - non-empty plain text     -> the text is treated as a message to be said
+    - empty / None             -> nobody speaks (intervene=False)
+
+    Returns:
+        dict: {"message": str, "agent": str, "intervene": bool, "addressee": str}
+    """
+    parsed = None
+    if isinstance(text, dict):
+        parsed = text
+    elif isinstance(text, str) and text.strip():
+        try:
+            parsed = json.loads(text)
+        except ValueError:
+            try:
+                parsed = ast.literal_eval(text.strip())
+            except (ValueError, SyntaxError):
+                parsed = None
+    if not isinstance(parsed, dict):
+        message = text.strip() if isinstance(text, str) else ""
+        # plain text is said as it is; an empty result means the robots stay silent
+        return {"message": message, "agent": "null", "intervene": bool(message), "addressee": "null"}
+    intervene = parsed.get("intervene", True)
+    if isinstance(intervene, str):
+        intervene = intervene.strip().lower() not in ("false", "0", "no")
+    return {
+        "message": str(parsed.get("response", "")),
+        "agent": str(parsed.get("agent") or "null"),
+        "intervene": bool(intervene),
+        "addressee": str(parsed.get("addressee") or "null"),
+    }
 
 class AssistantServicePytree(py_trees.behaviour.Behaviour):
     def __init__(self, name):
@@ -78,23 +119,11 @@ class AssistantServicePytree(py_trees.behaviour.Behaviour):
                     if self.client_result is not None:
                         rospy.loginfo("________________________The client results is " +str(self.client_result))
                         
-                        if isinstance(self.client_result, str) and self.client_result!="":
-                            _response = json.loads(self.client_result)
-                            print(_response)
-                            self.blackboard_bot.result = {
-                                                                    "message":   _response["response"]
-                                                        }
-                            self.blackboard_bot.agent = _response["agent"]
-                            _intervene = _response["intervene"]
-                            self.blackboard_bot.addressee = _response["addressee"]
-                            if not _intervene:
-                                self.blackboard_bot.speak = 0 #DON'T SPEAK
-                            else:
-                                self.blackboard_bot.speak = 1
-                        else:
-                            self.blackboard_bot.result  = {
-                                                                    "message":   self.client_result
-                                                }
+                        _response = parse_agent_response(self.client_result)
+                        self.blackboard_bot.result = {"message": _response["message"]}
+                        self.blackboard_bot.agent = _response["agent"]
+                        self.blackboard_bot.addressee = _response["addressee"]
+                        self.blackboard_bot.speak = 1 if _response["intervene"] else 0
                         self.client_result = None
                         self.blackboard_tts.result = self.blackboard_bot.result["message"]
                         new_status = py_trees.common.Status.SUCCESS

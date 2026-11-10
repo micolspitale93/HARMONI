@@ -15,6 +15,12 @@
         </include>
     </group>    
 
+	<group if="$(eval service_to_use == 'sd_azure')">
+        <include file="$(find harmoni_stt)/launch/stt_sd_azure_service.launch">
+            <arg name="instance_id" value = "$(arg instance_id)"/> 
+        </include>
+    </group>
+
 	<group if="$(eval service_to_use == 'deepspeech')">
         <include file="$(find harmoni_stt)/launch/stt_deepspeech_service.launch">
             <arg name="instance_id" value = "$(arg instance_id)"/> 

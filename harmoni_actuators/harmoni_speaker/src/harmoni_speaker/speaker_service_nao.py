@@ -15,6 +15,31 @@ import numpy as np
 import json
 
 
+def parse_speech_request(data):
+    """Parse the payload of a robot speaker DO request.
+
+    Args:
+        data (str): JSON string ``{"input": <text>, "addressee": <name(s)>}``.
+            A plain (non JSON) string is interpreted as the text to say.
+
+    Returns:
+        tuple: (text to say, list of addressees). The list is empty when the speech is
+        not addressed to anyone in particular (missing, empty or "null" addressee).
+    """
+    try:
+        payload = json.loads(data)
+    except (TypeError, ValueError):
+        payload = {"input": data}
+    if not isinstance(payload, dict):
+        payload = {"input": str(payload)}
+    text = str(payload.get("input", ""))
+    addressee = payload.get("addressee") or ""
+    names = [a.strip() for a in str(addressee).split(",")]
+    names = [a for a in names if a and a.lower() != "null"]
+    return text, names
+
+
+
 class SpeakerServiceNAO(HarmoniServiceManager):
     
     """Takes sound and publishes it to the default audio topic for the audio_play package
@@ -85,22 +110,21 @@ class SpeakerServiceNAO(HarmoniServiceManager):
         """
         self.state = State.REQUEST
         self.actuation_completed = False
-        data = json.loads(data)
+        text, addressees = parse_speech_request(data)
         try:
             if not self.mock:
-                #self.play_pub.publish(data["input"])
-                self.speak_service(data["input"])
-                if "," in data["addressee"]:
+                self.speak_service(text)
+                if len(addressees) > 1:
                     rospy.loginfo("The speech is addressed to multiple people")
-                else:
-                    rospy.loginfo(f'The speech is addressed to {data["addressee"]}')
-                    self.addressee_pub.publish(data["addressee"])
+                elif len(addressees) == 1:
+                    rospy.loginfo(f"The speech is addressed to {addressees[0]}")
+                    self.addressee_pub.publish(addressees[0])
             else:
-                print("NAO is supposed to say ", data)
+                rospy.loginfo(f"[mockup] NAO is supposed to say: {text} (addressee: {addressees})")
             self.state = State.SUCCESS
             self.actuation_completed = True
-        except IOError:
-            rospy.logwarn("Speaker failed: Audio appears too busy")
+        except (IOError, rospy.ServiceException) as e:
+            rospy.logwarn(f"Speaker failed: {e}")
             self.state = State.FAILED
             self.actuation_completed = True
         return {"response": self.state}

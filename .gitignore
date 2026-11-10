@@ -126,6 +126,7 @@ harmoni_detectors/harmoni_imageai/src/*.h5
 harmoni_detectors/harmoni_imageai/src/*.json
 **/config/configuration.yaml
 harmoni_models/stt/*
+harmoni_models/tts/*
 harmoni_models/ir/*
 harmoni_models/rl/*
 harmoni_models/yolo/*
@@ -139,8 +140,15 @@ private-keys_old.json
 *.wav
 .env
 
-test*
+# NOTE: "test*" and "dockerfiles*" used to be ignored here, which silently prevented new
+# test files and dockerfiles (e.g. the NAO image) from being committed.
+.pytest_cache/
+test_output*/
 **resources/*
-dockerfiles*
 
 ***py2.py
+# NAOqi SDK (not redistributable)
+dockerfiles/harmoni/kinetic/nao/*.tar.gz
+
+# harmoni.sh local state
+.harmoni/

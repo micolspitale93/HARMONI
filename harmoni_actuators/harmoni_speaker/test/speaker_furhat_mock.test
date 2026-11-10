@@ -1,0 +1,12 @@
+<!-- Integration test of the Furhat speaker node in mockup mode (no robot needed).
+     Run with: rostest harmoni_speaker speaker_furhat_mock.test
+     To test with the real robot set mockup to 0 and robot_ip in config/configuration.yaml -->
+<launch>
+    <rosparam file="$(find harmoni_speaker)/config/configuration.yaml" subst_value="True"/>
+    <param name="speaker/furhat_param/mockup" value="1"/>
+    <param name="instance_id" value="furhat"/>
+    <node pkg="harmoni_speaker" type="speaker_service_furhat.py" name="harmoni_speaker_furhat" output="screen" args="furhat"/>
+
+    <param name="test_speaker_input" value='{"input": "Hello, I am Manny", "addressee": "Sarah"}'/>
+    <test test-name="test_speaker_furhat" pkg="harmoni_speaker" type="rostest_speaker.py"/>
+</launch>

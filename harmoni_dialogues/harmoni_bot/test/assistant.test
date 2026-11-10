@@ -1,0 +1,12 @@
+<!-- Integration test of the OpenAI Assistant service (group interaction orchestrator).
+     Requires AZURE_OPENAI_API_ENDPOINT and AZURE_OPENAI_API_KEY in the HARMONI .env file
+     and a valid assistant_id in config/configuration.yaml (bot/default_param).
+     Run with: rostest harmoni_bot assistant.test -->
+<launch>
+    <rosparam file="$(find harmoni_bot)/config/configuration.yaml" subst_value="True"/>
+    <param name="instance_id" value="default"/>
+    <node pkg="harmoni_bot" type="assistant_service.py" name="harmoni_bot_assistant_default" output="screen"/>
+
+    <param name="test_assistant_input" value="['*user* Micol: Hi everyone, my name is Micol, nice to meet you!']"/>
+    <test test-name="test_assistant" pkg="harmoni_bot" type="rostest_assistant.py" time-limit="120.0"/>
+</launch>

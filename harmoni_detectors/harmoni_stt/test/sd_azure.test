@@ -1,0 +1,11 @@
+<!-- Live test of the Azure speaker diarization STT (sd_azure_service.py).
+     Requires MICROSOFT_SPEECH_KEY and MICROSOFT_SPEECH_REGION in the HARMONI .env file and a
+     microphone available in the container. Speak after "START TRANSCRIPTION" is printed: the
+     test passes when a "<speaker name>: <text>" transcription (or the silence prompt) is returned.
+     Run with: rostest harmoni_stt sd_azure.test -->
+<launch>
+    <rosparam file="$(find harmoni_stt)/config/sd_azure_configuration.yaml" subst_value="True"/>
+    <param name="instance_id" value="default"/>
+    <node pkg="harmoni_stt" type="sd_azure_service.py" name="harmoni_stt_default" output="screen"/>
+    <test test-name="test_sd_azure" pkg="harmoni_stt" type="rostest_sd_azure.py" time-limit="120.0"/>
+</launch>

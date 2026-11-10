@@ -1,0 +1,13 @@
+<!-- Integration test of the NAO speaker node in mockup mode (no robot needed).
+     Run with: rostest harmoni_speaker speaker_nao_mock.test
+     With the real robot, also start apis_nao_node.py in the harmoni_nao (kinetic) container
+     and set mockup to 0 and robot_ip in config/configuration.yaml -->
+<launch>
+    <rosparam file="$(find harmoni_speaker)/config/configuration.yaml" subst_value="True"/>
+    <param name="speaker/nao_param/mockup" value="1"/>
+    <param name="instance_id" value="nao"/>
+    <node pkg="harmoni_speaker" type="speaker_service_nao.py" name="harmoni_speaker_nao" output="screen" args="nao"/>
+
+    <param name="test_speaker_input" value='{"input": "Hello, I am Andrea", "addressee": "Jane"}'/>
+    <test test-name="test_speaker_nao" pkg="harmoni_speaker" type="rostest_speaker.py"/>
+</launch>
