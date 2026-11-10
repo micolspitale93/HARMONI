@@ -4,6 +4,7 @@ import json
 import urllib.error
 import urllib.request
 
+from harmoni.tree.registry import Param
 from harmoni.services.base import Result, ServiceBackend, register_backend
 
 
@@ -22,7 +23,18 @@ def parse_speech_request(data):
     return str(payload.get("input", "")), [a for a in names if a and a.lower() != "null"]
 
 
-@register_backend("furhat")
+@register_backend(
+    "furhat",
+    kind="actuator",
+    actions=["DO"],
+    doc="Furhat robot: says the text and attends the addressee",
+    params={
+        "robot_ip": Param(str, doc="IP of the robot (required unless mockup)"),
+        "voice": Param(str, default="Matthew"),
+        "mockup": Param(bool, default=False, doc="log only, no robot"),
+    },
+    requirements=["furhat-remote-api"],
+)
 class FurhatBackend(ServiceBackend):
     """DO: the Furhat robot says the text and attends the addressee.
 
@@ -55,7 +67,17 @@ class FurhatBackend(ServiceBackend):
         return Result(True)
 
 
-@register_backend("nao_http")
+@register_backend(
+    "nao_http",
+    kind="actuator",
+    actions=["DO"],
+    doc="NAO robot through the NAO bridge (HTTP)",
+    params={
+        "bridge_url": Param(str, default="http://localhost:8765"),
+        "timeout_s": Param(float, default=60.0),
+        "mockup": Param(bool, default=False, doc="log only, no robot"),
+    },
+)
 class NaoHttpBackend(ServiceBackend):
     """DO: the NAO robot says the text, through the NAO bridge (ros2/nao_bridge).
 

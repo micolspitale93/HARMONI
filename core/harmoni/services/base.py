@@ -104,21 +104,66 @@ class ServiceBackend:
 
 _BACKENDS: Dict[str, type] = {}
 
+KINDS = ("sensor", "detector", "dialogue", "actuator", "service")
 
-def register_backend(name):
+
+def register_backend(name, params=None, kind="service", actions=None, doc="", requirements=(), credentials=()):
+    """Class decorator registering a service backend.
+
+    Args:
+        name: backend name used in configuration files (``backend: <name>``)
+        params: ``{name: harmoni.tree.registry.Param}`` accepted in the configuration
+        kind: sensor | detector | dialogue | actuator | service
+        actions: actions supported, e.g. ``["REQUEST"]`` or ``["DO"]``
+        doc: one line description
+        requirements: pip packages needed by the backend
+        credentials: environment variables (from .env) needed by the backend
+    """
+
     def decorator(cls):
         cls.backend_name = name
+        cls.backend_info = {
+            "name": name,
+            "kind": kind if kind in KINDS else "service",
+            "actions": list(actions or []),
+            "params": dict(params or {}),
+            "doc": doc or (cls.__doc__ or "").strip().split("\n")[0],
+            "requirements": list(requirements),
+            "credentials": list(credentials),
+            "module": None,  # set by harmoni.modules for backends of user modules
+        }
         _BACKENDS[name] = cls
         return cls
 
     return decorator
 
 
+def _load_user_modules():
+    try:
+        from harmoni.modules import load_modules
+    except ImportError:  # pragma: no cover
+        return
+    load_modules()
+
+
 def available_backends():
+    _load_user_modules()
     return dict(_BACKENDS)
 
 
+def describe_backends():
+    """Metadata of every backend (JSON serializable), for configuration forms"""
+    result = []
+    for name, cls in sorted(available_backends().items()):
+        info = dict(getattr(cls, "backend_info", {"name": name}))
+        info["params"] = {k: p.to_dict() for k, p in (info.get("params") or {}).items()}
+        result.append(info)
+    return result
+
+
 def create_backend(name, service_id, params=None, emit=None) -> ServiceBackend:
+    if name not in _BACKENDS:
+        _load_user_modules()
     try:
         cls = _BACKENDS[name]
     except KeyError:

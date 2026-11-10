@@ -4,12 +4,26 @@ import os
 import threading
 import time
 
+from harmoni.tree.registry import Param
 from harmoni.services.base import Result, ServiceBackend, load_env, register_backend
 
 SILENCE_MESSAGE = "No one is talking. Please initiate a question to reignite the conversation."
 
 
-@register_backend("azure_diarization")
+@register_backend(
+    "azure_diarization",
+    kind="detector",
+    actions=["REQUEST"],
+    doc="Speech-to-text with speaker diarization (Azure Speech)",
+    params={
+        "language_id": Param(str, default="en-US"),
+        "names": Param(str, default="", doc="participants in the order Azure detects them (Guest-1, ...)"),
+        "max_silence": Param(float, default=10.0, doc="seconds without speech before the silence message"),
+        "max_wait_s": Param(float, default=120.0, doc="upper bound of a request"),
+    },
+    requirements=["azure-cognitiveservices-speech", "python-dotenv"],
+    credentials=["MICROSOFT_SPEECH_KEY", "MICROSOFT_SPEECH_REGION"],
+)
 class AzureDiarizationBackend(ServiceBackend):
     """REQUEST returns the next utterance as ``"<speaker name>: <text>"``.
 

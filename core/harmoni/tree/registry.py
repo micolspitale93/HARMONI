@@ -152,3 +152,6 @@ def _ensure_builtin_nodes():
     # importing the modules registers the built-in composites and leaves
     from harmoni.tree import composites  # noqa: F401
     import harmoni.leaves  # noqa: F401
+    from harmoni.modules import load_modules
+
+    load_modules()  # user modules may register leaves too

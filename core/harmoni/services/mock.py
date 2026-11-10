@@ -2,10 +2,22 @@
 
 import threading
 
+from harmoni.tree.registry import Param
 from harmoni.services.base import Result, ServiceBackend, register_backend
 
 
-@register_backend("mock")
+@register_backend(
+    "mock",
+    kind="service",
+    actions=["REQUEST", "DO"],
+    doc="Answers with configured responses (simulation, demos, tests)",
+    params={
+        "responses": Param(list, default=[], doc="answers returned in order (empty: echo the payload)"),
+        "cycle": Param(bool, default=True, doc="restart from the first response at the end"),
+        "delay_s": Param(float, default=0.0, doc="simulated duration of each action"),
+        "ok": Param(bool, default=True, doc="outcome of the actions"),
+    },
+)
 class MockBackend(ServiceBackend):
     """Answers every action with the next configured response.
 

@@ -3,6 +3,7 @@
 import ast
 import os
 
+from harmoni.tree.registry import Param
 from harmoni.services.base import Result, ServiceBackend, load_env, register_backend
 
 FALLBACK_MESSAGE = "Can you please repeat what you said?"
@@ -48,7 +49,22 @@ def parse_input(input_text):
     return parsed
 
 
-@register_backend("assistant")
+@register_backend(
+    "assistant",
+    kind="dialogue",
+    actions=["REQUEST"],
+    doc="LLM orchestrator: OpenAI Assistants API (Azure or OpenAI)",
+    params={
+        "assistant_id": Param(str, required=True, doc="id of the assistant (asst_...)"),
+        "create_thread": Param(bool, doc="create the conversation thread (default: true for *_default)"),
+        "participants": Param(str, default="", doc="comma separated names of the participants"),
+        "num_speaker": Param(int, doc="number of participants (default: number of names)"),
+        "scenario": Param(str, default="", doc="topic of the conversation"),
+        "api_version": Param(str, default="2025-01-01-preview", doc="Azure OpenAI API version"),
+    },
+    requirements=["openai>=1.0", "python-dotenv"],
+    credentials=["AZURE_OPENAI_API_ENDPOINT", "AZURE_OPENAI_API_KEY"],
+)
 class AssistantBackend(ServiceBackend):
     """Appends the last user message to an Assistants thread and runs the assistant.
 

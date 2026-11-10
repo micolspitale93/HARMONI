@@ -10,9 +10,10 @@ Adding a new sensor/detector/actuator = writing one backend class and registerin
 ``@register_backend("name")``; no ROS code is needed.
 """
 
-from harmoni.services.base import Result, ServiceBackend, available_backends, create_backend, register_backend
+from harmoni.services.base import (Result, ServiceBackend, available_backends, create_backend, describe_backends,
+                                   register_backend)
 
 # built-in backends (their third-party SDKs are imported lazily, in setup())
 from harmoni.services import assistant, azure_diarization, mock, robots  # noqa: F401,E402
 
-__all__ = ["Result", "ServiceBackend", "available_backends", "create_backend", "register_backend"]
+__all__ = ["Result", "ServiceBackend", "available_backends", "create_backend", "describe_backends", "register_backend"]

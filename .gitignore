@@ -154,3 +154,6 @@ ros1/dockerfiles/harmoni/kinetic/nao/*.tar.gz
 .harmoni/
 ros2/nao_bridge/*.tar.gz
 
+
+# private HARMONI modules (see modules/README.md)
+modules/private/
