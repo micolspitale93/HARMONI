@@ -10,6 +10,7 @@ All the things that do something
 
    harmoni_face
    harmoni_gesture
+   harmoni_led
    harmoni_speaker
    harmoni_tts
    harmoni_web

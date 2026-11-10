@@ -22,6 +22,7 @@ from harmoni_pytree.leaves.assistant_service import AssistantServicePytree
 from harmoni_pytree.leaves.speaker_service import SpeakerServicePytree
 from harmoni_pytree.leaves.script_group_dialogue_service import ScriptGroupDialogueService
 from harmoni_pytree.leaves.web_service import WebServicePytree 
+from harmoni_pytree.leaves.led_service import LedServicePytree 
 
 ##############################################################################
 # Classes
@@ -78,7 +79,7 @@ def post_tick_handler(snapshot_visitor, behaviour_tree):
             previously_visited=snapshot_visitor.previously_visited
         )
     )
-    print(py_trees.display.unicode_blackboard())
+    #print(py_trees.display.unicode_blackboard())
 
 
 def create_root(name= "GroupInteraction", params=""):
@@ -88,13 +89,63 @@ def create_root(name= "GroupInteraction", params=""):
     bot = AssistantServicePytree('LLM Assistant')
     speaker_1 = SpeakerServicePytree(name = 'Mover', instance_id = 'furhat')
     speaker_2 = SpeakerServicePytree(name = 'Opposer', instance_id = 'nao')
-    web_red = WebServicePytree(name="DialogueStateProcessing", color="red")
-    web_green = WebServicePytree(name="DialogueStateListening", color="green")
+    #web_red = WebServicePytree(name="DialogueStateProcessing", color="red")
+    #web_green = WebServicePytree(name="DialogueStateListening", color="green")
+    led_red = LedServicePytree(name="DialogueStateProcessing", color="red")
+    led_green = LedServicePytree(name="DialogueStateListening", color="green")
     agent_selector = py_trees.composites.Selector(name="Agent Selector", memory=True)
     agent_selector.add_children([speaker_1, speaker_2])
-    listening.add_children([diar_stt, web_green])
+    listening.add_children([diar_stt, led_green])
     root = py_trees.composites.Sequence(name="GroupInteraction",memory=True)
-    root.add_children([web_red, script, bot, agent_selector, listening])
+    root.add_children([led_red, script, bot, agent_selector, listening])
+    return root
+
+def create_root_het_2(name= "GroupInteraction", params=""):
+    listening = py_trees.composites.Parallel(name="Listening", policy = py_trees.common.ParallelPolicy.SuccessOnAll())
+    diar_stt=DiarSpeechToTextServicePytree("Diarization")
+    script = ScriptGroupDialogueService("Script", params=params)
+    bot = AssistantServicePytree('LLM Assistant')
+    speaker_1 = SpeakerServicePytree(name = 'Mover', instance_id = 'nao')
+    speaker_2 = SpeakerServicePytree(name = 'Opposer', instance_id = 'furhat')
+    led_red = LedServicePytree(name="DialogueStateProcessing", color="red")
+    led_green = LedServicePytree(name="DialogueStateListening", color="green")
+    agent_selector = py_trees.composites.Selector(name="Agent Selector", memory=True)
+    agent_selector.add_children([speaker_1, speaker_2])
+    listening.add_children([diar_stt, led_green])
+    root = py_trees.composites.Sequence(name="GroupInteraction",memory=True)
+    root.add_children([led_red, script, bot, agent_selector, listening])
+    return root
+
+def create_root_hom(name= "GroupInteraction", params=""):
+    listening = py_trees.composites.Parallel(name="Listening", policy = py_trees.common.ParallelPolicy.SuccessOnAll())
+    diar_stt=DiarSpeechToTextServicePytree("Diarization")
+    script = ScriptGroupDialogueService("Script", params=params)
+    bot = AssistantServicePytree('LLM Assistant')
+    speaker_1 = SpeakerServicePytree(name = 'Mover1', instance_id = 'furhat')
+    speaker_2 = SpeakerServicePytree(name = 'Mover2', instance_id = 'nao')
+    led_red = LedServicePytree(name="DialogueStateProcessing", color="red")
+    led_green = LedServicePytree(name="DialogueStateListening", color="green")
+    agent_selector = py_trees.composites.Selector(name="Agent Selector", memory=True)
+    agent_selector.add_children([speaker_1, speaker_2])
+    listening.add_children([diar_stt, led_green])
+    root = py_trees.composites.Sequence(name="GroupInteraction",memory=True)
+    root.add_children([led_red, script, bot, agent_selector, listening])
+    return root
+
+def create_root_hom_2(name= "GroupInteraction", params=""):
+    listening = py_trees.composites.Parallel(name="Listening", policy = py_trees.common.ParallelPolicy.SuccessOnAll())
+    diar_stt=DiarSpeechToTextServicePytree("Diarization")
+    script = ScriptGroupDialogueService("Script", params=params)
+    bot = AssistantServicePytree('LLM Assistant')
+    speaker_1 = SpeakerServicePytree(name = 'Mover1', instance_id = 'nao')
+    speaker_2 = SpeakerServicePytree(name = 'Mover2', instance_id = 'furhat')
+    led_red = LedServicePytree(name="DialogueStateProcessing", color="red")
+    led_green = LedServicePytree(name="DialogueStateListening", color="green")
+    agent_selector = py_trees.composites.Selector(name="Agent Selector", memory=True)
+    agent_selector.add_children([speaker_1, speaker_2])
+    listening.add_children([diar_stt, led_green])
+    root = py_trees.composites.Sequence(name="GroupInteraction",memory=True)
+    root.add_children([led_red, script, bot, agent_selector, listening])
     return root
 
 
@@ -107,7 +158,14 @@ def main():
     """
     py_trees.logging.level = py_trees.logging.Level.DEBUG
     params = rospy.get_param("pytree/default_param/")
-    root =create_root(params=params)
+    if params["condition"] == 0:
+        root =create_root(params=params)
+    elif params["condition"] == 1:
+        root =create_root_het_2(params=params) #heter inversed: HET_2
+    elif params["condition"] == 2:
+        root =create_root_hom(params=params) #homog: HOM
+    elif params["condition"] == 3:
+        root =create_root_hom_2(params=params) #homog: HOM_2
 
     print("########################################################")
 

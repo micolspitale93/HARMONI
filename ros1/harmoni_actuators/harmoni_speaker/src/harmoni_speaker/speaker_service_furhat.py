@@ -73,13 +73,14 @@ class SpeakerServiceFurhat(HarmoniServiceManager):
             voices = self.furhat.get_voices()
             # Set the voice of the robot
             self.furhat.set_voice(name='Matthew')
+            users = self.furhat.get_users()
 
         
     def stop(self):
         return
 
     def do(self, data):
-        """Makes the Furhat robot say a sentence and gaze at the addressee.
+        """Makes the Furhat robot say a sentence (attending a random detected user, or nodding if nobody is detected).
 
         Args:
             data (str): JSON string ``{"input": <text>, "addressee": <name>}``
@@ -91,12 +92,17 @@ class SpeakerServiceFurhat(HarmoniServiceManager):
             if self.mock:
                 rospy.loginfo(f"[mockup] Furhat is supposed to say: {text} (addressee: {addressees})")
             else:
+                users = self.furhat.get_users()
+                if len(users) == 0:
+                    self.furhat.gesture(name="Nod")  # nobody detected: acknowledge with a nod
+                else:
+                    self.furhat.attend(user="RANDOM")
                 self.furhat.say(text=text, blocking=True)
+                # Furhat user ids are not participant names, so the addressee is only logged
                 if len(addressees) > 1:
                     rospy.loginfo("The speech is addressed to multiple people")
                 elif len(addressees) == 1:
                     rospy.loginfo(f"The speech is addressed to {addressees[0]}")
-                    self.furhat.attend(userid=addressees[0])  # addressee of the conversation
             rospy.loginfo("End writing data for speaker")
             self.state = State.SUCCESS
             self.actuation_completed = True

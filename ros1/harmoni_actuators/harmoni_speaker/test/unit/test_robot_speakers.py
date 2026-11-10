@@ -42,7 +42,8 @@ def nao():
 
 
 def test_nao_publishes_robot_ip_on_connect(nao, published):
-    assert published("/speaker_nao/connect") == ["127.0.0.1"]
+    # shared with the LED service: both connect the NAO bridge through /nao/connect
+    assert published("/nao/connect") == ["127.0.0.1"]
 
 
 def test_nao_says_text_and_publishes_addressee(nao, published):
@@ -83,8 +84,16 @@ class FakeFurhat:
         self.ip = ip
         self.said = []
         self.attended = []
+        self.gestures = []
+        self.users = [{"id": "user-1"}]
         self.voice = None
         self.error = None
+
+    def get_users(self):
+        return self.users
+
+    def gesture(self, name):
+        self.gestures.append(name)
 
     def get_voices(self):
         return []
@@ -97,8 +106,8 @@ class FakeFurhat:
             raise self.error
         self.said.append(text)
 
-    def attend(self, userid):
-        self.attended.append(userid)
+    def attend(self, userid=None, user=None):
+        self.attended.append(userid or user)
 
 
 @pytest.fixture
@@ -112,17 +121,19 @@ def test_furhat_connects_and_sets_voice(furhat):
     assert furhat.furhat.voice == "Matthew"
 
 
-def test_furhat_says_text_and_attends_addressee(furhat):
-    result = furhat.do(json.dumps({"input": "Hello Jane", "addressee": "Jane"}))
+@pytest.mark.parametrize("addressee", ["Jane", "null", "", "Sarah, Jane"])
+def test_furhat_says_text_attending_a_random_user(furhat, addressee):
+    result = furhat.do(json.dumps({"input": "Hello Jane", "addressee": addressee}))
     assert result == {"response": State.SUCCESS}
     assert furhat.furhat.said == ["Hello Jane"]
-    assert furhat.furhat.attended == ["Jane"]
+    # study behaviour: Furhat user ids are not participant names, so it attends a random user
+    assert furhat.furhat.attended == ["RANDOM"] and furhat.furhat.gestures == []
 
 
-@pytest.mark.parametrize("addressee", ["null", "", "Sarah, Jane"])
-def test_furhat_does_not_attend_when_no_single_addressee(furhat, addressee):
-    furhat.do(json.dumps({"input": "Hello", "addressee": addressee}))
-    assert furhat.furhat.attended == []
+def test_furhat_nods_when_nobody_is_detected(furhat):
+    furhat.furhat.users = []
+    furhat.do(json.dumps({"input": "Hello"}))
+    assert furhat.furhat.gestures == ["Nod"] and furhat.furhat.attended == []
 
 
 def test_furhat_api_error_returns_failed(furhat):

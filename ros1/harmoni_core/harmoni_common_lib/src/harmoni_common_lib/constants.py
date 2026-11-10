@@ -45,6 +45,8 @@ class ActuatorNameSpace(Enum):
     web = "/harmoni/actuating/web/"
     gesture = "/harmoni/actuating/gesture/"
     sentiment = "/harmoni/actuating/sentiment/"
+    led = "/harmoni/actuating/led/"
+
 
 
 class DialogueNameSpace(Enum):

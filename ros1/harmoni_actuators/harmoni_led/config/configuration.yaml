@@ -1,0 +1,5 @@
+# LED feedback on the robots (state of the dialogue: red = processing, green = listening)
+led:
+  default_param:
+    furhat_robot_ip: "192.168.1.103" # IP of the Furhat robot (same as speaker/furhat_param)
+    nao_robot_ip: "192.168.1.100"    # IP of the NAO robot (same as speaker/nao_param)

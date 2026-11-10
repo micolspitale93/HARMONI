@@ -64,7 +64,11 @@ class FakeOpenAIClient:
             def create(self):
                 return types.SimpleNamespace(id="thread_123")
 
-        self.beta = types.SimpleNamespace(threads=Threads())
+        class Assistants:
+            def retrieve(self, assistant_id):
+                return types.SimpleNamespace(id=assistant_id)
+
+        self.beta = types.SimpleNamespace(threads=Threads(), assistants=Assistants())
 
 
 @pytest.fixture

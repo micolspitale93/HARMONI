@@ -23,7 +23,7 @@ from dotenv import load_dotenv
 
 # Credentials (MICROSOFT_SPEECH_KEY, MICROSOFT_SPEECH_REGION) are read from the HARMONI .env file.
 ENV_PATH = os.getenv("HARMONI_ENV_FILE", "/root/harmoni_catkin_ws/src/HARMONI/.env")
-SILENCE_MESSAGE = "No one is talking. Please initiate a question to reignite the conversation."
+SILENCE_MESSAGE = "No one is talking. Please initiate a question to reignite the conversation (balance Manny and Sam intervention)."
 
 
 class SDAzureService(HarmoniServiceManager):
@@ -178,7 +178,7 @@ class SDAzureService(HarmoniServiceManager):
         #stream_callback = MyAudioStream(buff)
         #audio_input = speechsdk.audio.PullAudioInputStream(stream_callback, audio_format)
         #audio_config = speechsdk.audio.AudioConfig(stream=audio_input)
-        audio_config = speechsdk.audio.AudioConfig(use_default_microphone=True)#device_name="TONOR TC30 Audio Device: USB Audio (hw:1,0)")
+        audio_config = speechsdk.audio.AudioConfig(device_name="hw:1,0")
         print(audio_config)
         self.conversation_transcriber = speechsdk.transcription.ConversationTranscriber(speech_config=speech_config, audio_config=audio_config)
         self.conversation_transcriber.properties.set_property(speechsdk.PropertyId.SpeechServiceConnection_InitialSilenceTimeoutMs, "4000")

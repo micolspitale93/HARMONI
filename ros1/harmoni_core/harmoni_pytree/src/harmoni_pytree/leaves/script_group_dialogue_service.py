@@ -8,12 +8,15 @@ import rospkg
 
 from harmoni_common_lib.constants import *
 
+START_PROMPT = "Now you MUST START the negotiation giving your opinion without telling your name."
+
 class ScriptGroupDialogueService(py_trees.behaviour.Behaviour):
     def __init__(self, name, params):
         self.name = name
         self.blackboards = []
         self.script_name = params['interaction']
         self.session = params['session']
+        self.max_turns = int(params.get('max_turns', 30))
         self.user_names = params["user_names"].split(",")
         self.blackboard_scene = self.attach_blackboard_client(name=self.name, namespace=PyTreeNameSpace.scene.name)
         self.blackboard_scene.register_key(key="nlp", access=py_trees.common.Access.WRITE)
@@ -26,7 +29,6 @@ class ScriptGroupDialogueService(py_trees.behaviour.Behaviour):
         self.blackboard_stt = self.attach_blackboard_client(name=self.name, namespace=DetectorNameSpace.stt.name)
         self.blackboard_stt.register_key("result", access=py_trees.common.Access.READ)
         self.scene_number = 0
-        self.max_number_scene = int(params.get("max_number_scene", 30))
         super(ScriptGroupDialogueService, self).__init__(name)
         self.logger.debug("%s.__init__()" % (self.__class__.__name__))
 
@@ -37,7 +39,7 @@ class ScriptGroupDialogueService(py_trees.behaviour.Behaviour):
         pattern_script_path = pck_path + f"/resources/{json_name}.json"
         with open(pattern_script_path, "r") as read_file:
             self.context = json.load(read_file)
-        self.blackboard_scene.max_number_scene = self.max_number_scene #MAXIMUM NUMBER OF TURNS
+        self.blackboard_scene.max_number_scene = self.max_turns #MAXIMUM NUMBER OF TURNS
         self.blackboard_scene.utterance = self.context[self.session][0]["utterance"]
         self.blackboard_scene.nlp = self.context[self.session][0]["nlp"]
         self.blackboard_scene.agent = self.context[self.session][0]["agent"]
@@ -63,7 +65,7 @@ class ScriptGroupDialogueService(py_trees.behaviour.Behaviour):
         self.blackboard_scene.utterance = self.format_user_utterance(self.blackboard_stt.result)
         self.blackboard_scene.nlp = scene["nlp"]
         if self.scene_number == 1+int(self.session[0]):
-            self.blackboard_scene.utterance = self.format_user_utterance("Now you can MUST START the discussion without telling your name.")
+            self.blackboard_scene.utterance = repr(["*assistant* " + START_PROMPT])
         if self.blackboard_scene.nlp==0:
             self.blackboard_scene.agent = scene["agent"]
             self.blackboard_scene.utterance = scene["utterance"]
@@ -72,6 +74,8 @@ class ScriptGroupDialogueService(py_trees.behaviour.Behaviour):
         if self.scene_number == self.blackboard_scene.max_number_scene:
             self.blackboard_scene.nlp = 0
             self.blackboard_scene.utterance = self.context[self.session][-1]["utterance"]
+        elif self.scene_number == (self.blackboard_scene.max_number_scene + 1):
+            return py_trees.common.Status.FAILURE
         i=0
         for name in self.user_names:
             i+=1

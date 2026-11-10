@@ -124,7 +124,8 @@ ros1/harmoni_actuators/harmoni_tts/scale_stats.npy
 ros1/harmoni_actuators/harmoni_tts/temp_data/tts.wav
 ros1/harmoni_detectors/harmoni_imageai/src/*.h5
 ros1/harmoni_detectors/harmoni_imageai/src/*.json
-**/config/configuration.yaml
+# NOTE: "**/config/configuration.yaml" used to be ignored here: new packages (e.g. harmoni_led)
+# lost their configuration. Keep credentials in .env, not in configuration files.
 ros1/harmoni_models/stt/*
 ros1/harmoni_models/tts/*
 ros1/harmoni_models/ir/*
