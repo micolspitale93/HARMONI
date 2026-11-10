@@ -1,6 +1,6 @@
 # HARMONI Bot
 
-This package wraps different chatbot services that can be used with HARMONI. Currently we support AWS Lex, Google Dialogflow, and ChatGPT. Rasa is a high priority on our roadmap for local chatbot functionality.
+This package wraps different chatbot services that can be used with HARMONI. Currently we support AWS Lex, Google Dialogflow, ChatGPT and the OpenAI Assistants API (on Azure), used as orchestrator of the group interaction. Rasa is a high priority on our roadmap for local chatbot functionality.
 
 You can run this module in the `harmoni_full` container.
 
@@ -34,7 +34,30 @@ The API for ChatGPT has:
     - message (str): response from the chatgpt
 
 
-You can run the service with the following command:
+### OpenAI Assistant (Azure)
+The Assistant service keeps the whole conversation in an Assistants API *thread* and, at each turn, asks the
+assistant (the orchestrator of the group interaction) whether one of the robots should intervene.
+
+The API for the Assistant has:
+- Request Name: ActionType: REQUEST
+- Body: data(str): string representation of a python list of messages in the form `"*<role>* <content>"`,
+  e.g. `"['*user* Sarah: I think AI will change education']"`. Only the last message is appended to the thread.
+- Response:
+    - response (int): SUCCESS, or FAILED
+    - message (str): the assistant answer. For the orchestrator (`service_id: default`) it is a JSON object:
+      `{"intervene": bool, "agent": "Mover" | "Opposer", "response": str, "explanation": str, "addressee": str}`.
+      On any error (API, connection, rate limit, malformed input) the state is FAILED and the message is
+      "Can you please repeat what you said?".
+
+The answer is also published on `/harmoni/dialoging/bot/<service_id>`. The orchestrator publishes the id of the
+thread on `/harmoni/dialoging/bot/<service_id>/thread_id`, so that other assistants (e.g. `mover`, `opposer`)
+can join the same conversation.
+
+Credentials (`AZURE_OPENAI_API_ENDPOINT`, `AZURE_OPENAI_API_KEY`) are read from the `.env` file in the root of the
+repository, see [Cloud Services](https://harmoni-20.readthedocs.io/en/latest/configuration/Cloud-Services.html).
+
+You can run the service with the following command (the Assistant is the default, select the others with
+`use_aws_lex:=true use_assistant:=false`, `use_google:=true ...`, `use_chatgpt:=true ...`):
 ```roslaunch harmoni_bot bot_service.launch```
 
 ## Parameters
@@ -61,7 +84,20 @@ Parameters input for the aws lex service:
 
 
 ### OpenAI ChatGPT
-The service ChatGPT has no parameters required.
+
+| Parameters           | Definition | Values |
+|----------------------|------------|--------|
+|model                 |  OpenAI model         |str; e.g., "gpt-4o-mini"     |
+
+### OpenAI Assistant
+
+| Parameters           | Definition | Values |
+|----------------------|------------|--------|
+|assistant_id          |  id of the assistant created on Azure OpenAI       |str; e.g., "asst_..."     |
+|service_id            |  `default` for the orchestrator (creates the thread), any other id joins the thread of the orchestrator  |str; e.g., "default"     |
+|participants          |  names of the participants, added to the assistant instructions       |str; e.g., "Sarah, Jane, Alex"     |
+|num_speaker           |  number of participants       |int; e.g., 3     |
+|scenario              |  topic of the conversation, added to the assistant instructions       |str     |
 
 ## Testing.
 
@@ -77,6 +113,18 @@ ChatGPT module can be tested using
 
 ```  bash
 rostest harmoni_bot chatgpt.test
+```
+
+The OpenAI Assistant can be tested using (requires the Azure credentials)
+
+```  bash
+rostest harmoni_bot assistant.test
+```
+
+Unit tests that do not need ROS nor credentials (run from the repository root):
+
+```  bash
+python3 -m pytest harmoni_dialogues/harmoni_bot
 ```
 
 

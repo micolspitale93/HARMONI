@@ -452,6 +452,27 @@ Client Data
 Variables
 - /fer/result: py_trees.common.Status
 
+### LLM Assistant (group interaction)
+
+This leaf (`leaves/assistant_service.py`) is the client of the harmoni_bot Assistant service (REQUEST). When the
+current scene is LLM driven (`nlp != 0`) it sends the utterance of the participants and parses the JSON answer
+of the orchestrator with `parse_agent_response` (which also accepts python-like dicts and plain text). It has the following blackboard clients:
+
+- scene (READ): `utterance`, `nlp`
+- bot (WRITE): `result`, `agent` (Mover/Opposer), `addressee`, `speak` (0 if the robots should stay silent)
+- tts (WRITE): `result` (the sentence to say)
+
+### Script Group Dialogue
+
+This leaf (`leaves/script_group_dialogue_service.py`) moves the group interaction to the next scene of
+`resources/group_interaction.json` and writes `scene/utterance`, `scene/nlp` and `scene/agent`.
+See the [Group Interaction tutorial](https://harmoni-20.readthedocs.io/en/latest/tutorials/Group-Interaction.html).
+
+### Diarization STT
+
+This leaf (`leaves/sd_azure_service.py`) is the client of the Azure diarization STT (REQUEST) and writes the
+transcription (`"<name>: <text>"`) on `stt/result`.
+
 ## Testing
 
 Here are the steps that you can follow in order to run a demo of pytree in HARMONI. This demo show how work a small three with just two behaviours: microphone and stt.
@@ -464,3 +485,10 @@ Here are the steps that you can follow in order to run a demo of pytree in HARMO
      ```
 
 You will see some information about the structure of the tree and the way in which pytree engines tick the tree. Some blackboards are used to show the results of the leaves and in particular in backboards stt/result shows the result of the speech to text services.
+### Unit tests
+
+The leaves of the group interaction have unit tests that do not need ROS (run from the repository root):
+
+```  bash
+python3 -m pytest harmoni_core/harmoni_pytree
+```

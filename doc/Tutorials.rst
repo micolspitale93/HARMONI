@@ -7,6 +7,7 @@ Tutorials
    :glob:
 
    tutorials/Compose-an-Interaction
+   tutorials/Group-Interaction
    tutorials/Launching-Services
    tutorials/Multi-Container
    tutorials/Multi-PC

@@ -1,112 +1,120 @@
+# Docker Setup [recommended]
 
-# Docker Setup[recommended]
+HARMONI runs in a set of docker containers that share a ROS network. The `harmoni.sh`
+script in the repository root wraps all the docker commands you need.
 
-## Setup
+## Requirements
 
-To complete these steps you will need to have docker working on your machine. We recommend you follow the steps here: [https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/) and verify your install with:
-```bash
-sudo docker run hello-world
-```
+- Linux (on Windows use WSL2; macOS is not supported because of device and display forwarding)
+- Docker Engine: [https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/). Verify with `docker run hello-world`.
+- Docker Compose **v2** (`docker compose`, with a space): [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
+- About 20 GB of free disk space for the complete set of images.
 
-To avoid entering sudo, run the following:
+To use docker without `sudo`:
 ```bash
 sudo usermod -aG docker ${USER}
-su - ${USER}
+# then log out and log in again
 ```
 
-You will also need to install docker-compose. Instructions can be found here: [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/).
+## Install
 
-Note that if you have already installed the version V1 of docker compose, we recommend to update it to V2. Update scripts to use Compose V2 by replacing the hyphen (-) with a space, using docker compose instead of docker-compose.
-
-## HARMONI Install
-
-1. Clone the repository:
+1. Clone the repository on the HARMONI 2.0 branch:
    ```bash
-   git clone https://github.com/micolspitale93/HARMONI.git
+   git clone -b dev/harmoni2.0 https://github.com/micolspitale93/HARMONI.git
    cd HARMONI
-   git checkout dev/harmoni2.0
    ```
 
+2. Run the setup:
+   ```bash
+   ./harmoni.sh setup
+   ```
+   It checks that docker works, creates `.env` from [`.env.example`](https://github.com/micolspitale93/HARMONI/blob/dev/harmoni2.0/.env.example)
+   and creates the `~/.aws` and `~/.gcp` folders that are mounted in the containers
+   (if docker creates them, they are owned by root and hard to edit).
 
-2. **(optional)** Pull the containers:
+3. Get the images. Pulling is much faster than building:
+   ```bash
+   ./harmoni.sh pull          # or: ./harmoni.sh build
+   ```
 
-    You may either build or pull containers to run harmoni. Pulling containers is generally faster and can be done as:
-
-    ```bash
-    docker pull harmoni02/harmoni2.0:full
-    ```
-
-    *Note: If you would like to use all the containers we have provided a script in dockerfiles/pull_images.sh for getting all the current images, which includes both kinetic and noetic. If you run a compose file without pulling, the images will be automatically built.*
-
-    For additional information on building or running harmoni containers, see dockerfiles/README.md.
-
-3. **(optional)** Some Harmoni interactions require accounts with cloud services (Such as Amazon Polly). If you do not already have them set up, set up cloud services/keys. Instructions are in the [Cloud Services section](../configuration/Cloud-Services).
-
+4. **(optional)** Add the credentials of the cloud services you want to use (OpenAI, Azure, AWS, Google)
+   following the [Cloud Services section](../configuration/Cloud-Services).
 
 ## Run HARMONI
 
-1. **(optional)** In order to run with window forwarding on linux use:
+1. Start the containers:
    ```bash
-   xhost +local:
+   ./harmoni.sh up            # basic setup: harmoni_full, harmoni_hardware, harmoni_fer, harmoni_detectors
+   ./harmoni.sh up full       # all the containers (adds harmoni_face_detector and harmoni_imageai)
+   ./harmoni.sh up group      # group interaction study (harmoni_full_group and harmoni_nao)
    ```
+   Devices that are not present on your machine (webcam `/dev/video0`, sound card `/dev/snd`, GPU `/dev/dri`)
+   are skipped automatically with a warning, so the containers start anyway.
 
-   Note: For Windows you will need to set up docker with WSL2
-
-
-2. Use docker compose to launch the complete system (will build if necessary, use --build to force):
+2. Open a terminal in a container (repeat in new terminals for more processes):
    ```bash
-   docker compose -f docker-compose-basic.yml up
-   ``` 
-   *Note: If you would like to install the full HARMONI V2 modules, you need 20 GB of space. The image pulling and compose of the container will take around 2 hours (depending on your internet connection). In can you want to pull and build all the available HARMONI images you should run: `docker compose -f docker-compose.yml up`
-
-   If the terminal prints: "Hello, rosmaster", you successfully setup the HARMONI full container.  
-   If you have pulled and run the docker compose correctly, you should see something as follows:
-   ![packges](../images/task1.png)
-
-   *Note: We provide a bash script for launching multiple containers called run_compose.sh*
-   
-
-3. Open a new terminal. To get into this container, you will need to run the following to mount a terminal into the container:
-   ```bash
-   docker exec -it harmoni_full bash
-   ``` 
-   *Note: if you wish to connect to other containers, simply replace harmoni_full with the other containers name, e.g. harmoni_hardware*  
-
-   If this is successful, you will see:
+   ./harmoni.sh shell                 # harmoni_full
+   ./harmoni.sh shell harmoni_hardware
+   ```
+   You will see:
    ```bash
    Hello! Welcome to Harmoni 2.0
-   11:47 AM [develop] ~/harmoni_catkin_ws/src/HARMONI :
-   root@harmoni_full# 
-   ``` 
-  
-4. Then change the branch to set it to HARMONI 2.0 with the following command:
-   ```bash
-   git checkout dev/harmoni2.0
+   11:47 AM [dev/harmoni2.0] ~/harmoni_catkin_ws/src/HARMONI :
+   root@harmoni_full#
    ```
-   *Note: If you cannot see [dev/harmoni2.0], please follow the instructions in the Troubleshooting section below (step 1)
+   The folder `~/harmoni_catkin_ws/src/HARMONI` **is your local clone** (it is mounted in the container):
+   there is no need to checkout branches inside the container, and files edited on the host are immediately available.
 
-5. Make sure that all the packages are build correctly. Build all the packages following these commands:
+3. The first time, and every time you pull code that changes messages/services or adds packages, build the workspace:
    ```bash
-   catkin build
-   source ../../devel/setup.bash
-   ``` 
-6. From this point you may launch `roscore` or any other ros or harmoni command. 
-   *Note: You will need to do this step for every process you wish to run in the container. If multiple terminal processes are required, you will need to connect multiple terminals to the docker instance with the docker exec command above*  
-   If the `roscore` run is successful, you will see:
-   ```bash
-   started core service [/rosout]
+   ./harmoni.sh build-ws
    ```
+
+4. From a container terminal you can now launch `roscore` or any HARMONI service, e.g.
+   ```bash
+   roslaunch harmoni_bot bot_service.launch
+   ```
+   If `roscore` started correctly you will see `started core service [/rosout]`.
    ![packges](../images/roscore.png)
 
-
-If you want to use also the other containers, repeat the same process, and remeber to build (step 5) the catking packages in all containers opened.
+5. Stop everything with:
+   ```bash
+   ./harmoni.sh down
+   ```
 
 You are now set up for Harmoni with Docker! Check on your [configuration here](../Configuration) and then [start some services here](../tutorials/Launching-Services).
 
+### Local speech models
+
+The local DeepSpeech STT and Coqui TTS need model files in `harmoni_models/` (they are not in git).
+Download them once with:
+```bash
+./harmoni.sh models
+```
+
+### Without the helper script
+
+`harmoni.sh` only calls docker compose, so you can also use the compose files directly:
+```bash
+docker compose -f docker-compose-basic.yml up -d
+docker exec -it harmoni_full bash
+docker compose -f docker-compose-basic.yml down
+```
+
+| Compose file | Containers |
+|--------------|------------|
+| `docker-compose-basic.yml` | harmoni_full, harmoni_hardware, harmoni_fer, harmoni_detectors |
+| `docker-compose.yml` | the basic ones + harmoni_face_detector, harmoni_imageai |
+| `docker-compose-group-study.yml` | harmoni_full_group (noetic) and harmoni_nao (kinetic, NAOqi SDK), host network |
+
 ## Troubleshooting
-1. If you cannot see [dev/harmoni2.0], and you see the screen below:
-   ![packges](../images/troubleshooting1.png)
-   Please run the following commands:
+
+1. **`cannot talk to the docker daemon`**: start docker (`sudo systemctl start docker`) and make sure your user is in the `docker` group.
+2. **`error gathering device information`** when starting the containers: run them with `./harmoni.sh up`, which removes missing devices, or remove the device from the compose file.
+3. **No window / display errors** (e.g. rviz, face): run `xhost +local:` on the host (done automatically by `./harmoni.sh up`).
+4. **`~/.aws` or `~/.gcp` owned by root**: they were created by docker before `./harmoni.sh setup`. Fix with `sudo chown -R $USER ~/.aws ~/.gcp`.
+5. **`ImportError: cannot import name 'nao_speak'`** or other missing messages: the workspace has not been built with the current code, run `./harmoni.sh build-ws`.
+6. **git complains about `dubious ownership`** inside the container:
    ```bash
    git config --global --add safe.directory /root/harmoni_catkin_ws/src/HARMONI
    ```
