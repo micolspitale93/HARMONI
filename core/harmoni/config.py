@@ -1,4 +1,4 @@
-"""HARMONI configuration files (YAML): which backend serves each service, and which tree runs.
+"""HARMONI configuration files (YAML): which backend serves each service, and which tree runs::
 
     extends: group_interaction.yaml          # optional: start from another configuration
     participants: &participants "Sarah, Jane"

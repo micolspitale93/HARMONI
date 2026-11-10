@@ -50,7 +50,9 @@ behavior tree. Nothing in it refers to ROS: the same file runs on ROS 2, in the 
   - `ServiceAction`: calls any HARMONI service (all services share the same interface: an action type,
     REQUEST/DO/ON/OFF, and a string payload, answered with ok + message);
   - `CheckValue`, `SetValue`, `CopyValue`, `Wait`: blackboard conditions/assignments and pauses;
-  - `GroupScript`, `ScriptedTurn`, `OrchestratorDecision`: the group interaction.
+  - multi-party: `AgentSpeak` (the agent chosen by role speaks with its own service), `AgentsAction`
+    (every agent acts on a channel, e.g. LEDs), `LogUtterance`, `DialogueScript`, `ScriptedTurn`,
+    `OrchestratorDecision`.
 - **Variables**: `"${name}"` takes the value (and type) of a variable, which can be overridden from a
   configuration file; `"Hello ${name}"` is string interpolation.
 - **Blackboard**: keys such as `bot/message`; `"@bot/message"` in `input_json` reads the blackboard.
@@ -61,6 +63,37 @@ behavior tree. Nothing in it refers to ROS: the same file runs on ROS 2, in the 
 ./harmoni.sh validate core/trees/group_interaction.json
 PYTHONPATH=core python3 -m harmoni.tree simulate core/trees/group_interaction.json \
     --services core/trees/group_interaction.mock.yaml          # no ROS, no robots
+```
+
+### Cast: any number of humans and agents
+
+A tree can declare its **cast**: the humans, and the agents (robots, virtual agents) with their **role**,
+name, robot and services per channel:
+
+```json
+"cast": {
+  "humans": ["Sarah", "Jane", "Alex"],
+  "agents": [
+    {"role": "Mover", "name": "Manny", "robot": "Furhat", "services": {"speech": "speaker_furhat", "led": "led_furhat"}},
+    {"role": "Opposer", "name": "Sam", "robot": "NAO", "services": {"speech": "speaker_nao", "led": "led_nao"}}
+  ]
+}
+```
+
+Leaves address agents by role and channel, never by robot, so one tree works with any number of robots and
+people. The runner puts the cast on the blackboard (`cast/*`) and every spoken turn in the conversation log
+(`conversation`: who said what to whom), which monitoring tools display generically.
+
+Configurations (and runs) can override the cast: `humans` replaces the participants, `agents` as a list
+replaces the agents, `agents` as a mapping updates the agents with those roles (e.g. to swap which robot plays
+which role). With `extends`, an experimental condition is a few lines over a base configuration:
+
+```yaml
+extends: group_interaction.yaml
+tree:
+  cast:
+    agents:
+      Mover: {robot: NAO, services: {speech: speaker_nao, led: led_nao}}
 ```
 
 ### Service backends

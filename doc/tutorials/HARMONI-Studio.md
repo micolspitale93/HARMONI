@@ -24,6 +24,10 @@ Build the behavior tree of an interaction.
   `ServiceAction` calls any HARMONI service (sensor, detector, dialogue, actuator) by its service id.
 - **Tree** (center): *Outline* to edit (drag rows to move them: on the top/bottom half of a row to put the node
   before/after it, in the middle of a container to put it inside), *Diagram* to see the whole tree.
+- **Cast** (Tree settings): the humans and the agents of the interaction — any number of each. An agent has
+  a role (used by the tree and by the orchestrator), a name, a robot, and the service of each channel
+  (speech, led, gesture…). Leaves such as `AgentSpeak` and `AgentsAction` route by role, so adding a robot or
+  swapping robots between roles does not change the tree.
 - **Properties** (right): the parameters of the selected node, generated from the node description:
   required parameters are marked `*`, choices are drop-downs, `service` suggests the configured services,
   `*_key` parameters suggest the blackboard keys used in the tree. Any parameter can be a tree variable,
@@ -50,13 +54,15 @@ YAML of a new service from a form generated from the backend description.
 
 ### Run
 
-- **Simulation**: runs a tree inside Studio with the backends of a configuration. With the `mock`
-  configurations no robot, microphone or API key is needed. Variables can be changed for the run.
+- **Simulation**: runs a tree inside Studio with the services, variables and cast of a configuration (e.g. a
+  study condition). With the `mock` configurations no robot, microphone or API key is needed. The
+  participants, the services of each agent and the variables can be changed for one run.
 - **ROS 2 live** (when Studio runs in the ROS 2 container): follows the tree started with
   `./harmoni.sh ros2 run …`.
 
-The page shows the tree with the live status of every node, the conversation, the blackboard and the
-activity of the services; *Pause*, *Resume*, *Reload* (re-read the tree file after an edit) and *Stop* are
+The page shows the tree with the live status of every node, the conversation (speaker, role, addressee,
+for any number of humans and agents), the participation of each human and agent (turns, including who has
+not spoken yet), the blackboard and the activity of the services; *Pause*, *Resume*, *Reload* (re-read the tree file after an edit) and *Stop* are
 sent to the runner, which applies them between two ticks. Studio is never in the control loop:
 closing the browser does not affect the interaction.
 

@@ -34,10 +34,11 @@ on ROS 2. The ROS 1 packages are kept unchanged and working. See
 | Actuators | `harmoni_tts`, `harmoni_speaker` (audio, Furhat, NAO), `harmoni_face`, `harmoni_gesture`, `harmoni_web`, `harmoni_sentiment` | `furhat`, `nao_http` |
 | Core | `harmoni_common_lib`, `harmoni_pytree`, `harmoni_recorder`, `harmoni_decision`, `harmoni_pattern` | tree runner, `mock` |
 
-New in 2.0: a **multi-party group interaction** in which an LLM orchestrator decides when one of two robots
-(Furhat as the *Mover*, NAO as the *Opposer*) should intervene in a discussion among 1-3 people,
-using Azure speaker diarization to know who is speaking. See the
-[group interaction tutorial](doc/tutorials/Group-Interaction.md).
+New in 2.0: **multi-party interactions** with any number of humans and robots. A tree declares its *cast*
+(humans, and agents with a role and the services they use) and addresses agents by role, so the same tree
+runs with one or many robots and experimental conditions are configuration changes. Example: a group
+discussion in which an LLM orchestrator decides when a robot (Furhat, NAO) intervenes, with Azure speaker
+diarization and LED feedback; see the [group interaction tutorial](doc/tutorials/Group-Interaction.md).
 
 ## Quickstart
 

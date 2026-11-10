@@ -43,6 +43,15 @@ To check an installation end to end: `./harmoni.sh ros2 smoke-test`.
    ./harmoni.sh ros2 run group
    ```
 
+## Other configurations
+
+```bash
+./harmoni.sh ros2 run group_interaction_homog     # any file of ros2/config, by name
+```
+
+The group interaction study has one configuration per condition (heterogeneous, homogeneous, inversed),
+see [Group Interaction](../tutorials/Group-Interaction).
+
 ## Working in the container
 
 ```bash
@@ -60,13 +69,14 @@ same `ROS_DOMAIN_ID` (default 0).
 
 ## A new configuration
 
-A configuration file says which backend serves each service id and which tree to run:
+A configuration file says which backend serves each service id and which tree to run, and can override
+the variables and the cast of the tree (or `extends` another configuration and change only what differs):
 
 ```yaml
 participants: &participants "Sarah, Jane"
 tree:
   file: core/trees/group_interaction.json
-  variables: {session: 2session, user_names: *participants}
+  variables: {participants: *participants}      # the humans of the cast
 services:
   stt_default: {backend: azure_diarization, names: *participants}
   speaker_furhat: {backend: furhat, robot_ip: 192.168.1.101}
