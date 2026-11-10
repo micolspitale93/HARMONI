@@ -1,0 +1,128 @@
+{
+  "harmoni_tree": 1,
+  "name": "GroupInteraction",
+  "description": "Two robots (Mover on Furhat, Opposer on NAO) take part in a discussion among 1-3 people. An LLM orchestrator decides at every turn whether a robot intervenes, which one, what it says and to whom. If it decides to stay silent the speaking step is skipped and the microphone is reopened.",
+  "variables": {
+    "session": "1session",
+    "user_names": "Micol",
+    "max_scenes": 30,
+    "orchestrator": "bot_default",
+    "stt": "stt_default",
+    "mover_speaker": "speaker_furhat",
+    "opposer_speaker": "speaker_nao",
+    "llm_timeout_s": 60,
+    "speech_timeout_s": 60,
+    "listen_timeout_s": 180
+  },
+  "stop_when": "scene/finished",
+  "root": {
+    "type": "Sequence",
+    "name": "GroupInteraction",
+    "children": [
+      {
+        "type": "GroupScript",
+        "name": "Script",
+        "params": {
+          "script": "scripts/group_interaction.json",
+          "session": "${session}",
+          "user_names": "${user_names}",
+          "max_scenes": "${max_scenes}"
+        }
+      },
+      {
+        "type": "Selector",
+        "name": "Decide",
+        "children": [
+          {
+            "type": "Sequence",
+            "name": "Scripted scene",
+            "children": [
+              {"type": "CheckValue", "name": "Is scripted", "params": {"key": "scene/nlp", "equals": 0}},
+              {"type": "ScriptedTurn", "name": "Use script line"}
+            ]
+          },
+          {
+            "type": "Sequence",
+            "name": "LLM scene",
+            "children": [
+              {
+                "type": "ServiceAction",
+                "name": "Ask orchestrator",
+                "params": {
+                  "service": "${orchestrator}",
+                  "action": "REQUEST",
+                  "input_key": "scene/utterance",
+                  "output_key": "bot/raw",
+                  "timeout_s": "${llm_timeout_s}",
+                  "on_timeout": "success",
+                  "timeout_output": "",
+                  "on_failure": "success"
+                }
+              },
+              {"type": "OrchestratorDecision", "name": "Parse decision"}
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Selector",
+        "name": "Speak",
+        "children": [
+          {"type": "CheckValue", "name": "Stay silent", "params": {"key": "bot/speak", "equals": false}},
+          {
+            "type": "Sequence",
+            "name": "Opposer speaks",
+            "children": [
+              {"type": "CheckValue", "name": "Is Opposer", "params": {"key": "bot/agent", "equals": "Opposer"}},
+              {
+                "type": "ServiceAction",
+                "name": "NAO says",
+                "params": {
+                  "service": "${opposer_speaker}",
+                  "action": "DO",
+                  "input_json": {"input": "@bot/message", "addressee": "@bot/addressee"},
+                  "timeout_s": "${speech_timeout_s}",
+                  "on_timeout": "success",
+                  "on_failure": "success"
+                }
+              }
+            ]
+          },
+          {
+            "type": "ServiceAction",
+            "name": "Furhat says",
+            "params": {
+              "service": "${mover_speaker}",
+              "action": "DO",
+              "input_json": {"input": "@bot/message", "addressee": "@bot/addressee"},
+              "timeout_s": "${speech_timeout_s}",
+              "on_timeout": "success",
+              "on_failure": "success"
+            }
+          }
+        ]
+      },
+      {
+        "type": "Selector",
+        "name": "Listen",
+        "children": [
+          {"type": "CheckValue", "name": "Interaction finished", "params": {"key": "scene/finished", "equals": true}},
+          {
+            "type": "ServiceAction",
+            "name": "Diarization STT",
+            "params": {
+              "service": "${stt}",
+              "action": "REQUEST",
+              "output_key": "stt/result",
+              "timeout_s": "${listen_timeout_s}",
+              "on_timeout": "success",
+              "timeout_output": "No one is talking. Please initiate a question to reignite the conversation.",
+              "on_failure": "success",
+              "failure_output": ""
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

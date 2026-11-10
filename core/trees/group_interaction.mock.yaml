@@ -1,0 +1,22 @@
+# Services used to simulate the group interaction without robots, ROS or cloud credentials:
+#   python -m harmoni.tree simulate trees/group_interaction.json --services trees/group_interaction.mock.yaml
+services:
+  stt_default:
+    backend: mock
+    responses:
+      - "Micol: Hi, I am Micol, nice to meet you"
+      - "Micol: I think AI can help teachers a lot"
+      - "Micol: But I am worried about privacy"
+      - "Micol: Maybe we need clear rules"
+  bot_default:
+    backend: mock
+    responses:
+      - '{"intervene": true, "agent": "Opposer", "response": "Are you sure AI helps every teacher?", "addressee": "Micol"}'
+      - '{"intervene": false, "agent": "Mover", "response": "", "addressee": ""}'
+      - '{"intervene": true, "agent": "Mover", "response": "Privacy matters: who should set the rules?", "addressee": "Micol"}'
+  speaker_furhat:
+    backend: furhat
+    mockup: true
+  speaker_nao:
+    backend: nao_http
+    mockup: true
