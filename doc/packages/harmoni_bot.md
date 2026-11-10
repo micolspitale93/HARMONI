@@ -1,3 +1,3 @@
 
-```{include} ../../harmoni_dialogues/harmoni_bot/README.md
+```{include} ../../ros1/harmoni_dialogues/harmoni_bot/README.md
 ```

@@ -60,7 +60,7 @@ The API for the robot speakers has:
 - `apis_nao_node.py` (kinetic, `harmoni_nao` container, see `docker-compose-group-study.yml`): the bridge to the robot,
   which offers the ROS service `/nao/speak` and listens to `/speaker_nao/connect` and `/speaker_nao/addressee`.
 
-Start the HARMONI service first and then the bridge (`./harmoni.sh run group` does it for you):
+Start the HARMONI service first and then the bridge (`./harmoni.sh ros1 run group` does it for you; on ROS 2 the NAO is reached through the HTTP NAO bridge instead, see `ros2/nao_bridge`):
 ```bash
 roslaunch harmoni_speaker speaker_service_nao.launch          # in harmoni_full
 rosrun harmoni_speaker apis_nao_node.py                      # in harmoni_nao

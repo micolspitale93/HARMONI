@@ -49,13 +49,14 @@ RUN \
 
 #caching protection for Harmoni, per https://stackoverflow.com/a/39278224/5715374
 #ADD https://api.github.com/repos/micolspitale93/git/refs/heads/develop /root/version.json
-# The branch baked into the image. With docker compose your local clone is mounted on top of
-# it, so this only matters for running the image standalone.
+# The branch baked into the image. With docker compose your local ros1/ folder is mounted on
+# top of it, so this only matters for running the image standalone.
 ARG HARMONI_BRANCH=dev/harmoni2.0
-RUN git -C src clone \
-    -b ${HARMONI_BRANCH} \
-    https://github.com/micolspitale93/HARMONI.git \
-    && git config --global --add safe.directory /root/harmoni_catkin_ws/src/HARMONI
+# Only the ros1/ folder of the repository is the catkin workspace content (the same folder
+# docker compose mounts at runtime), so that build paths and runtime paths match.
+RUN git clone --depth 1 -b ${HARMONI_BRANCH} https://github.com/micolspitale93/HARMONI.git /tmp/HARMONI \
+    && mv /tmp/HARMONI/ros1 src/HARMONI \
+    && rm -rf /tmp/HARMONI
 
 
 # ==================================================================

@@ -1,17 +1,18 @@
 #!/bin/bash
-# HARMONI docker helper: one command to set up, start and use the HARMONI containers.
+# HARMONI ROS1 (noetic) docker helper: set up, start and use the ROS1 containers.
+# Usually called through the dispatcher in the repository root:  ./harmoni.sh ros1 <command>
 #
-#   ./harmoni.sh setup                 check docker, create .env and credential folders
-#   ./harmoni.sh pull   [setup]        pull the pre-built images (fastest way to start)
-#   ./harmoni.sh build  [setup]        build the images locally instead of pulling them
-#   ./harmoni.sh up     [setup]        start the containers in the background
-#   ./harmoni.sh down   [setup]        stop and remove the containers
-#   ./harmoni.sh status [setup]        show the running containers
-#   ./harmoni.sh shell  [container]    open a shell in a container (default: harmoni_full)
-#   ./harmoni.sh build-ws [container]  catkin build the workspace inside a container
-#   ./harmoni.sh models                download local STT/TTS models into harmoni_models/
-#   ./harmoni.sh test   [suite]        run tests: unit (local) | mock | cloud | hardware | all
-#   ./harmoni.sh run group             start the group interaction study (Furhat + NAO)
+#   ./harmoni.sh ros1 setup                 check docker, create .env and credential folders
+#   ./harmoni.sh ros1 pull   [setup]        pull the pre-built images (fastest way to start)
+#   ./harmoni.sh ros1 build  [setup]        build the images locally instead of pulling them
+#   ./harmoni.sh ros1 up     [setup]        start the containers in the background
+#   ./harmoni.sh ros1 down   [setup]        stop and remove the containers
+#   ./harmoni.sh ros1 status [setup]        show the running containers
+#   ./harmoni.sh ros1 shell  [container]    open a shell in a container (default: harmoni_full)
+#   ./harmoni.sh ros1 build-ws [container]  catkin build the workspace inside a container
+#   ./harmoni.sh ros1 models                download local STT/TTS models into harmoni_models/
+#   ./harmoni.sh ros1 test   [suite]        run tests: unit (local) | mock | cloud | hardware | all
+#   ./harmoni.sh ros1 run group             start the group interaction study (Furhat + NAO)
 #
 # [setup] is one of:
 #   basic  (default) docker-compose-basic.yml        full + hardware + fer + detectors
@@ -23,6 +24,8 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO="$(cd "$ROOT/.." && pwd)"
+ENV_FILE="$REPO/.env"   # shared by ROS1 and ROS2, passed to the containers with env_file
 cd "$ROOT"
 STATE_DIR="$ROOT/.harmoni"
 mkdir -p "$STATE_DIR"
@@ -128,11 +131,11 @@ cmd_setup() {
     require_docker
     info "docker $(docker --version | awk '{print $3}' | tr -d ,) and $(docker compose version --short 2>/dev/null | sed 's/^/compose /') found"
 
-    if [ ! -f .env ]; then
-        cp .env.example .env
-        info "created .env from .env.example: add your API keys there (only for the cloud services you use)"
+    if [ ! -f "$ENV_FILE" ]; then
+        cp "$REPO/.env.example" "$ENV_FILE"
+        info "created .env from .env.example in the repository root: add your API keys there (only for the cloud services you use)"
     else
-        info ".env already exists"
+        info ".env already exists in the repository root"
     fi
 
     # Create the credential folders mounted by docker compose. If they do not exist docker
@@ -150,15 +153,15 @@ cmd_setup() {
 
     echo
     bold "Next steps"
-    echo "  ./harmoni.sh pull        # download the images (or ./harmoni.sh build)"
-    echo "  ./harmoni.sh up          # start the containers"
-    echo "  ./harmoni.sh shell       # open a terminal in harmoni_full"
+    echo "  ./harmoni.sh ros1 pull        # download the images (or ./harmoni.sh ros1 build)"
+    echo "  ./harmoni.sh ros1 up          # start the containers"
+    echo "  ./harmoni.sh ros1 shell       # open a terminal in harmoni_full"
 }
 
 cmd_up() {
     local setup; setup="$(current_setup "${1:-}")"
     require_docker
-    [ -f .env ] || { warn ".env not found, running setup first"; cmd_setup; }
+    [ -f "$ENV_FILE" ] || { warn ".env not found, running setup first"; cmd_setup; }
     if command -v xhost >/dev/null 2>&1 && [ -n "${DISPLAY:-}" ]; then
         xhost +local: >/dev/null 2>&1 || true
     fi
@@ -170,13 +173,13 @@ cmd_up() {
     echo
     bold "HARMONI is running"
     if [ "$setup" = group ]; then
-        echo "  ./harmoni.sh run group           # start the group interaction"
-        echo "  ./harmoni.sh shell harmoni_nao   # terminal in the NAO bridge container"
+        echo "  ./harmoni.sh ros1 run group           # start the group interaction"
+        echo "  ./harmoni.sh ros1 shell harmoni_nao   # terminal in the NAO bridge container"
     else
-        echo "  ./harmoni.sh shell               # terminal in harmoni_full"
-        echo "  ./harmoni.sh build-ws            # rebuild the catkin workspace after pulling new code"
+        echo "  ./harmoni.sh ros1 shell               # terminal in harmoni_full"
+        echo "  ./harmoni.sh ros1 build-ws            # rebuild the catkin workspace after pulling new code"
     fi
-    echo "  ./harmoni.sh down                # stop everything"
+    echo "  ./harmoni.sh ros1 down                # stop everything"
 }
 
 cmd_down() {
@@ -197,7 +200,7 @@ cmd_pull() {
     # the NAO bridge image is not published: it has to be built (it needs the NAOqi SDK)
     if [ "$setup" = group ]; then
         compose "$setup" pull harmoni_full
-        info "the harmoni_nao image must be built: ./harmoni.sh build group (see dockerfiles/harmoni/kinetic/nao/README.md)"
+        info "the harmoni_nao image must be built: ./harmoni.sh ros1 build group (see dockerfiles/harmoni/kinetic/nao/README.md)"
     else
         compose "$setup" pull
     fi
@@ -255,9 +258,9 @@ cmd_run() {
     case "${1:-}" in
         group)
             require_docker
-            docker ps --format '{{.Names}}' | grep -qx harmoni_full_group || die "start the containers first: ./harmoni.sh up group"
-            [ -f .env ] && grep -q '^AZURE_OPENAI_API_KEY=.\+' .env || warn "AZURE_OPENAI_API_KEY is empty in .env: the LLM orchestrator will not work"
-            [ -f .env ] && grep -q '^MICROSOFT_SPEECH_KEY=.\+' .env || warn "MICROSOFT_SPEECH_KEY is empty in .env: speaker diarization will not work"
+            docker ps --format '{{.Names}}' | grep -qx harmoni_full_group || die "start the containers first: ./harmoni.sh ros1 up group"
+            [ -f "$ENV_FILE" ] && grep -q '^AZURE_OPENAI_API_KEY=.\+' "$ENV_FILE" || warn "AZURE_OPENAI_API_KEY is empty in .env: the LLM orchestrator will not work"
+            [ -f "$ENV_FILE" ] && grep -q '^MICROSOFT_SPEECH_KEY=.\+' "$ENV_FILE" || warn "MICROSOFT_SPEECH_KEY is empty in .env: speaker diarization will not work"
             info "the NAO bridge will start in harmoni_nao 15 s after the interaction (log: /tmp/nao_bridge.log in harmoni_nao)"
             # The bridge must start after speaker_service_nao is up, because it announces
             # itself once on /speaker_nao/start
@@ -266,11 +269,11 @@ cmd_run() {
                 rosrun harmoni_speaker apis_nao_node.py > /tmp/nao_bridge.log 2>&1") &
             ros_exec harmoni_full_group "roslaunch harmoni_pytree root_group.launch"
             ;;
-        *) die "Usage: ./harmoni.sh run group" ;;
+        *) die "Usage: ./harmoni.sh ros1 run group" ;;
     esac
 }
 
-usage() { sed -n '2,22p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { awk 'NR > 1 && /^#/ { sub(/^# ?/, ""); print; next } NR > 1 { exit }' "$0"; }
 
 case "${1:-help}" in
     setup) shift; cmd_setup "$@" ;;

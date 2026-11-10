@@ -1,17 +1,21 @@
 # HARMONI basic setup: central (full), hardware, facial expression recognition and detectors containers.
 #
-# Start with:   ./harmoni.sh up basic      (or: docker compose -f docker-compose-basic.yml up -d)
-# Open a shell: ./harmoni.sh shell harmoni_full
+# Start with:   ./harmoni.sh ros1 up basic      (or, from ros1/: docker compose -f docker-compose-basic.yml up -d)
+# Open a shell: ./harmoni.sh ros1 shell harmoni_full
 #
-# Your local clone of HARMONI is mounted inside every container at
+# The ros1/ folder of your local clone is mounted inside every container at
 # /root/harmoni_catkin_ws/src/HARMONI, so edits on the host are immediately visible
-# in the containers. Credentials are read from ./.env (see .env.example), ~/.aws and ~/.gcp.
+# in the containers. Credentials are read from the .env file in the repository root
+# (see .env.example), ~/.aws and ~/.gcp.
 
 x-harmoni-common: &harmoni-common
   init: true
   privileged: true
   working_dir: /root/harmoni_catkin_ws/src/HARMONI
   command: tail -f /dev/null
+  env_file:
+    - path: ../.env
+      required: false
   volumes: &harmoni-volumes
     - ./:/root/harmoni_catkin_ws/src/HARMONI/
     # Configuration / credentials

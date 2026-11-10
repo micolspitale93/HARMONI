@@ -1,4 +1,5 @@
-# Install components needed for HARMONI
+# Install components needed for HARMONI (ROS1, native install without docker)
+# Run this script from the HARMONI/ros1 folder, with HARMONI cloned in <catkin_ws>/src.
 
 # We recommend using a clean install of ROS with python 3
 
@@ -49,8 +50,8 @@ sudo apt-get install -y --no-install-recommends libboost-all-dev \
 
 python3.6 -m pip install -r ./requirements.txt
 
-# Clone the additional repositories
-cd ../..
+# Clone the additional repositories (from HARMONI/ros1 to the root of the catkin workspace)
+cd ../../..
 git -C src clone -b master https://github.com/ros-drivers/audio_common.git
 # git -C src clone -b $ROS_DISTRO https://github.com/ros-perception/vision_opencv.git
 git -C src clone -b $ROS_DISTRO-devel https://github.com/ROBOTIS-GIT/dynamixel-workbench-msgs.git

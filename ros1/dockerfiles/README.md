@@ -1,16 +1,17 @@
 # Docker Details
 
-The easiest way to use the HARMONI containers is the `harmoni.sh` script in the repository root:
+These are the ROS 1 images (the ROS 2 image is in `ros2/docker`). The easiest way to use them is the
+`harmoni.sh` script in the repository root:
 
 ```bash
-./harmoni.sh setup        # check docker, create .env and credential folders
-./harmoni.sh pull         # or ./harmoni.sh build
-./harmoni.sh up           # basic | full | group
-./harmoni.sh shell        # terminal in harmoni_full
+./harmoni.sh ros1 setup        # check docker, create .env and credential folders
+./harmoni.sh ros1 pull         # or ./harmoni.sh ros1 build
+./harmoni.sh ros1 up           # basic | full | group
+./harmoni.sh ros1 shell        # terminal in harmoni_full
 ```
 
-See the [Docker quickstart](../doc/quickstart/Docker-Quickstart.md) for the details. Your local clone of the
-repository is mounted in all the containers at `/root/harmoni_catkin_ws/src/HARMONI`
+See the [Docker quickstart](../../doc/quickstart/Docker-Quickstart.md) for the details. The `ros1/` folder of your
+local clone is mounted in all the containers at `/root/harmoni_catkin_ws/src/HARMONI`
 (`/nao/harmoni_catkin_ws/src/HARMONI` in the NAO container).
 
 **Important** Please note that the kinetic build is not currently functional (except for the NAO bridge image
@@ -46,6 +47,8 @@ The list of detector containers will expand over time, but currently includes:
 
 
 # Building Harmoni
+
+Run the following commands from the `ros1/` folder (it is the build context of the ROS 1 images).
 
 ## Noetic
 ```bash

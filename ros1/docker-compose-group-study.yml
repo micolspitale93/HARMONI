@@ -1,8 +1,8 @@
 # HARMONI group interaction study: two robots (Furhat "Mover" and NAO "Opposer") moderated
 # by an LLM orchestrator, with Azure speaker diarization.
 #
-# Start with:  ./harmoni.sh up group
-# Run study:   ./harmoni.sh run group
+# Start with:  ./harmoni.sh ros1 up group
+# Run study:   ./harmoni.sh ros1 run group
 #
 # Both containers use the host network so that they can reach the robots on the LAN
 # (robot IPs are set in harmoni_actuators/harmoni_speaker/config/configuration.yaml).
@@ -19,6 +19,9 @@ services:
     init: true
     privileged: true
     network_mode: host
+    env_file:
+      - path: ../.env
+        required: false
     environment:
       DISPLAY: ${DISPLAY:-:0}
       QT_GRAPHICSSYSTEM: native

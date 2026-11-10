@@ -1,2 +1,2 @@
-```{include} ../../harmoni_detectors/harmoni_stt/README.md
+```{include} ../../ros1/harmoni_detectors/harmoni_stt/README.md
 ```

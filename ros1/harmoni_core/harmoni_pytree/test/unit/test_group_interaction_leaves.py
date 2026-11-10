@@ -262,3 +262,60 @@ def test_scripted_scene_is_said_by_the_scripted_agent():
     assert opposer.update() == Status.RUNNING
     opposer.service_client_speaker.state = GoalStatus.SUCCEEDED
     assert opposer.update() == Status.SUCCESS
+
+
+# ======================================================================
+# Speak -> Listen step of the group interaction tree
+# ======================================================================
+class RecordingListener(py_trees.behaviour.Behaviour):
+    """Stands in for the Listening branch (diarization STT + web)"""
+
+    def __init__(self):
+        super().__init__("Listening")
+        self.ticks = 0
+
+    def update(self):
+        self.ticks += 1
+        return Status.SUCCESS
+
+
+def speak_then_listen():
+    mover = speaker_leaf(name="Mover", instance_id="furhat")
+    opposer = speaker_leaf(name="Opposer", instance_id="nao")
+    selector = py_trees.composites.Selector(name="Agent Selector", memory=True)
+    selector.add_children([mover, opposer])
+    listening = RecordingListener()
+    root = py_trees.composites.Sequence(name="SpeakThenListen", memory=True)
+    root.add_children([selector, listening])
+    return root, mover, opposer, listening
+
+
+def test_intervene_false_skips_speaking_and_reopens_the_microphone():
+    writer("tts", result="I should not be said")
+    writer("scene", nlp=1, agent="")
+    writer("bot", agent="Opposer", speak=0, addressee="Sarah")
+    root, mover, opposer, listening = speak_then_listen()
+
+    root.tick_once()
+
+    assert root.status == Status.SUCCESS
+    assert mover.service_client_speaker.goals == []
+    assert opposer.service_client_speaker.goals == []
+    assert listening.ticks == 1  # the microphone is reopened in the same tick
+
+
+def test_intervene_true_speaks_before_listening():
+    writer("tts", result="Are you sure?")
+    writer("scene", nlp=1, agent="")
+    writer("bot", agent="Opposer", speak=1, addressee="Sarah")
+    root, mover, opposer, listening = speak_then_listen()
+
+    root.tick_once()
+    assert listening.ticks == 0  # still speaking
+    assert len(opposer.service_client_speaker.goals) == 1
+    assert mover.service_client_speaker.goals == []
+
+    opposer.service_client_speaker.state = GoalStatus.SUCCEEDED
+    root.tick_once()
+    assert listening.ticks == 1
+    assert root.status == Status.SUCCESS

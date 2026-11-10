@@ -112,26 +112,26 @@ ENV/
 **/private-keys_en.json
 
 *.wav
-dockerfiles/config/.asoundrc
-dockerfiles/config/private-keys.json
+ros1/dockerfiles/config/.asoundrc
+ros1/dockerfiles/config/private-keys.json
 # temporary generated files
-harmoni_core/harmoni_decision/launch/hardware_service.launch
-harmoni_core/harmoni_decision/launch/harmoni_service.launch
-harmoni_dialogues/harmoni_bot/config/configuration.yaml
-harmoni_actuators/harmoni_tts/content/*
+ros1/harmoni_core/harmoni_decision/launch/hardware_service.launch
+ros1/harmoni_core/harmoni_decision/launch/harmoni_service.launch
+ros1/harmoni_dialogues/harmoni_bot/config/configuration.yaml
+ros1/harmoni_actuators/harmoni_tts/content/*
 doc/_build
-harmoni_actuators/harmoni_tts/scale_stats.npy
-harmoni_actuators/harmoni_tts/temp_data/tts.wav
-harmoni_detectors/harmoni_imageai/src/*.h5
-harmoni_detectors/harmoni_imageai/src/*.json
+ros1/harmoni_actuators/harmoni_tts/scale_stats.npy
+ros1/harmoni_actuators/harmoni_tts/temp_data/tts.wav
+ros1/harmoni_detectors/harmoni_imageai/src/*.h5
+ros1/harmoni_detectors/harmoni_imageai/src/*.json
 **/config/configuration.yaml
-harmoni_models/stt/*
-harmoni_models/tts/*
-harmoni_models/ir/*
-harmoni_models/rl/*
-harmoni_models/yolo/*
-OpenFace/*
-OpenFace/
+ros1/harmoni_models/stt/*
+ros1/harmoni_models/tts/*
+ros1/harmoni_models/ir/*
+ros1/harmoni_models/rl/*
+ros1/harmoni_models/yolo/*
+ros1/OpenFace/*
+ros1/OpenFace/
 
 temp_data
 temp_output
@@ -148,7 +148,9 @@ test_output*/
 
 ***py2.py
 # NAOqi SDK (not redistributable)
-dockerfiles/harmoni/kinetic/nao/*.tar.gz
+ros1/dockerfiles/harmoni/kinetic/nao/*.tar.gz
 
 # harmoni.sh local state
 .harmoni/
+ros2/nao_bridge/*.tar.gz
+

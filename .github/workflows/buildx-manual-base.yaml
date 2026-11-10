@@ -48,7 +48,7 @@ jobs:
             --cache-to "type=local,dest=/tmp/.buildx-cache" \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --output "type=image,push=false" \
-            --file ./dockerfiles/harmoni/kinetic/base/dockerfile . \
+            --file ./ros1/dockerfiles/harmoni/kinetic/base/dockerfile ./ros1 \
             --tag harmoniteam/harmoni:kinetic-base
 
       - name: Login to DockerHub
@@ -67,7 +67,7 @@ jobs:
             --cache-from "type=local,src=/tmp/.buildx-cache" \
             --output "type=image,push=true" \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --file ./dockerfiles/harmoni/kinetic/base/dockerfile . \
+            --file ./ros1/dockerfiles/harmoni/kinetic/base/dockerfile ./ros1 \
             --tag harmoniteam/harmoni:kinetic-base
       - name: Inspect image
         if: github.event.inputs.ros == 'kinetic'
@@ -83,7 +83,7 @@ jobs:
             --cache-to "type=local,dest=/tmp/.buildx-cache" \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --output "type=image,push=false" \
-            --file ./dockerfiles/harmoni/noetic/base/dockerfile . \
+            --file ./ros1/dockerfiles/harmoni/noetic/base/dockerfile ./ros1 \
             --tag harmoniteam/harmoni:noetic-base
 
       - name: Login to DockerHub
@@ -102,7 +102,7 @@ jobs:
             --cache-from "type=local,src=/tmp/.buildx-cache" \
             --output "type=image,push=true" \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --file ./dockerfiles/harmoni/noetic/base/dockerfile . \
+            --file ./ros1/dockerfiles/harmoni/noetic/base/dockerfile ./ros1 \
             --tag harmoniteam/harmoni:noetic-base
       - name: Inspect image
         if: github.event.inputs.ros == 'noetic'

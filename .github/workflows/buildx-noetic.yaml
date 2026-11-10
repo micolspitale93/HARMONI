@@ -47,7 +47,7 @@ jobs:
             --cache-to "type=local,dest=/tmp/.buildx-cache" \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --output "type=image,push=false" \
-            --file ./dockerfiles/harmoni/noetic/full/dockerfile . \
+            --file ./ros1/dockerfiles/harmoni/noetic/full/dockerfile ./ros1 \
             --tag harmoniteam/harmoni:noetic-full \
             --tag harmoniteam/harmoni:noetic-latest
 
@@ -67,7 +67,7 @@ jobs:
             --cache-from "type=local,src=/tmp/.buildx-cache" \
             --output "type=image,push=true" \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --file ./dockerfiles/harmoni/noetic/full/dockerfile . \
+            --file ./ros1/dockerfiles/harmoni/noetic/full/dockerfile ./ros1 \
             --tag harmoniteam/harmoni:noetic-full \
             --tag harmoniteam/harmoni:noetic-latest
       - name: Inspect image
