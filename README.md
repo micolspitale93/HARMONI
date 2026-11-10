@@ -72,6 +72,24 @@ services you need to `.env` (see [.env.example](.env.example)); it is shared by 
 
 More details: [ROS 2 quickstart](doc/quickstart/ROS2-Quickstart.md) · [ROS 1 quickstart](doc/quickstart/Docker-Quickstart.md) · [Cloud services](doc/configuration/Cloud-Services.md) · [Installing ROS 1 without Docker](doc/quickstart/pc-quickstart.md)
 
+## HARMONI Studio: author interactions and modules in the browser
+
+```bash
+./harmoni.sh studio                # then open http://localhost:8800
+./harmoni.sh ros2 studio           # in the ROS 2 container: also monitors trees running on ROS 2
+```
+
+- **Compose** behavior trees from the HARMONI nodes (drag and drop, forms generated from the node
+  descriptions, validation while you edit), **Scripts** for scripted dialogues, **Services** to choose which
+  module serves each service;
+- **Run** a tree in simulation (mock services: no robots, no keys) or follow it live on ROS 2, with the tree
+  status, the conversation and the blackboard; Studio only observes and sends commands between ticks;
+- **Modules**: create new sensors, detectors, dialogues and actuators from a short description (working code,
+  tests and examples are generated), test them, and keep them private or share them with everyone once their
+  checks pass.
+
+See [HARMONI Studio](doc/tutorials/HARMONI-Studio.md) and [Create a module](doc/tutorials/Create-a-Module.md).
+
 ## Authoring and testing interactions without ROS
 
 ```bash

@@ -8,6 +8,7 @@ HARMONI has three test suites, one per folder, plus integration tests on real RO
 | ros2 | `ros2/tests` | python 3; rclpy is faked | `./harmoni.sh ros2 test` |
 | ros1 | `ros1/harmoni_*/*/test/unit` | python 3; rospy is faked | `cd ros1 && ./run_tests.sh unit` |
 | ROS 2 end to end | `ros2/tests/ros_smoke_test.py` | the ROS 2 container | `./harmoni.sh ros2 smoke-test` |
+| Studio in a browser | `core/tests/e2e/studio.e2e.js` | node + Playwright (Chromium) | `core/tests/e2e/run_studio_e2e.sh` |
 | ROS 1 rostest | `ros1/harmoni_*/*/test/*.test` | the ROS 1 containers | `./harmoni.sh ros1 test mock\|cloud\|hardware` |
 
 The unit tests need no ROS, no docker, no robots and no credentials, and run on GitHub for every push
@@ -21,6 +22,10 @@ by `.github/workflows/ros2.yaml`.
 cd core && python3 -m pytest -k group -v             # a subset
 ./harmoni.sh validate core/trees/my_tree.json        # check a tree file
 ```
+
+The core tests also cover the module system (generation, loading, checks, private/public) and the HARMONI
+Studio API on a real server; the browser test drives the whole dashboard (compose, simulate, services,
+modules) on a throwaway copy of the workspace.
 
 The core tests cover the tree format (validation, variables), every leaf, the runner (commands,
 snapshots, errors), the service backends with fake SDKs, and the group interaction end to end with mock

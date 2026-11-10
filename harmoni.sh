@@ -5,6 +5,7 @@
 #   ./harmoni.sh ros1 <command>    ROS 1 (Noetic): all the original packages -> ros1/harmoni.sh
 #   ./harmoni.sh test              unit tests of core, ros1 and ros2 (no ROS or docker needed)
 #   ./harmoni.sh validate [tree]   check a HARMONI tree file
+#   ./harmoni.sh studio [--open]   HARMONI Studio: compose interactions, create modules (http://localhost:8800)
 #
 # Run `./harmoni.sh ros1 help` or `./harmoni.sh ros2 help` for the commands of each setup.
 
@@ -22,6 +23,14 @@ case "${1:-help}" in
         (cd "$REPO/ros1" && ./run_tests.sh unit)
         ;;
     validate) shift; exec "$REPO/ros2/harmoni.sh" validate "$@" ;;
+    studio)
+        shift
+        if ! python3 -c "import py_trees, yaml" 2>/dev/null; then
+            echo "Installing the Studio requirements (py_trees, pyyaml)..."
+            python3 -m pip install --quiet py_trees pyyaml python-dotenv
+        fi
+        cd "$REPO" && PYTHONPATH="$REPO/core" exec python3 -m harmoni.studio --root "$REPO" "$@"
+        ;;
     help|-h|--help) usage ;;
     up|down|shell|setup|pull|build|status|run|build-ws|models)
         echo "HARMONI now has two setups: use './harmoni.sh ros2 $1' or './harmoni.sh ros1 $1'." >&2

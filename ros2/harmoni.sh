@@ -17,6 +17,8 @@
 #   validate [tree.json]   check a tree file (default: the group interaction)
 #   test                   run the core and ros2 unit tests (no ROS needed, runs on the host)
 #   smoke-test             run the mock group interaction on real ROS 2 in the container
+#   studio                 HARMONI Studio in the container: also monitors ROS 2 trees (http://localhost:8800)
+#   modules-install        install the python requirements of the HARMONI modules in the container
 #
 # Environment: ROS_DISTRO (default jazzy), ROS_DOMAIN_ID (default 0)
 
@@ -138,6 +140,17 @@ cmd_validate() {
     PYTHONPATH="$REPO/core" python3 -m harmoni.tree validate "$tree"
 }
 
+cmd_studio() {
+    require_docker; require_running
+    info "HARMONI Studio on http://localhost:8800 (Ctrl+C to stop)"
+    ros_exec "python3 -m harmoni.studio --root /root/HARMONI --host 127.0.0.1 --port \${HARMONI_STUDIO_PORT:-8800}"
+}
+
+cmd_modules_install() {
+    require_docker; require_running
+    ros_exec 'for r in /root/HARMONI/modules/*/*/requirements.txt; do [ -s "$r" ] && echo "== $r" && pip install --quiet -r "$r"; done; echo done'
+}
+
 cmd_smoke_test() { require_docker; require_running; ros_exec "python3 tests/ros_smoke_test.py"; }
 
 cmd_test() {
@@ -166,6 +179,8 @@ case "${1:-help}" in
     validate) shift; cmd_validate "$@" ;;
     test) shift; cmd_test "$@" ;;
     smoke-test) shift; cmd_smoke_test "$@" ;;
+    studio) shift; cmd_studio "$@" ;;
+    modules-install) shift; cmd_modules_install "$@" ;;
     help|-h|--help) usage ;;
     *) usage; exit 2 ;;
 esac

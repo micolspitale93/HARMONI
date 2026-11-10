@@ -5,6 +5,8 @@ ROS-independent part of HARMONI 2.0 (python 3.8+, depends only on `py_trees` and
 - `harmoni/tree`: tree file format (JSON/YAML), validation, builder, runner, snapshots, CLI
 - `harmoni/leaves`: leaves usable in tree files (`ServiceAction`, conditions, group interaction)
 - `harmoni/services`: service backends (`assistant`, `azure_diarization`, `furhat`, `nao_http`, `mock`)
+- `harmoni/modules`: user modules (discovery in `../modules`, generator, publish checks)
+- `harmoni/studio`: HARMONI Studio, the web dashboard (`python -m harmoni.studio`)
 - `trees/`: tree files, their scripts and mock services
 - `tests/`: unit tests (`python3 -m pytest`)
 

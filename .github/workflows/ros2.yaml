@@ -4,7 +4,7 @@ name: ros2
 # plus the NAO bridge image in mock mode.
 on:
   push:
-    branches: [develop, dev/harmoni2.0]
+    branches: [develop, dev/harmoni2.0, dev/ros2]
     paths: ["core/**", "ros2/**", ".github/workflows/ros2.yaml"]
   pull_request:
     paths: ["core/**", "ros2/**", ".github/workflows/ros2.yaml"]

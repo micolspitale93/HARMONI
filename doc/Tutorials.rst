@@ -6,6 +6,8 @@ Tutorials
    :caption: Contents:
    :glob:
 
+   tutorials/HARMONI-Studio
+   tutorials/Create-a-Module
    tutorials/Compose-an-Interaction
    tutorials/Group-Interaction
    tutorials/Launching-Services
