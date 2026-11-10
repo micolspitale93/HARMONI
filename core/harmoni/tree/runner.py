@@ -103,8 +103,11 @@ class TreeRunner:
         """Apply pending commands, tick once if running, notify observers. Returns the snapshot."""
         if self.tree is None and self.state == "idle":
             self.load()
+        if self.tree is None and self.state != "error":
+            self.state = "error"
+            self.error = self.error or "the tree is not loaded"
         self._apply_commands()
-        if self.state == "running":
+        if self.state == "running" and self.tree is not None:
             try:
                 self.tree.tick()
             except Exception as e:  # noqa: BLE001 - a broken leaf must not kill the host process

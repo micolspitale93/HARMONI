@@ -1,0 +1,1056 @@
+{
+    "3session" :   [ 
+        {
+        	"id"        	:  0,
+        	"utterance" 	: "Hi everyone, I’m Manny, thanks so much for being here: $USERNAME1, $USERNAME2, and $USERNAME3! I’ll be working alongside Sam, the robot, to help guide our conversation as we work through the room and rent decision for your new shared apartment. Before we dive in, a quick reminder: the goal is to reach a consensus together. So feel free to jump in whenever you have something to say, this is meant to be an open and relaxed conversation, and every voice counts. To get us started, let’s do a round of quick introductions to learn a bit more about each other and where you're coming from. I already know your names, but it’s always good to hear it in your own words. $USERNAME1, would you like to kick things off?",
+            "agent"         : "Mover1",
+        	"nlp"       	:  0,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  1,
+        	"utterance" 	: "Wonderful, $USERNAME1, very nice to meet you! $USERNAME2 would you like to go next?",
+            "agent"         : "Mover1",
+        	"nlp"       	:  0,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  2,
+        	"utterance" 	: "Nice to meet you, $USERNAME2. Then, last but not least $USERNAME3 would you like to tell us your name?",
+            "agent"         : "Mover2",
+        	"nlp"       	:  0,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "Nice to meet you, $USERNAME3! Hey everyone, I’m Sam, it’s great to have you all here. Let’s go ahead and get started. So here’s the deal: you are moving into an apartment with one big room with a private bathroom and two smaller rooms with a bathroom that two people will share.  The total rent is 2,000 CHF, and your job is to figure out who gets which room and how to split the rent in a way that feels fair to everyone. You can divide the rent however you all agree—it doesn’t have to follow any set rule. The most important thing is that everyone’s cool with the final plan. $USERNAME1, want to kick things off and share what you’re thinking?",
+            "agent"         : "Mover2",
+        	"nlp"       	:  0,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},{
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},
+        {
+            "id"            :  30,
+            "utterance"     : "It’s time to wrap up our discussion for today. Thank you all for your thoughtful input on the room allocation—great teamwork! I look forward to continuing next time.",
+            "agent"         : "Mover1",
+			"nlp"           :  0,
+            "gesture"       : ""
+        }
+
+     ],
+	"2session" :   [ 
+        {
+        	"id"        	:  0,
+        	"utterance" 	: "Hi everyone, I’m Manny, thanks so much for being here: $USERNAME1 and $USERNAME2! I’ll be working alongside Sam, the robot, to help guide our conversation as we work through the room and rent decision for your new shared apartment. Before we dive in, a quick reminder: the goal is to reach a consensus together. So feel free to jump in whenever you have something to say, this is meant to be an open and relaxed conversation, and every voice counts. To get us started, let’s do a round of quick introductions to learn a bit more about each other and where you're coming from. I already know your names, but it’s always good to hear it in your own words. $USERNAME1, would you like to kick things off?",
+            "agent"         : "Mover1",
+        	"nlp"       	:  0,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  1,
+        	"utterance" 	: "Wonderful, $USERNAME1, very nice to meet you! $USERNAME2 would you like to go next?",
+            "agent"         : "Mover1",
+        	"nlp"       	:  0,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "Nice to meet you, $USERNAME2! Hey everyone, I’m Sam, it’s great to have you all here. Let’s go ahead and get started. So here’s the deal: you are moving into an apartment with one big room with a private bathroom and two smaller rooms with a bathroom that two people will share.  The total rent is 2,000 CHF, and your job is to figure out who gets which room and how to split the rent in a way that feels fair to everyone. You can divide the rent however you all agree—it doesn’t have to follow any set rule. The most important thing is that everyone’s cool with the final plan. $USERNAME1, want to kick things off and share what you’re thinking?",
+            "agent"         : "Mover2",
+        	"nlp"       	:  0,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},{
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},
+        {
+            "id"            :  30,
+            "utterance"     : "It’s time to wrap up our discussion for today. Thank you all for your thoughtful input on the room allocation—great teamwork! I look forward to continuing next time.",
+            "agent"         : "Mover1",
+			"nlp"           :  0,
+            "gesture"       : ""
+        }],
+
+	"1session" :   [ 
+        {
+        	"id"        	:  0,
+        	"utterance" 	: "Hi everyone, I’m Manny, thanks so much for being here: $USERNAME1! I’ll be working alongside Sam, the robot, to help guide our conversation as we work through the room and rent decision for your new shared apartment. Before we dive in, a quick reminder: the goal is to reach a consensus together. So feel free to jump in whenever you have something to say, this is meant to be an open and relaxed conversation, and every voice counts. To get us started, let’s do a round of quick introductions to learn a bit more about each other and where you're coming from. I already know your names, but it’s always good to hear it in your own words. $USERNAME1, would you like to kick things off?",
+            "agent"         : "Mover1",
+        	"nlp"       	:  0,
+        	"gesture"   	: ""
+    	},       
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "Nice to meet you, $USERNAME1! Hey everyone, I’m Sam, it’s great to have you all here. Let’s go ahead and get started. So here’s the deal: you are moving into an apartment with one big room with a private bathroom and two smaller rooms with a bathroom that two people will share.  The total rent is 2,000 CHF, and your job is to figure out who gets which room and how to split the rent in a way that feels fair to everyone. You can divide the rent however you all agree—it doesn’t have to follow any set rule. The most important thing is that everyone’s cool with the final plan. $USERNAME1, want to kick things off and share what you’re thinking?",
+            "agent"         : "Mover2",
+        	"nlp"       	:  0,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "Manny should kick off the conversation",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},{
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},        
+        {
+        	"id"        	:  3,
+        	"utterance" 	: "",
+            "agent"         : "Mover1",
+        	"nlp"       	:  1,
+        	"gesture"   	: ""
+    	},
+        {
+            "id"            :  30,
+            "utterance"     : "It’s time to wrap up our discussion for today. Thank you all for your thoughtful input on the room allocation—great teamwork! I look forward to continuing next time.",
+            "agent"         : "Mover1",
+			"nlp"           :  0,
+            "gesture"       : ""
+        }]
+
+}

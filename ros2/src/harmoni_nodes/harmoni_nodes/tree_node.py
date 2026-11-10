@@ -70,9 +70,12 @@ class TreeRunnerNode(Node):
         if not self._started:
             if not self._services_ready():
                 return
-            self.runner.load()
             self._started = True
-            self.get_logger().info("tree started")
+            try:
+                self.runner.load()
+                self.get_logger().info("tree started")
+            except Exception as e:  # noqa: BLE001 - report it, keep the node alive (fix the file, then `reload`)
+                self.runner.state, self.runner.error = "error", f"{type(e).__name__}: {e}"
         snapshot = self.runner.step()
         if snapshot["state"] != self._last_state:
             self._last_state = snapshot["state"]

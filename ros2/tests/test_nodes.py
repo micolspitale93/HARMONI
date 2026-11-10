@@ -261,3 +261,20 @@ def test_monitor_render():
                             "children": [{"name": "Ask", "status": "RUNNING", "message": "REQUEST sent"}]},
                    "blackboard": {"/bot/agent": "Mover"}})
     assert "* Ask  (REQUEST sent)" in text and "/bot/agent = 'Mover'" in text
+
+
+def test_tree_node_reports_a_broken_tree_instead_of_crashing(monkeypatch, tmp_path):
+    tree = tmp_path / "broken.json"
+    tree.write_text('{"harmoni_tree": 1, "name": "Broken", "root": {"type": "NoSuchNode", "name": "x"}}')
+    config = tmp_path / "c.yaml"
+    config.write_text(f"tree: {{file: {tree}}}\nservices: {{}}\n")
+    node = tree_node(monkeypatch, config=str(config))
+    node.timers[0]()  # must not raise
+    snapshot = json.loads(node.publishers["/harmoni/tree/status"].published[-1])
+    assert snapshot["state"] == "error" and "NoSuchNode" in snapshot["error"]
+    assert any(level == "error" and "NoSuchNode" in msg for level, msg in node.logger.messages)
+    # after fixing the file, `reload` starts it
+    tree.write_text('{"harmoni_tree": 1, "name": "Fixed", "root": {"type": "Wait", "name": "w", "params": {"seconds": 0}}}')
+    node.subscriptions["/harmoni/tree/command"](types.SimpleNamespace(data="reload"))
+    node.timers[0]()
+    assert json.loads(node.publishers["/harmoni/tree/status"].published[-1])["state"] in ("running", "finished")
