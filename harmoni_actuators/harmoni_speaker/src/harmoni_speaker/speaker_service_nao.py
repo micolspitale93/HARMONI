@@ -33,7 +33,7 @@ class SpeakerServiceNAO(HarmoniServiceManager):
         self.speak_service = rospy.ServiceProxy('/nao/speak', nao_speak)
         
         self.setup_pub = rospy.Publisher(
-            "/" + self.name  +"/connect",
+            "/nao/connect",
             String,
             queue_size=1,
         )

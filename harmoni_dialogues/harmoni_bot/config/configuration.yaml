@@ -1,15 +1,22 @@
-# Configuration file for the dialogue
+# Configuration file for the dialogue: HOM: asst_JvDM8TQEWPrSyk0fB38vuLkw, HET: asst_7iYWPs6E7obv7Lp5343RGuo7
 bot:
   default_param:
     user_id: "Micol"
     bot_name: "QTRobot"
     bot_alias: "DemoBot"
     region_name: "eu-west-2"
-    assistant_id: "asst_vHBrXCxblYeARtQMymaVyshm" #"" #ORACLE
+    assistant_id: "asst_7iYWPs6E7obv7Lp5343RGuo7" 
     service_id : "default"
-    participants: "Micol" #"Sarah, Jane, Alex"
-    num_speaker: 1
-    scenario: "The topic of this group conversation is AI in society."
+    participants: "Micol,Emmanuel,Yukun" #"Sarah, Jane, Alex"
+    num_speaker: 3
+    scenario: "'You are three students moving into a shared apartment for the academic year. The apartment has three bedrooms: one large private room with a private bathroom, and two smaller rooms that will share a bathroom (one with a window and a double bed and the other with no window and a single bed). The total monthly rent for the apartment is 2,000 CHF, and you must decide together how to divide three rooms and the rent in a way that feels fair to everyone. Maintaining good relationships is important, as you’ll be living together for the entire year.' Other instructions for the orchestrator: - Explain your decision based on each person's preferences, needs, and financial situation; - Consensus is required; -  Wrap-up and summarise the decision when everyone agrees on the room allocation; - Balance the intervention of the two robots Manny and Sam; - Students might have hidden agendas;- Say goodbye at the end of the agreement and wrap-up the session." 
+    
+  #"'You are three students moving into a shared apartment for the academic year. The apartment has three bedrooms: one large private room with a private bathroom, and two smaller rooms that will share a bathroom (one with a window and a double bed and the other with no window and a single bed). The total monthly rent for the apartment is 2,000 CHF, and you must decide together how to divide three rooms and the rent in a way that feels fair to everyone. Maintaining good relationships is important, as you’ll be living together for the entire year.' Other instructions for the orchestrator: - Explain your decision based on each person's preferences, needs, and financial situation; - Consensus is required; -  Wrap-up and summarise the decision when everyone agrees on the room allocation; - Balance the intervention of the two robots Manny and Sam; - Students might have hidden agendas;- Say goodbye at the end of the agreement and wrap-up the session." 
+
+#'You are two of the three students preparing to move into a shared apartment for the academic year. The apartment has three bedrooms: one large private room with a private bathroom, and two smaller rooms (one with a window and a double bed and the other with no window and a single bed) that will share a bathroom. The total monthly rent for the apartment is 2,000 CHF, and you must decide together how to divide three rooms and the rent in a way that feels fair to everyone. Maintaining good relationships is important, as you’ll be living together for the entire year. You need to take a preliminary fair decision and then share it with your third roommate.' Other instructions for the orchestrator: - Explain your decision based on each person's preferences, needs, and financial situation; - Consensus is required; -  Wrap-up and summarise the decision when everyone agrees on the room allocation; - Balance the intervention of the two robots Manny and Sam; - Students might have hidden agendas; - Say goodbye at the end of the agreement and wrap-up the session.
+
+#'You are one of three students moving into a shared apartment for the academic year. The apartment has three bedrooms: one large private room with a private bathroom, and two smaller rooms (one with a window and a double bed and the other with no window and a single bed) that will share a bathroom.  The total monthly rent is 2,000 CHF, and all three roommates will need to agree on how to divide both the rooms and the rent. However, you are the only one currently present to begin the discussion. As the only student currently available, your job is to develop a fair and thoughtful proposal to present to your two future roommates. Your proposal should include who gets the private room and who shares the double room, and a plan for how to divide the 2,000 CHF rent among the three of you. Maintaining good relationships is important, as you’ll be living together for the entire year.  Strive for fairness and clarity, and be ready to explain and adjust your plan when everyone is present. ' Other instructions for the orchestrator: - Explain your decision based on each person's preferences, needs, and financial situation; - Consensus is required; -  Wrap-up and summarise the decision when everyone agrees on the room allocation; - Balance the intervention of the two robots Manny and Sam and the Opposer role should be clear implicitly; - Students might have hidden agendas; - Say goodbye at the end of the agreement and wrap-up the session.
+
   mover_param:
     assistant_id: "" #MOVER
     service_id : "mover"

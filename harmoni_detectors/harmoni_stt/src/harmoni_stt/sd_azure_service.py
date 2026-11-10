@@ -112,7 +112,7 @@ class SDAzureService(HarmoniServiceManager):
     def conversation_transcriber_transcribed_cb(self, evt: speechsdk.SpeechRecognitionEventArgs):
         self.elapsed_time = time.time() - self.start_time
         if self.elapsed_time > 10:
-            self.stt_response = "No one is talking. Please initiate a question to reignite the conversation."
+            self.stt_response = "No one is talking. Please initiate a question to reignite the conversation (balance Manny and Sam intervention)."
             self.state = State.SUCCESS
             self.response_received = True
             self.result_msg = self.stt_response
@@ -169,7 +169,7 @@ class SDAzureService(HarmoniServiceManager):
         #stream_callback = MyAudioStream(buff)
         #audio_input = speechsdk.audio.PullAudioInputStream(stream_callback, audio_format)
         #audio_config = speechsdk.audio.AudioConfig(stream=audio_input)
-        audio_config = speechsdk.audio.AudioConfig(use_default_microphone=True)#device_name="TONOR TC30 Audio Device: USB Audio (hw:1,0)")
+        audio_config = speechsdk.audio.AudioConfig(device_name="hw:1,0")
         print(audio_config)
         self.conversation_transcriber = speechsdk.transcription.ConversationTranscriber(speech_config=speech_config, audio_config=audio_config)
         self.conversation_transcriber.properties.set_property(speechsdk.PropertyId.SpeechServiceConnection_InitialSilenceTimeoutMs, "4000")

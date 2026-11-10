@@ -48,6 +48,7 @@ class SpeakerServiceFurhat(HarmoniServiceManager):
             voices = self.furhat.get_voices()
             # Set the voice of the robot
             self.furhat.set_voice(name='Matthew')
+            users = self.furhat.get_users()
 
         
     def stop(self):
@@ -71,13 +72,20 @@ class SpeakerServiceFurhat(HarmoniServiceManager):
             if self.mock:
                 print("The robot will say:" , data["input"])
             else:
+                users = self.furhat.get_users()
+                print(users)
+                if len(users) == 0:
+                    self.furhat.gesture(name="Nod")
+                else:
+                    self.furhat.attend(user="RANDOM")
                 self.furhat.say(text=data["input"], blocking = True)
                 # Attend a user with a specific id
                 if "," in data["addressee"]:
                     rospy.loginfo("The speech is addressed to multiple people")
+                    #self.furhat.attend(user="RANDOM")
                 else:
                     rospy.loginfo(f'The speech is addressed to {data["addressee"]}')
-                    self.furhat.attend(userid=data["addressee"]) #addressee of the conversation
+                    #self.furhat.attend(userid=data["addressee"]) #addressee of the conversation
                 #r = rospy.Rate(10)
                 #print(self.furhat)
                 #while self.furhat.isSpeaking():

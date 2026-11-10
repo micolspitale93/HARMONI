@@ -14,6 +14,7 @@ class ScriptGroupDialogueService(py_trees.behaviour.Behaviour):
         self.blackboards = []
         self.script_name = params['interaction']
         self.session = params['session']
+        self.max_turns = params['max_turns']
         self.user_names = params["user_names"].split(",")
         self.blackboard_scene = self.attach_blackboard_client(name=self.name, namespace=PyTreeNameSpace.scene.name)
         self.blackboard_scene.register_key(key="nlp", access=py_trees.common.Access.WRITE)
@@ -36,7 +37,7 @@ class ScriptGroupDialogueService(py_trees.behaviour.Behaviour):
         pattern_script_path = pck_path + f"/resources/{json_name}.json"
         with open(pattern_script_path, "r") as read_file:
             self.context = json.load(read_file)
-        self.blackboard_scene.max_number_scene = 30 #SETTING THE MAXIMUM NUMBER OF TURNS
+        self.blackboard_scene.max_number_scene = self.max_turns
         self.blackboard_scene.utterance = self.context[self.session][0]["utterance"]
         self.blackboard_scene.nlp = self.context[self.session][0]["nlp"]
         self.blackboard_scene.agent = self.context[self.session][0]["agent"]
@@ -51,7 +52,7 @@ class ScriptGroupDialogueService(py_trees.behaviour.Behaviour):
         self.blackboard_scene.nlp = self.context[self.session][self.scene_number]["nlp"]
         print(self.session[0])
         if self.scene_number == 1+int(self.session[0]):
-            self.blackboard_scene.utterance ="['*user* Now you can MUST START the discussion without telling your name.']"
+            self.blackboard_scene.utterance ="['*assistant* Now you MUST START the negotiation giving your opinion without telling your name.']"
         if self.blackboard_scene.nlp==0:
             self.blackboard_scene.agent = self.context[self.session][self.scene_number]["agent"]
             self.blackboard_scene.utterance = self.context[self.session][self.scene_number]["utterance"]
@@ -60,6 +61,8 @@ class ScriptGroupDialogueService(py_trees.behaviour.Behaviour):
         if self.scene_number == self.blackboard_scene.max_number_scene:
             self.blackboard_scene.nlp = 0
             self.blackboard_scene.utterance = self.context[self.session][-1]["utterance"]
+        elif self.scene_number == (self.blackboard_scene.max_number_scene + 1):
+            return py_trees.common.Status.FAILURE
         i=0
         for name in self.user_names:
             i+=1

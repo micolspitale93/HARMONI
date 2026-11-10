@@ -1,0 +1,8 @@
+<launch>
+<!-- record topics listed below -->
+<arg name="topics_name" default="/harmoni/detecting/stt/default /harmoni/dialoging/bot/default"/>
+
+<!-- record topics -->
+<node name="record_topics_for_verification" pkg="rosbag" type="record" output="screen"
+      args="-o /root/harmoni_catkin_ws/src/HARMONI/logs/Gtest $(arg topics_name)"/>
+</launch>

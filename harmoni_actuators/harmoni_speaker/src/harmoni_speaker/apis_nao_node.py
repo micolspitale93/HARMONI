@@ -26,9 +26,14 @@ class SpeakerAPINAO():
         """ Initialization of variables and camera parameters """
         print("APIs Nao node up and running")
         self.setup_sub = rospy.Subscriber(
-            "/speaker_nao/connect",
+            "/nao/connect",
             String,
             self.setup_connection,
+        )
+        self.led_sub = rospy.Subscriber(
+            "/led_nao/set",
+            String,
+            self.set_led,
         )
         self.start_pub = rospy.Publisher(
             "/speaker_nao/start",
@@ -46,18 +51,54 @@ class SpeakerAPINAO():
             String,
             self.move,
         )
+        self.connected = False
         self.tts = None
         rospy.sleep(3)
         self.start_pub.publish(True)
+        #self.setup_connection("192.168.100.1")
         return
     
     def setup_connection(self, data):
+        ip_address = data.data
+        #ip_address = data
+        self.tts = ALProxy("ALTextToSpeech", ip_address, 9559)
+        self.tts.setParameter("speed", 90)
+        self.tts.setParameter("pitchShift", 0.9)
+        self.motion = ALProxy("ALMotion", ip_address, 9559)
+        self.led = ALProxy("ALLeds", ip_address, 9559)
+        
+        self.awer = ALProxy("ALBasicAwareness", ip_address, 9559)
+        motion_service = ALProxy("ALMotion", ip_address, 9559)
+        self.blink= ALProxy("ALAutonomousBlinking", ip_address, 9559)
+        self.connected = True
+        motion_service.wakeUp()
+        self.awer.setEnabled(True)
+        self.blink.setEnabled(True)
+        return
+    
+    def set_led(self, data):
         print(data.data)
-        self.tts = ALProxy("ALTextToSpeech", data.data, 9559)
-        self.motion = ALProxy("ALMotion", data.data, 9559)
+        while not self.connected:
+            print("LED wait for NAO")
+        if data.data== "green":
+            self.led.off("ChestLedsRed")
+            self.led.on("ChestLedsGreen")
+            self.led.off("ChestLedsBlue")
+        elif data.data == "red":
+            #self.led.on("RightFaceLedsRed")
+            #self.led.on("LeftFaceLedsRed")
+            self.led.on("ChestLedsRed")
+            #self.led.off("RightFaceLedsGreen")
+            #self.led.off("LeftFaceLedsGreen")
+            self.led.off("ChestLedsGreen")
+            #self.led.off("RightFaceLedsBlue")
+            #self.led.off("LeftFaceLedsBlue")
+            self.led.off("ChestLedsBlue")
         return
         
     def play(self, data):
+        while not self.connected:
+            print("PLAY wait for NAO")
         print(data.data)
         id = self.tts.say(data.data)
         print("DONE THE SPEECH")
