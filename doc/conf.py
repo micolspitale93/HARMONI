@@ -45,11 +45,12 @@ extensions = [
 ]
 autoapi_type = "python"
 autoapi_dirs = [
-    "../harmoni_actuators",
-    "../harmoni_core",
-    "../harmoni_detectors",
-    "../harmoni_dialogues",
-    "../harmoni_sensors",
+    "../core/harmoni",
+    "../ros1/harmoni_actuators",
+    "../ros1/harmoni_core",
+    "../ros1/harmoni_detectors",
+    "../ros1/harmoni_dialogues",
+    "../ros1/harmoni_sensors",
 ]
 autoapi_add_toctree_entry = True
 autosummary_generate = True  # Turn on sphinx.ext.autosummary

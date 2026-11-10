@@ -1,14 +1,38 @@
 # Testing
 
-HARMONI has two kinds of tests:
+HARMONI has three test suites, one per folder, plus integration tests on real ROS:
 
-- **Unit tests** (`<package>/test/unit/test_*.py`, pytest): test the python logic of a service in
-  isolation. ROS, robots and cloud SDKs are replaced by fakes, so they run anywhere in a few seconds
-  and run automatically on GitHub for every push and pull request.
-- **Integration tests** (`<package>/test/*.test`, rostest): start the real ROS nodes and
-  talk to them through the HARMONI action servers. They run inside the containers.
+| Suite | Where | Needs | Command |
+|-------|-------|-------|---------|
+| core | `core/tests` | python 3 (pytest, py_trees, pyyaml) | `./harmoni.sh test` (runs all three) |
+| ros2 | `ros2/tests` | python 3; rclpy is faked | `./harmoni.sh ros2 test` |
+| ros1 | `ros1/harmoni_*/*/test/unit` | python 3; rospy is faked | `cd ros1 && ./run_tests.sh unit` |
+| ROS 2 end to end | `ros2/tests/ros_smoke_test.py` | the ROS 2 container | `./harmoni.sh ros2 smoke-test` |
+| ROS 1 rostest | `ros1/harmoni_*/*/test/*.test` | the ROS 1 containers | `./harmoni.sh ros1 test mock\|cloud\|hardware` |
 
-All the suites are run with `run_tests.sh` (or `./harmoni.sh test <suite>` from the host):
+The unit tests need no ROS, no docker, no robots and no credentials, and run on GitHub for every push
+(`.github/workflows/unit-tests.yaml`). The ROS 2 image is built and the smoke test is run on real ROS 2
+by `.github/workflows/ros2.yaml`.
+
+## Core and ROS 2
+
+```bash
+./harmoni.sh test                                    # core + ros2 + ros1 unit tests
+cd core && python3 -m pytest -k group -v             # a subset
+./harmoni.sh validate core/trees/my_tree.json        # check a tree file
+```
+
+The core tests cover the tree format (validation, variables), every leaf, the runner (commands,
+snapshots, errors), the service backends with fake SDKs, and the group interaction end to end with mock
+services (scripted introductions, LLM turns, silence, robot failures, timeouts).
+
+The ROS 2 tests fake `rclpy` (`ros2/tests/ros_fakes.py`) to check the wiring of the nodes: parameters,
+topics, action results and goal tracking; the NAO bridge is tested over real HTTP. The smoke test then
+runs the mock group interaction on real ROS 2 and waits until the tree reports `finished`.
+
+## ROS 1
+
+All the ROS 1 suites are run with `ros1/run_tests.sh` (or `./harmoni.sh ros1 test <suite>` from the host):
 
 | Suite | Command | Needs |
 |-------|---------|-------|
@@ -17,10 +41,10 @@ All the suites are run with `run_tests.sh` (or `./harmoni.sh test <suite>` from 
 | cloud | `./run_tests.sh cloud` | credentials in `.env`, `~/.aws`, `~/.gcp` |
 | hardware | `./run_tests.sh hardware` | microphone, camera, speaker, screen; some need a person talking |
 
-## Unit tests
+### Unit tests
 
 ```bash
-# from the repository root, on the host or in a container
+# from the ros1/ folder, on the host or in a container
 ./run_tests.sh unit
 # or directly
 python3 -m pytest                                    # all packages
@@ -35,17 +59,17 @@ Currently covered:
 | harmoni_bot | `test/unit/test_assistant_service.py` | OpenAI Assistant: input parsing, request/response, thread setup, every API error releases the action server |
 | harmoni_stt | `test/unit/test_sd_azure_service.py` | Azure diarization: speaker-id to name mapping, transcription callbacks, silence timeout, microphone buffering |
 | harmoni_speaker | `test/unit/test_robot_speakers.py` | Furhat and NAO speakers: payload parsing, addressee handling, mockup mode, robot errors |
-| harmoni_pytree | `test/unit/test_group_interaction_leaves.py` | Group interaction leaves: LLM response parsing, script progression, speaker selection |
+| harmoni_pytree | `test/unit/test_group_interaction_leaves.py` | Group interaction leaves: LLM response parsing, script progression, speaker selection, silence skips speaking |
 | harmoni_common_lib | `test/unit/test_constants_and_helpers.py` | constants contract and helper functions |
 
 ### Writing a unit test
 
-The repository root `conftest.py` puts every package `src` folder on the python path and replaces
+The `ros1/conftest.py` puts every package `src` folder on the python path and replaces
 `rospy`, `actionlib`, the ROS messages, `openai`, the Azure speech SDK and the Furhat API with fakes.
 A minimal test of a new service looks like:
 
 ```python
-# harmoni_<group>/harmoni_<pkg>/test/unit/test_my_service.py
+# ros1/harmoni_<group>/harmoni_<pkg>/test/unit/test_my_service.py
 from harmoni_common_lib.constants import State
 from harmoni_mypkg.my_service import MyService
 
@@ -63,9 +87,9 @@ Replace external clients with fakes using pytest's `monkeypatch` (see the existi
 Always make sure that every error path sets `self.response_received = True` in `request()`,
 otherwise the HARMONI action server waits forever.
 
-## Integration tests (rostest)
+### Integration tests (rostest)
 
-Run inside a container (`./harmoni.sh shell`), after `./harmoni.sh build-ws`:
+Run inside a container (`./harmoni.sh ros1 shell`), after `./harmoni.sh ros1 build-ws`:
 
 ```bash
 rostest harmoni_speaker speaker_furhat_mock.test   # Furhat speaker node, mockup mode
@@ -80,7 +104,7 @@ There are three levels of testing:
 - Package Testing - _Do packages perform the function requested?_
 - Integration Testing - _Do packages communicate with each other as expected?_
 
-## Package Testing
+### Package Testing
 
 Package testing for sensors, actuators, and dialogues is ideally performed on real hardware. Some testing using simulation and/or rosbags in place of hardware is also acceptable. Package tests should force the package to perform some subset of the functionality the package provides and verify the output.
 
@@ -102,7 +126,7 @@ Package testing for sensors, actuators, and dialogues is ideally performed on re
     - etc.
   - harmoni_core - _Tested during integration._
 
-## Integration Testing
+### Integration Testing
 
 Integration tests may be largely similar to package tests, except that they will involve more than one package and in certain instances may require user interaction or mock user interaction.
 The behavior trees in `harmoni_pytree/test/*_test/` combine several packages (e.g. microphone, STT, bot, TTS and speaker).

@@ -13,6 +13,7 @@ HARMONI is built to be Robot-Agnostic, Modular, and Composable. By building on t
    :caption: Contents:
    :glob:
 
+   overview/HARMONI-2-Architecture
    overview/Architecture
    overview/Harmoni-and-Docker
    overview/Package-Organization

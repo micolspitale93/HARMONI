@@ -69,9 +69,9 @@ docker run -it --name harmoni_hardware --network host --init \
 -e "ROS_DISTRO=kinetic" \
 -e "CATKIN_WS=harmoni_catkin_ws" \
 -e "IS_DOCKER_ENV=true" \
--v /home/qtrobot/harmoni_catkin_ws/src/HARMONI/dockerfiles/config/setup_script.sh:/root/.setup_script.sh \
--v /home/qtrobot/harmoni_catkin_ws/src/HARMONI/dockerfiles/config/dev_setup_script.sh:/root/.dev_setup_script.sh \
--v /home/qtrobot/harmoni_catkin_ws/src/HARMONI/dockerfiles/config/asoundrc:/root/.asoundrc \
+-v /home/qtrobot/harmoni_catkin_ws/src/HARMONI/ros1/dockerfiles/config/setup_script.sh:/root/.setup_script.sh \
+-v /home/qtrobot/harmoni_catkin_ws/src/HARMONI/ros1/dockerfiles/config/dev_setup_script.sh:/root/.dev_setup_script.sh \
+-v /home/qtrobot/harmoni_catkin_ws/src/HARMONI/ros1/dockerfiles/config/asoundrc:/root/.asoundrc \
 -v /tmp/.X11-unix:/tmp/.X11-unix \
 -v /home/qtrobot/.gitconfig:/root/.gitconfig:ro \
 -v /home/qtrobot/.ssh/:/root/.ssh:ro \

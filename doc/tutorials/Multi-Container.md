@@ -11,7 +11,7 @@ xhost +local:
 ```
  Use docker compose to launch the complete system (will build if necessary, use --build to force):
 ```bash
-docker-compose -f docker-compose.yml up
+cd ros1 && docker compose -f docker-compose.yml up
 ```
 
 If the terminal prints: "Hello, rosmaster", you successfully setup the HARMONI full container.  

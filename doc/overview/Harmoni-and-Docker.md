@@ -67,4 +67,4 @@ Note that if you try to run a module that belongs to a different container (e.g.
 ## Getting started
 Unless adding a new node which requires additional libraries that have not been included, it unlikely you will need to modify the dockerfiles. Once Docker has been installed, you should be able to quickly get up and running with docker-compose. Docker-compose files have been provided which launch core, hardware, and detector containers. You may need to modify the network, devices, or volumes to suit your hardware configuration.
 
-Additional instructions for building and running images are provided in the [dockerfiles/README.md](https://github.com/micolspitale93/HARMONI/blob/dev/harmoni2.0/dockerfiles/README.md)
+Additional instructions for building and running images are provided in the [ros1/dockerfiles/README.md](https://github.com/micolspitale93/HARMONI/blob/dev/harmoni2.0/ros1/dockerfiles/README.md)

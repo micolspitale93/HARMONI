@@ -7,7 +7,7 @@ all mounted in the containers by docker compose:
 
 | Where | Used by |
 |-------|---------|
-| `HARMONI/.env` (copy of [`.env.example`](https://github.com/micolspitale93/HARMONI/blob/dev/harmoni2.0/.env.example), created by `./harmoni.sh setup`) | OpenAI ChatGPT, Azure OpenAI Assistants, Azure Speech |
+| `HARMONI/.env` (copy of [`.env.example`](https://github.com/micolspitale93/HARMONI/blob/dev/harmoni2.0/.env.example), created by `./harmoni.sh ros2 setup` or `./harmoni.sh ros1 setup`) | OpenAI ChatGPT, Azure OpenAI Assistants, Azure Speech |
 | `~/.aws` | AWS Polly (TTS), AWS Lex (bot) |
 | `~/.gcp/private-keys.json/private-keys.json` | Google STT, Google Dialogflow |
 
@@ -61,7 +61,7 @@ Default output format [json]:
 ## Setup Google Accounts
 If you are planning on using dialogflow or other google services (like speech to text):
 
-You need to update private-keys.json in ./dockerfiles/config/ with your google credentials.
+You need to save your google credentials as described at the end of this section.
 When you activate google account API, you can create credentials for connecting HARMONI with your account, following this instraction.
 Get the API key (https://developers.google.com/maps/documentation/maps-static/get-api-key)
 You must have at least one API key associated with your project.
@@ -83,7 +83,7 @@ To get an API key:
 
 
 Set credentials on HARMONI by saving the json key generated in the previous steps on the host as
-`~/.gcp/private-keys.json/private-keys.json` (`./harmoni.sh setup` creates the folder for you):
+`~/.gcp/private-keys.json/private-keys.json` (`./harmoni.sh ros1 setup` creates the folder for you):
 
 ```bash
 $ mkdir -p ~/.gcp/private-keys.json
@@ -113,7 +113,7 @@ Set up your OpenAI account: https://platform.openai.com/
 > **_NOTE:_** If you have already your credentials, you can follow the instructions from here!!
 
 
-Then edit the `.env` file in the root of the HARMONI repository (created by `./harmoni.sh setup`,
+Then edit the `.env` file in the root of the HARMONI repository (created by `./harmoni.sh ros2 setup` or `./harmoni.sh ros1 setup`,
 or copy `.env.example` to `.env`) and fill in:
 
 ```bash

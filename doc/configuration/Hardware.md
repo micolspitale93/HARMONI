@@ -6,10 +6,10 @@
 
 ### Speaker
 
-Check the `.asoundrc` file (located in `HARMONI/dockerfiles/config`) to ensure it refers to the appropriate sound device on your system. Determine which audio device you want to use by running `aplay -l` or `arecord -l` and update aforementioned `.asoundrc` file. *Note: make sure you can see hidden files*. If you are not using Docker, you will need to find or create the `.asoundrc` file in your home directory to configure sound in the same way.
+Check the `.asoundrc` file (located in `HARMONI/ros1/dockerfiles/config`) to ensure it refers to the appropriate sound device on your system. Determine which audio device you want to use by running `aplay -l` or `arecord -l` and update aforementioned `.asoundrc` file. *Note: make sure you can see hidden files*. If you are not using Docker, you will need to find or create the `.asoundrc` file in your home directory to configure sound in the same way.
 
 ```bash
-cd dockerfiles/config
+cd ros1/dockerfiles/config
 nano .asoundrc
 # Update the hardware and soundcard id.
 ```
@@ -84,7 +84,7 @@ Usually the defaults will work here. If you have trouble, verify which device yo
 sudo apt-get install v4l-utils
 v4l2-ctl --list-devices
 ```
-Then modify your docker-compose file and container (e.g. in `docker-compose.yml` under `harmoni_hardware:`) to select the desired video device. The pattern is `</local/devicepath>:<docker/devicepath>`. If you wanted to use `/dev/video1`, then you would replace the line under `devices:` which says `/dev/video0:/dev/video0` with `/dev/video1:/dev/video0` (if you would like to use multiple video devices, be sure to check the harmoni_camera config file).
+Then modify your docker-compose file and container (e.g. in `ros1/docker-compose.yml` under `harmoni_hardware:`) to select the desired video device. The pattern is `</local/devicepath>:<docker/devicepath>`. If you wanted to use `/dev/video1`, then you would replace the line under `devices:` which says `/dev/video0:/dev/video0` with `/dev/video1:/dev/video0` (if you would like to use multiple video devices, be sure to check the harmoni_camera config file).
 
 ### Camera
 
